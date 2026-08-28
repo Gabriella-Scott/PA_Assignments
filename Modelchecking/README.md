@@ -80,3 +80,8 @@ the default contention workload. That scenario exceeds 5x10^7 states with
 | `p_mutual_dispatch` | **fails** — two threads hold the same PCB | holds |
 | `p_no_premature_stop` | **fails** (consequence of the above) | holds |
 | `p_termination` (with `-f`) | **fails** | **fails** — see report: not provable under weak fairness with non-queueing mutexes |
+
+## Running
+spin -a model.pml
+gcc -o pan pan.c
+./pan -a -N pcb_mutex

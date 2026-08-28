@@ -1,0 +1,17 @@
+# SPIN-generated verifier source files
+pan.b
+pan.c
+pan.h
+pan.m
+pan.p
+pan.t
+
+# Compiled verifier binary
+pan
+
+# Counterexample trail files
+*.trail
+
+# SPIN verification artifacts
+*.pml.trail
+_spin_nvr.tmp
