@@ -1,0 +1,46 @@
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Source code}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Notation}{3}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Program 1: FCFS Process Scheduler}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}The implementation under analysis}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}The Promela model}{3}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Scope and configuration}{3}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}From implementation to model}{3}{subsubsection.2.2.2}%
+\contentsline {paragraph}{Queues as channels.}{3}{section*.4}%
+\contentsline {paragraph}{Locks as atomic blocks.}{3}{section*.5}%
+\contentsline {paragraph}{The instruction pointer as a counter.}{3}{section*.6}%
+\contentsline {subsubsection}{\numberline {2.2.3}Structure of the model}{4}{subsubsection.2.2.3}%
+\contentsline {paragraph}{The worker loop.}{4}{lstlisting.2}%
+\contentsline {subsubsection}{\numberline {2.2.4}Auxiliary variables}{4}{subsubsection.2.2.4}%
+\contentsline {subsubsection}{\numberline {2.2.5}What is deliberately omitted}{4}{subsubsection.2.2.5}%
+\contentsline {subsubsection}{\numberline {2.2.6}Refinements made during the analysis}{4}{subsubsection.2.2.6}%
+\contentsline {subsubsection}{\numberline {2.2.7}Fidelity and limitations of the abstraction}{4}{subsubsection.2.2.7}%
+\contentsline {subsection}{\numberline {2.3}Correctness properties}{6}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}Mutual exclusion over process control blocks}{6}{subsubsection.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.3.2}No process waits for a resource it holds}{6}{subsubsection.2.3.2}%
+\contentsline {subsubsection}{\numberline {2.3.3}Consistency of the waiting state}{6}{subsubsection.2.3.3}%
+\contentsline {subsubsection}{\numberline {2.3.4}Ready queue integrity}{6}{subsubsection.2.3.4}%
+\contentsline {subsubsection}{\numberline {2.3.5}Termination}{6}{subsubsection.2.3.5}%
+\contentsline {subsubsection}{\numberline {2.3.6}Responsiveness of the ready queue}{6}{subsubsection.2.3.6}%
+\contentsline {subsubsection}{\numberline {2.3.7}Deadlock}{6}{subsubsection.2.3.7}%
+\contentsline {subsection}{\numberline {2.4}Verification results and analysis}{7}{subsection.2.4}%
+\contentsline {subsubsection}{\numberline {2.4.1}Verification setup}{7}{subsubsection.2.4.1}%
+\contentsline {subsubsection}{\numberline {2.4.2}The double dispatch race}{7}{subsubsection.2.4.2}%
+\contentsline {paragraph}{Proposed fix.}{7}{section*.12}%
+\contentsline {subsubsection}{\numberline {2.4.3}Self deadlock in \texttt {request\_resource}}{7}{subsubsection.2.4.3}%
+\contentsline {subsubsection}{\numberline {2.4.4}Liveness and the role of fairness}{7}{subsubsection.2.4.4}%
+\contentsline {subsubsection}{\numberline {2.4.5}The invalid end state}{7}{subsubsection.2.4.5}%
+\contentsline {subsubsection}{\numberline {2.4.6}The property that holds, and what it establishes}{7}{subsubsection.2.4.6}%
+\contentsline {subsubsection}{\numberline {2.4.7}State explosion and the reduced configuration}{7}{subsubsection.2.4.7}%
+\contentsline {subsection}{\numberline {2.5}Summary of findings for Program 1}{7}{subsection.2.5}%
+\contentsline {section}{\numberline {3}Program 2: \leavevmode {\color {red}\textbf {[TODO: name]}}}{8}{section.3}%
+\contentsline {subsection}{\numberline {3.1}The implementation under analysis}{8}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}The Promela model}{8}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Correctness properties}{8}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Verification results and analysis}{8}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Summary of findings for Program 2}{8}{subsection.3.5}%
+\contentsline {section}{\numberline {4}Reflection}{8}{section.4}%
+\contentsline {section}{\numberline {5}Conclusion}{8}{section.5}%
+\contentsline {section}{\numberline {A}Promela model for Program 1}{9}{appendix.A}%
+\contentsline {section}{\numberline {B}Verification commands and reproducibility}{9}{appendix.B}%
+\contentsline {section}{\numberline {C}Promela model for Program 2}{10}{appendix.C}%

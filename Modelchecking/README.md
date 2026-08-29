@@ -82,6 +82,22 @@ the default contention workload. That scenario exceeds 5x10^7 states with
 | `p_termination` (with `-f`) | **fails** | **fails** — see report: not provable under weak fairness with non-queueing mutexes |
 
 ## Running
+```
 spin -a model.pml
 gcc -o pan pan.c
 ./pan -a -N pcb_mutex
+```
+With several ltl blocks in one file, spin -a model.pml compiles all of them into pan.c and you pick one per run:
+```
+spin -a model.pml
+gcc -O2 -o pan pan.c
+./pan -a -N no_self_wait
+```
+
+
+Each ./pan run overwrites model.pml.trail, so save the ones you want to keep:
+
+./pan -a -N waiting_consistent
+cp model.pml.trail results/waiting_consistent.trail
+
+To replay a saved one later, copy it back to model.pml.trail first, then spin -t -p model.pml. Watch for the "model.pml is newer than model.pml.trail" warning, which means the trail is stale and belongs to an earlier version of the model.

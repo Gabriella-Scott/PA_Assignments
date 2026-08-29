@@ -1,0 +1,378 @@
+% =====================================================================
+% RW796 Software Verification and Analysis
+% Model Checking Assignment
+%
+% Compile with: latexmk -pdf main
+%
+% House rule: no em dashes anywhere, in text or in code comments. In
+% LaTeX an em dash is written as three hyphens, so do not use "---".
+% =====================================================================
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\always}{\ensuremath{\Box}}
+\newcommand{\eventually}{\ensuremath{\Diamond}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
+
+\lstdefinelanguage{Promela}{
+  morekeywords={active, proctype, init, chan, byte, bit, bool, short,
+    int, mtype, pid, typedef, if, fi, do, od, break, goto, atomic,
+    d_step, inline, ltl, never, assert, printf, skip, run, len, empty,
+    nempty, full, nfull, timeout, else, of, select, for, in, unless,
+    end, progress, accept},
+  sensitive=true,
+  morecomment=[l]{//}, morecomment=[s]{/*}{*/}, morestring=[b]"
+}
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\bfseries,
+  commentstyle=\itshape\color{gray},
+  breaklines=true, showstringspaces=false,
+  frame=single, framesep=5pt, xleftmargin=10pt, tabsize=2
+}
+\lstdefinestyle{promela}{language=Promela}
+\lstdefinestyle{clang}{language=C}
+
+\title{Model Checking Two Concurrent Programs with SPIN\\
+       \large RW796 Software Verification and Analysis}
+\author{Gabriella \todo{surname} \\ \todo{student number}}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% Short. A paragraph or two at most: the two programs chosen, and the
+% repository URLs, which the lecturer requires because the abstraction
+% is marked with the implementation as reference.
+\section*{Introduction}
+
+\todo{One paragraph: which two programs were modelled and what the
+analysis found.}
+
+Implementation under analysis: \todo{repo URL}\\
+Promela models, properties and verification records: \todo{repo URL}
+
+% =====================================================================
+\section{Program 1: FCFS Process Scheduler}
+
+% ---------------------------------------------------------------------
+\subsection{The Promela Model}
+
+% Spec asks for: the design decisions, the relationship between model
+% and implementation, the extent to which it is an appropriate
+% abstraction and how that affects interpretation of results, and any
+% major refinements made during the analysis.
+%
+% Cover, in prose, with short code excerpts only:
+%
+% 1. Configuration and why. NUM_PROCS 3, NUM_WORKERS 2, NUM_RESOURCES 2,
+%    MAX_INSTR 3. Two workers is the smallest value at which any
+%    interleaving exists; three processes is the smallest at which a non
+%    trivial waiting queue exists; two resources allows a circular wait.
+%    Ids start at 1 so 0 encodes NULL.
+% 2. The mapping table below.
+% 3. Locks as atomic. The omp critical plus q_locks[0] dequeue becomes
+%    an atomic block \cite{holzmann2004}. Say explicitly where the
+%    implementation holds no lock, since that is where the double
+%    dispatch race lives, and note that those reads were deliberately
+%    left outside any atomic block.
+% 4. next_instruction as a bounded counter, with instruction type and
+%    target resource chosen nondeterministically. Nondeterminism gives a
+%    sound abstraction over all instruction sequences up to the bound
+%    \cite{inggs_promela}.
+% 5. Ghost arrays executing[] and in_ready[]. No counterpart in
+%    manager.c, never read by a guard, so they do not change reachable
+%    behaviour \cite{owicki1976}.
+% 6. Omitted and why: dynamic arrivals and a_lock, the RR and priority
+%    schedulers, names and strcmp, the nonexistent resource path,
+%    logging, terminatedq as an explicit queue, detect_deadlock. For
+%    each say what it costs. Two are not free: omitting arrivals removes
+%    the terminate() race, and omitting detect_deadlock means deadlock
+%    is checked by SPIN's invalid end state test rather than by the
+%    program's own detector, which is a different question.
+% 7. Refinements during the analysis: the blocking if with no
+%    complementary guard, the else combined with i/o restriction,
+%    active proctypes starting before init seeds ready_q, and the two
+%    ghost arrays added when properties needed observables.
+% 8. Limits on interpretation. The model is a hand built abstraction,
+%    not a refinement, so a counterexample implies a real defect only
+%    after checking by hand that the interleaving is permitted by the
+%    implementation and by OpenMP \cite{openmp52}. The bounds mean a
+%    property that holds establishes nothing outside them.
+
+\todo{Model description.}
+
+\begin{table}[htbp]
+\centering
+\caption{Mapping between the implementation and the model.}
+\label{tab:mapping}
+\begin{tabular}{p{4cm} p{4cm} p{6cm}}
+\toprule
+\textbf{\code{manager.c}} & \textbf{Model} & \textbf{Reason} \\
+\midrule
+Thread in \code{schedule\_fcfs} & \code{active [NUM\_WORKERS] proctype Worker} & \todo{} \\
+\code{readyq}, \code{waitingq} & buffered channels & \todo{} \\
+\code{terminatedq} & \code{pcb\_state[] == TERMINATED} & \todo{} \\
+\code{pcb\_t.state} & \code{pcb\_state[]} & \todo{} \\
+\code{next\_instruction} & \code{instr\_count[]} & \todo{} \\
+\code{resource\_t.allocated} & \code{resource\_owner[]} & \todo{} \\
+\code{q\_locks[0]}, \code{omp critical} & \code{atomic} block & \todo{} \\
+\code{terminate()} & \code{check\_terminate} inline & \todo{} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% Pair each excerpt with the manager.c fragment it abstracts, so the
+% origin of the abstraction is visible. Three or four pairs is enough.
+
+\begin{lstlisting}[style=clang,caption={Dequeue in \code{schedule\_fcfs}}]
+#pragma omp critical
+{
+  omp_set_nest_lock(&q_locks[0]);
+  running_p = dequeue_pcb(&readyq);
+  omp_unset_nest_lock(&q_locks[0]);
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=promela,caption={The same step in the model}]
+\todo{paste the atomic dequeue block from model.pml}
+\end{lstlisting}
+
+% ---------------------------------------------------------------------
+\subsection{Correctness Properties}
+
+% For each property: informal statement, LTL formula, Promela form, and
+% why it matters for the scheduler. Keep the justification tied to the
+% implementation, not to the model.
+
+\subsubsection*{\code{pcb\_mutex}: mutual exclusion over process control blocks}
+
+\[ \always \bigwedge_{p=1}^{3} \mathit{executing}[p] \le 1 \]
+
+\begin{lstlisting}[style=promela]
+#define one_worker_per_pcb (executing[1] <= 1 && executing[2] <= 1 && executing[3] <= 1)
+ltl pcb_mutex { [] one_worker_per_pcb }
+\end{lstlisting}
+
+% A PCB is the unit of scheduling. Two threads in the instruction loop
+% for one PCB both advance next_instruction and both write state.
+\todo{Justification.}
+
+\subsubsection*{\code{no\_self\_wait}: no process waits for a resource it owns}
+
+\[ \always \bigwedge_{p=1}^{3}
+   \bigl( \mathit{waiting\_for}[p] = 0 \lor
+          \mathit{resource\_owner}[\mathit{waiting\_for}[p]] \neq p \bigr) \]
+
+% request_resource tests only resource->allocated == NULL and never
+% compares allocated against the requester.
+\todo{Promela form and justification.}
+
+\subsubsection*{\code{waiting\_consistent}: the waiting state is consistent}
+
+% pcb_state and waiting_for are two views of the same fact and a correct
+% scheduler keeps them in agreement.
+\todo{Formula, Promela form and justification.}
+
+\subsubsection*{\code{no\_dup\_ready}: ready queue integrity}
+
+% The only property expected to hold. Needs the in_ready ghost array,
+% since the implementation keeps no count of queue membership.
+\todo{Formula, Promela form and justification.}
+
+\subsubsection*{\code{all\_terminate}: every process eventually terminates}
+
+\[ \eventually \bigwedge_{p=1}^{3} \mathit{pcb\_state}[p] = \mathit{TERMINATED} \]
+
+\todo{Justification.}
+
+\subsubsection*{\code{ready\_dispatched}: a ready process is eventually dispatched}
+
+\[ \always \bigl( \mathit{pcb\_state}[1] = \mathit{READY} \rightarrow
+   \eventually\, \mathit{pcb\_state}[1] = \mathit{RUNNING} \bigr) \]
+
+% Stated for process 1 only. Justify by symmetry: no process has a
+% distinguishing attribute, so one instance is representative and the
+% never claim stays small. Say that this is an argument, not a proof.
+\todo{Justification.}
+
+\subsubsection*{Deadlock}
+
+% Not expressed in LTL. Checked with SPIN's invalid end state detection
+% \cite{inggs_properties}, which asks whether the system halted where it
+% should not have. That is a broader question than whether a circular
+% wait exists \cite{coffman1971}.
+\todo{Discussion.}
+
+% ---------------------------------------------------------------------
+\subsection{Verification Results and Analysis}
+
+% The spec says not to merely reproduce SPIN output. One table, then
+% interpretation.
+%
+% Setup, in two or three sentences: all properties are named ltl blocks
+% in one model.pml selected with ./pan -a -N name, since pan silently
+% uses the first claim if -N is omitted; an active never claim disables
+% the invalid end state check, so the deadlock run uses a second binary
+% compiled with -DNOCLAIM from the same pan.c \cite{spin_man}; MAX_INSTR
+% is overridden on the command line rather than by editing the model.
+
+\todo{Setup paragraph.}
+
+\begin{table}[htbp]
+\centering
+\caption{Verification results, Spin 6.5.2. Depths and state counts as
+reported by \code{pan}.}
+\label{tab:results}
+\begin{tabular}{l l l r r}
+\toprule
+\textbf{Property} & \textbf{Config} & \textbf{Result} & \textbf{Depth} & \textbf{States} \\
+\midrule
+\code{pcb\_mutex}          & \code{MAX\_INSTR 3} & violated & 901  & 65\,957 \\
+\code{no\_self\_wait}      & \code{MAX\_INSTR 3} & violated & 379  & 188 \\
+\code{waiting\_consistent} & \code{MAX\_INSTR 3} & violated & 962  & 69\,699 \\
+\code{no\_dup\_ready}      & \code{MAX\_INSTR 2} & holds    & n/a  & 20\,861\,451 \\
+\code{all\_terminate}      & \code{MAX\_INSTR 3}, \code{-f} & violated & 1069 & 493 \\
+\code{ready\_dispatched}   & \code{MAX\_INSTR 3}, \code{-f} & violated & 1088 & 11\,372\,991 \\
+deadlock                   & \code{MAX\_INSTR 3}, \code{-DNOCLAIM} & violated & 504 & 67\,872 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection*{The double dispatch race}
+
+% The headline finding, from pcb_mutex and waiting_consistent.
+% - The interleaving in terms of manager.c: worker A dequeues p, blocks
+%   it on a request, releases i_lock; before A reaches
+%   if (running_p->state == WAITING) break;
+%   worker B releases the resource, which moves p to readyq with state
+%   READY; p is dequeued and run while A is still in its loop for p.
+% - The cause: while (running_p->state == RUNNING) and the WAITING test
+%   both read shared PCB state with no lock held.
+% - Concrete harm: instr_count overshoots MAX_INSTR, which in the
+%   implementation is next_instruction advanced twice for one
+%   instruction, walking the pointer off the end of the list.
+% - waiting_consistent shows the worse symptom: a PCB left WAITING, on
+%   waiting_q, and owning a resource it will never release.
+% - Fix: hold a lock across the state test and the branch, not only
+%   across execution. Note the cost in lost parallelism.
+% A figure of the interleaving would help here if you have space.
+
+\todo{Analysis and fix.}
+
+\subsubsection*{Self deadlock in \code{request\_resource}}
+
+% Not a race, and the counterexample proves it: 379 deep, 188 states,
+% one worker, executing[] never exceeds 1. Reachable single threaded.
+% Cause: no ownership test, so a process re-requesting a resource it
+% holds falls through with resource_found FALSE and is enqueued on
+% waitingq to wait for itself. Note that the same branch also handles a
+% resource that does not exist, which the model omits, so two different
+% situations share one path. Fix: test ownership first and separate
+% "not found" from "not available".
+
+\todo{Analysis and fix.}
+
+\subsubsection*{Liveness and fairness}
+
+% Both liveness properties fail trivially without -f, at depth 14 with
+% 25 states, in a cycle where init is never scheduled again so ready_q
+% is never seeded. That is a modelling artefact, not a defect. Weak
+% fairness excludes cycles in which a runnable process is passed over
+% forever \cite{inggs_properties}, and costs a great deal: 25 states
+% without -f against over eleven million with it for ready_dispatched.
+% The fair all_terminate counterexample ends with process 1 holding
+% resource 1 while waiting for resource 1, so it is the self wait defect
+% resurfacing as a liveness failure rather than an independent finding.
+% Say so, since a marker will notice.
+
+\todo{Analysis.}
+
+\subsubsection*{The invalid end state}
+
+% Final state has instr_count = 4 with MAX_INSTR 3. A worker is blocked
+% at the selection statement on instr_count because no guard is
+% executable past the bound. In manager.c this is the instruction
+% pointer walked off the end of the list by two threads. Argue whether
+% modelling that as a blocked control point is faithful.
+
+\todo{Analysis.}
+
+\subsubsection*{The property that holds}
+
+% What it establishes: within three processes, two workers, two
+% resources and two instructions, no reachable state has a PCB twice in
+% the ready queue, over 20,861,451 states with zero errors, and pan
+% reported zero unreached statements in init and Worker, so the result
+% is not an artefact of dead code \cite{inggs_spin}.
+% What it does not establish: nothing outside those bounds, and nothing
+% about the real linked list, since a channel cannot hold a duplicate
+% reference the way a badly maintained list can. Be honest that the
+% abstraction may have made this property easier to satisfy than it is
+% in the implementation.
+% Why MAX_INSTR 2: failing properties stop at the first counterexample,
+% but a property that holds must exhaust the space, and the space grows
+% by roughly 50 per instruction (420,705 at 1, 20,861,451 at 2, about
+% 10^9 at 3, roughly 100 GB). The shortest possible duplicate needs one
+% blocking request and one wakeup, so it fits within two instructions.
+% That is an argument about the shortest witness, not a proof.
+
+\todo{Analysis.}
+
+% =====================================================================
+\section{Program 2: \todo{name}}
+
+\subsection{The Promela Model}
+\todo{}
+
+\subsection{Correctness Properties}
+\todo{}
+
+\subsection{Verification Results and Analysis}
+\todo{}
+
+% =====================================================================
+\appendix
+\section{Reproducing the verification results}
+
+% The submission requires the exact commands and flags, and the ispin
+% parameters if ispin was used. Record that ispin was not used.
+
+\begin{lstlisting}[language=bash,caption={Build}]
+spin -a model.pml
+gcc -O2 -o pan pan.c
+gcc -O2 -DNOCLAIM -o pan_noclaim pan.c
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash,caption={Verification runs}]
+./pan -a -N pcb_mutex
+./pan -a -N no_self_wait
+./pan -a -N waiting_consistent
+./pan -a -N all_terminate    -f -m50000
+./pan -a -N ready_dispatched -f -m50000 -w26
+./pan_noclaim
+
+spin -a -DMAX_INSTR=2 model.pml
+gcc -O2 -o pan pan.c
+./pan -a -N no_dup_ready -m20000 -w26
+\end{lstlisting}
+
+\todo{State the commit hash the results were produced from.}
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
+
+\end{document}
