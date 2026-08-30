@@ -1,0 +1,1491 @@
+Initialising communication.
+Communication initialised 
+Let the game begin...
+My name: random_player.log
+My colour: 0
+Board size: 8
+Time limit: 5000
+-----------------------------------
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . . W B . . . 
+4 . . . B W . . . 
+5 . . . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Placing piece in row: 3, column 2
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . B B B . . . 
+4 . . . B W . . . 
+5 . . . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 4, column 2
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . B B B . . . 
+4 . . W W W . . . 
+5 . . . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 5, column 1
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . B B B . . . 
+4 . . B W W . . . 
+5 . B . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 2, column 2
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . W . . . . . 
+3 . . B W B . . . 
+4 . . B W W . . . 
+5 . B . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 1, column 2
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B . . . . . 
+2 . . B . . . . . 
+3 . . B W B . . . 
+4 . . B W W . . . 
+5 . B . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 2, column 4
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B . . . . . 
+2 . . B . W . . . 
+3 . . B W W . . . 
+4 . . B W W . . . 
+5 . B . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 1, column 5
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B . . B . . 
+2 . . B . B . . . 
+3 . . B B W . . . 
+4 . . B W W . . . 
+5 . B . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 2, column 3
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B . . B . . 
+2 . . B W B . . . 
+3 . . B W W . . . 
+4 . . B W W . . . 
+5 . B . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 1, column 4
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B . B B . . 
+2 . . B B B . . . 
+3 . . B W W . . . 
+4 . . B W W . . . 
+5 . B . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 4, column 1
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B . B B . . 
+2 . . B B B . . . 
+3 . . B W W . . . 
+4 . W W W W . . . 
+5 . B . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 5, column 4
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B . B B . . 
+2 . . B B B . . . 
+3 . . B W B . . . 
+4 . W W B B . . . 
+5 . B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 1, column 3
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B W B B . . 
+2 . . B W B . . . 
+3 . . B W B . . . 
+4 . W W B B . . . 
+5 . B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 5, column 0
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B W B B . . 
+2 . . B W B . . . 
+3 . . B W B . . . 
+4 . B W B B . . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 2, column 5
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B W B B . . 
+2 . . B W W W . . 
+3 . . B W B . . . 
+4 . B W B B . . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 3, column 6
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B W B B . . 
+2 . . B W W B . . 
+3 . . B W B . B . 
+4 . B W B B . . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 2, column 6
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B W B B . . 
+2 . . B W W W W . 
+3 . . B W B . B . 
+4 . B W B B . . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 3, column 7
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B W B B . . 
+2 . . B W W W B . 
+3 . . B W B . B B 
+4 . B W B B . . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 4, column 5
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B W B B . . 
+2 . . B W W W B . 
+3 . . B W W . B B 
+4 . B W W W W . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 0, column 4
+  0 1 2 3 4 5 6 7 
+0 . . . . B . . . 
+1 . . B B B B . . 
+2 . . B W W W B . 
+3 . . B W W . B B 
+4 . B W W W W . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 0, column 5
+  0 1 2 3 4 5 6 7 
+0 . . . . B W . . 
+1 . . B B W W . . 
+2 . . B W W W B . 
+3 . . B W W . B B 
+4 . B W W W W . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 0, column 3
+  0 1 2 3 4 5 6 7 
+0 . . . B B W . . 
+1 . . B B B W . . 
+2 . . B W W B B . 
+3 . . B W W . B B 
+4 . B W W W W . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 3, column 5
+  0 1 2 3 4 5 6 7 
+0 . . . B B W . . 
+1 . . B B B W . . 
+2 . . B W W W B . 
+3 . . B W W W B B 
+4 . B W W W W . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 0, column 6
+  0 1 2 3 4 5 6 7 
+0 . . . B B B B . 
+1 . . B B B B . . 
+2 . . B W B W B . 
+3 . . B B W W B B 
+4 . B B W W W . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 2, column 7
+  0 1 2 3 4 5 6 7 
+0 . . . B B B B . 
+1 . . B B B B . . 
+2 . . B W B W W W 
+3 . . B B W W W B 
+4 . B B W W W . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 5, column 5
+  0 1 2 3 4 5 6 7 
+0 . . . B B B B . 
+1 . . B B B B . . 
+2 . . B W B B W W 
+3 . . B B W B W B 
+4 . B B W B B . . 
+5 B B . . B B . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 6, column 3
+  0 1 2 3 4 5 6 7 
+0 . . . B B B B . 
+1 . . B B B B . . 
+2 . . B W B B W W 
+3 . . B B W B W B 
+4 . B B W B W . . 
+5 B B . . W B . . 
+6 . . . W . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 6, column 4
+  0 1 2 3 4 5 6 7 
+0 . . . B B B B . 
+1 . . B B B B . . 
+2 . . B W B B W W 
+3 . . B B W B W B 
+4 . B B W B W . . 
+5 B B . . B B . . 
+6 . . . W B . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 0, column 1
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . . W B B B . . 
+2 . . B W B B W W 
+3 . . B B W B W B 
+4 . B B W B W . . 
+5 B B . . B B . . 
+6 . . . W B . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 5, column 2
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . . W B B B . . 
+2 . . B W B B W W 
+3 . . B B B B W B 
+4 . B B B B W . . 
+5 B B B . B B . . 
+6 . . . W B . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 6, column 2
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . . W B B B . . 
+2 . . W W B B W W 
+3 . . W B B B W B 
+4 . B W B B W . . 
+5 B B W . B B . . 
+6 . . W W B . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 5, column 3
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . . W B B B . . 
+2 . . W W B B W W 
+3 . . W B B B W B 
+4 . B W B B W . . 
+5 B B B B B B . . 
+6 . . W W B . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 7, column 5
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . . W B B B . . 
+2 . . W W B B W W 
+3 . . W B B B W B 
+4 . B W B B W . . 
+5 B B B W B B . . 
+6 . . W W W . . . 
+7 . . . . . W . . 
+message type: 2
+
+Placing piece in row: 4, column 7
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . . W B B B . . 
+2 . . W W B B W W 
+3 . . W B B B B B 
+4 . B W B B W . B 
+5 B B B W B B . . 
+6 . . W W W . . . 
+7 . . . . . W . . 
+message type: 1
+
+Opponent placing piece in row: 6, column 6
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . . W B B B . . 
+2 . . W W B B W W 
+3 . . W W B B B B 
+4 . B W B W W . B 
+5 B B B W B W . . 
+6 . . W W W . W . 
+7 . . . . . W . . 
+message type: 2
+
+Placing piece in row: 1, column 1
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . B B B B B . . 
+2 . . W W B B W W 
+3 . . W W B B B B 
+4 . B W B W W . B 
+5 B B B W B W . . 
+6 . . W W W . W . 
+7 . . . . . W . . 
+message type: 1
+
+Opponent placing piece in row: 3, column 0
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . B B B B B . . 
+2 . . W W B B W W 
+3 W . W W B B B B 
+4 . W W B W W . B 
+5 B B W W B W . . 
+6 . . W W W . W . 
+7 . . . . . W . . 
+message type: 2
+
+Placing piece in row: 4, column 0
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . B B B B B . . 
+2 . . W W B B W W 
+3 W . W W B B B B 
+4 B B B B W W . B 
+5 B B W W B W . . 
+6 . . W W W . W . 
+7 . . . . . W . . 
+message type: 1
+
+Opponent placing piece in row: 6, column 5
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . B B B B B . . 
+2 . . W W B B W W 
+3 W . W W B B B B 
+4 B B B W W W . B 
+5 B B W W W W . . 
+6 . . W W W W W . 
+7 . . . . . W . . 
+message type: 2
+
+Placing piece in row: 1, column 7
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . B B B B B . B 
+2 . . W W B B B B 
+3 W . W W B B B B 
+4 B B B W W W . B 
+5 B B W W W W . . 
+6 . . W W W W W . 
+7 . . . . . W . . 
+message type: 1
+
+Opponent placing piece in row: 2, column 1
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 . W W W B B B B 
+3 W . W W B B B B 
+4 B B B W W W . B 
+5 B B W W W W . . 
+6 . . W W W W W . 
+7 . . . . . W . . 
+message type: 2
+
+Placing piece in row: 7, column 2
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 . W W W B B B B 
+3 W . W W B B B B 
+4 B B B W W B . B 
+5 B B B W B W . . 
+6 . . B B W W W . 
+7 . . B . . W . . 
+message type: 1
+
+Opponent placing piece in row: 7, column 1
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 . W W W B B B B 
+3 W . W W B B B B 
+4 B B B W W B . B 
+5 B B B W B W . . 
+6 . . W B W W W . 
+7 . W B . . W . . 
+message type: 2
+
+Placing piece in row: 7, column 3
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 . W W W B B B B 
+3 W . W W B B B B 
+4 B B B W W B . B 
+5 B B B W B W . . 
+6 . . B B W W W . 
+7 . W B B . W . . 
+message type: 1
+
+Opponent placing piece in row: 7, column 4
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 . W W W B B B B 
+3 W . W W B B B B 
+4 B W B W W B . B 
+5 B B W W B W . . 
+6 . . B W W W W . 
+7 . W W W W W . . 
+message type: 2
+
+Placing piece in row: 6, column 7
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 . W W W B B B B 
+3 W . W W B B B B 
+4 B W B W W B . B 
+5 B B W W B W . . 
+6 . . B B B B B B 
+7 . W W W W W . . 
+message type: 1
+
+Opponent placing piece in row: 6, column 0
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 . W W W B B B B 
+3 W . W W B B B B 
+4 W W W W W B . B 
+5 W W W W B W . . 
+6 W . B B B B B B 
+7 . W W W W W . . 
+message type: 2
+
+Placing piece in row: 5, column 6
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 . W W W B B B B 
+3 W . W W B B B B 
+4 W W W W W B . B 
+5 W W W W B B B . 
+6 W . B B B B B B 
+7 . W W W W W . . 
+message type: 1
+
+Opponent placing piece in row: 7, column 6
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 . W W W B B B B 
+3 W . W W B B B B 
+4 W W W W W B . B 
+5 W W W W W B B . 
+6 W . B B B W B B 
+7 . W W W W W W . 
+message type: 2
+
+Placing piece in row: 2, column 0
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 B B B B B B B B 
+3 W . W W B B B B 
+4 W W W W W B . B 
+5 W W W W W B B . 
+6 W . B B B W B B 
+7 . W W W W W W . 
+message type: 1
+
+Opponent placing piece in row: 6, column 1
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 B B B B B B B B 
+3 W . W W B B B B 
+4 W W W W W B . B 
+5 W W W W W B B . 
+6 W W W W W W B B 
+7 . W W W W W W . 
+message type: 2
+
+Placing piece in row: 1, column 0
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 B B B B B B . B 
+2 B B B B B B B B 
+3 W . W W B B B B 
+4 W W W W W B . B 
+5 W W W W W B B . 
+6 W W W W W W B B 
+7 . W W W W W W . 
+message type: 1
+
+Opponent placing piece in row: 1, column 6
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 B B B B B B W B 
+2 B B B B B W B B 
+3 W . W W W B B B 
+4 W W W W W B . B 
+5 W W W W W B B . 
+6 W W W W W W B B 
+7 . W W W W W W . 
+message type: 2
+
+Placing piece in row: 7, column 0
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 B B B B B B W B 
+2 B B B B B W B B 
+3 B . W W W B B B 
+4 B W W W W B . B 
+5 B W W W W B B . 
+6 B W W W W W B B 
+7 B W W W W W W . 
+message type: 1
+
+Opponent placing piece in row: 4, column 6
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 B B B B B B W B 
+2 B B B B B W W B 
+3 B . W W W B W B 
+4 B W W W W W W B 
+5 B W W W W W W . 
+6 B W W W W W W B 
+7 B W W W W W W . 
+message type: 2
+
+Placing piece in row: 3, column 1
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 B B B B B B W B 
+2 B B B B B W W B 
+3 B B B B B B W B 
+4 B W W W W W W B 
+5 B W W W W W W . 
+6 B W W W W W W B 
+7 B W W W W W W . 
+message type: 1
+
+Opponent placing piece in row: 0, column 2
+  0 1 2 3 4 5 6 7 
+0 . W W B B B B . 
+1 B B W W B B W B 
+2 B B W B W W W B 
+3 B B W B B W W B 
+4 B W W W W W W B 
+5 B W W W W W W . 
+6 B W W W W W W B 
+7 B W W W W W W . 
+message type: 2
+
+Placing piece in row: 0, column 7
+  0 1 2 3 4 5 6 7 
+0 . W W B B B B B 
+1 B B W W B B B B 
+2 B B W B W B W B 
+3 B B W B B W W B 
+4 B W W W W W W B 
+5 B W W W W W W . 
+6 B W W W W W W B 
+7 B W W W W W W . 
+message type: 1
+
+Opponent placing piece in row: 0, column 0
+  0 1 2 3 4 5 6 7 
+0 W W W B B B B B 
+1 B W W W B B B B 
+2 B B W B W B W B 
+3 B B W B B W W B 
+4 B W W W W W W B 
+5 B W W W W W W . 
+6 B W W W W W W B 
+7 B W W W W W W . 
+message type: 2
+
+Placing piece in row: 7, column 7
+  0 1 2 3 4 5 6 7 
+0 W W W B B B B B 
+1 B W W W B B B B 
+2 B B W B W B W B 
+3 B B W B B W W B 
+4 B W W W B W W B 
+5 B W W W W B W . 
+6 B W W W W W B B 
+7 B B B B B B B B 
+message type: 1
+
+Opponent placing piece in row: 0, column -1
+
+Opponent had no moves, therefore passed.
+Placing piece in row: 5, column 7
+  0 1 2 3 4 5 6 7 
+0 W W W B B B B B 
+1 B W W W B B B B 
+2 B B W B W B W B 
+3 B B W B B W W B 
+4 B W W W B W W B 
+5 B W W W W B B B 
+6 B W W W W W B B 
+7 B B B B B B B B 
+message type: 1
+Match reset.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~ NEW MATCH ~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+New board state:
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . . W B . . . 
+4 . . . B W . . . 
+5 . . . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 3
+
+Opponent placing piece in row: 5, column 4
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . . W B . . . 
+4 . . . B B . . . 
+5 . . . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 5, column 5
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . . W B . . . 
+4 . . . B W . . . 
+5 . . . . B W . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 4, column 5
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . . W B . . . 
+4 . . . B B B . . 
+5 . . . . B W . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 5, column 3
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . . W B . . . 
+4 . . . W B B . . 
+5 . . . W W W . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 4, column 2
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . . W B . . . 
+4 . . B B B B . . 
+5 . . . W W W . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 3, column 1
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . W . W B . . . 
+4 . . W B B B . . 
+5 . . . W W W . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 2, column 2
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B . . . . . 
+3 . W . B B . . . 
+4 . . W B B B . . 
+5 . . . W W W . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 3, column 5
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B . . . . . 
+3 . W . B B W . . 
+4 . . W B W W . . 
+5 . . . W W W . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 5, column 6
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B . . . . . 
+3 . W . B B W . . 
+4 . . W B W B . . 
+5 . . . W W W B . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 3, column 6
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B . . . . . 
+3 . W . B B W W . 
+4 . . W B W W . . 
+5 . . . W W W B . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 4, column 6
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B . . . . . 
+3 . W . B B W W . 
+4 . . W B B B B . 
+5 . . . W W W B . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 5, column 7
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B . . . . . 
+3 . W . B B W W . 
+4 . . W B B B W . 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 2, column 6
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B . . . B . 
+3 . W . B B B W . 
+4 . . W B B B W . 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 2, column 3
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B W . . B . 
+3 . W . W W B W . 
+4 . . W W B W W . 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 3, column 2
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B W . . B . 
+3 . W B B B B W . 
+4 . . W W B W W . 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 2, column 5
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B W . W B . 
+3 . W B B W W W . 
+4 . . W W B W W . 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 3, column 7
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B W . W B . 
+3 . W B B B B B B 
+4 . . W W B W W . 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 1, column 2
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . W . . . . . 
+2 . . W W . W B . 
+3 . W W B B B B B 
+4 . . W W B W W . 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 1, column 3
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . W B . . . . 
+2 . . W B . W B . 
+3 . W W B B B B B 
+4 . . W W B W W . 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 4, column 7
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . W B . . . . 
+2 . . W B . W B . 
+3 . W W B B B W B 
+4 . . W W B W W W 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 1, column 1
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . B B B . . . . 
+2 . . B B . W B . 
+3 . W W B B B W B 
+4 . . W W B W W W 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 0, column 1
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W B . 
+3 . W W B W B W B 
+4 . . W W B W W W 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 5, column 1
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W B . 
+3 . W W B W B W B 
+4 . . B W B W W W 
+5 . B . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 2, column 7
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . B W B W W W 
+5 . B . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 6, column 5
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . B W B B W W 
+5 . B . W W B W W 
+6 . . . . . B . . 
+7 . . . . . . . . 
+message type: 2
+
+Placing piece in row: 7, column 4
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . B W B B W W 
+5 . B . W W B W W 
+6 . . . . . W . . 
+7 . . . . W . . . 
+message type: 1
+
+Opponent placing piece in row: 6, column 2
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . B W B B W W 
+5 . B . B W B W W 
+6 . . B . . W . . 
+7 . . . . W . . . 
+message type: 2
+
+Placing piece in row: 6, column 3
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . B W B B W W 
+5 . B . W W B W W 
+6 . . B W . W . . 
+7 . . . . W . . . 
+message type: 1
+
+Opponent placing piece in row: 5, column 2
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . B W B B W W 
+5 . B B B B B W W 
+6 . . B W . W . . 
+7 . . . . W . . . 
+message type: 2
+
+Placing piece in row: 6, column 4
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . W W W B W W 
+5 . B B W W W W W 
+6 . . B W W W . . 
+7 . . . . W . . . 
+message type: 1
+
+Opponent placing piece in row: 6, column 7
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . W W W B W W 
+5 . B B W W W B W 
+6 . . B W W W . B 
+7 . . . . W . . . 
+message type: 2
+
+Placing piece in row: 6, column 1
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . W W W B W W 
+5 . B W W W W B W 
+6 . W W W W W . B 
+7 . . . . W . . . 
+message type: 1
+
+Opponent placing piece in row: 4, column 0
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . B W B W B W W 
+4 B . W W W B W W 
+5 . B W W W W B W 
+6 . W W W W W . B 
+7 . . . . W . . . 
+message type: 2
+
+Placing piece in row: 1, column 4
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W W W . . . 
+2 . . B W . W W W 
+3 . B W B W B W W 
+4 B . W W W B W W 
+5 . B W W W W B W 
+6 . W W W W W . B 
+7 . . . . W . . . 
+message type: 1
+
+Opponent placing piece in row: 1, column 5
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B B B B B . . 
+2 . . B W . B W W 
+3 . B W B W B W W 
+4 B . W W W B W W 
+5 . B W W W W B W 
+6 . W W W W W . B 
+7 . . . . W . . . 
+message type: 2
+
+Placing piece in row: 4, column 1
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B B B B B . . 
+2 . . B W . B W W 
+3 . B W B W B W W 
+4 B W W W W B W W 
+5 . W W W W W B W 
+6 . W W W W W . B 
+7 . . . . W . . . 
+message type: 1
+
+Opponent placing piece in row: 5, column 0
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B B B B B . . 
+2 . . B B . B W W 
+3 . B B B W B W W 
+4 B B W W W B W W 
+5 B B B B B B B W 
+6 . W W W W W . B 
+7 . . . . W . . . 
+message type: 2
+
+Placing piece in row: 0, column 4
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . B B B B W . . 
+2 . . B B . B W W 
+3 . B B B W B W W 
+4 B B W W W B W W 
+5 B B B B B B B W 
+6 . W W W W W . B 
+7 . . . . W . . . 
+message type: 1
+
+Opponent placing piece in row: 7, column 2
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . B B B B W . . 
+2 . . B B . B W W 
+3 . B B B W B W W 
+4 B B W W W B W W 
+5 B B B B B B B W 
+6 . B B B W W . B 
+7 . . B . W . . . 
+message type: 2
+
+Placing piece in row: 2, column 1
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . W B B B W . . 
+2 . W B B . B W W 
+3 . B W B W B W W 
+4 B B W W W B W W 
+5 B B B B B B B W 
+6 . B B B W W . B 
+7 . . B . W . . . 
+message type: 1
+
+Opponent placing piece in row: 6, column 6
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . W B B B W . . 
+2 . W B B . B W W 
+3 . B W B W B W W 
+4 B B W W W B W W 
+5 B B B B B B B W 
+6 . B B B B B B B 
+7 . . B . W . . . 
+message type: 2
+
+Placing piece in row: 6, column 0
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . W B B B W . . 
+2 . W B B . B W W 
+3 . B W B W B W W 
+4 B B W W W B W W 
+5 B W B B B B B W 
+6 W B B B B B B B 
+7 . . B . W . . . 
+message type: 1
+
+Opponent placing piece in row: 7, column 0
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . W B B B W . . 
+2 . W B B . B W W 
+3 . B W B W B W W 
+4 B B W W W B W W 
+5 B W B B B B B W 
+6 B B B B B B B B 
+7 B . B . W . . . 
+message type: 2
+
+Placing piece in row: 1, column 6
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . W B B B W W . 
+2 . W B B . W W W 
+3 . B W B W B W W 
+4 B B W W W B W W 
+5 B W B B B B B W 
+6 B B B B B B B B 
+7 B . B . W . . . 
+message type: 1
+
+Opponent placing piece in row: 3, column 0
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . W B B B W W . 
+2 . B B B . W W W 
+3 B B W B W B W W 
+4 B B W W W B W W 
+5 B W B B B B B W 
+6 B B B B B B B B 
+7 B . B . W . . . 
+message type: 2
+
+Placing piece in row: 7, column 5
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . W B B B W W . 
+2 . B B B . W W W 
+3 B B W B W W W W 
+4 B B W W W W W W 
+5 B W B W B W B W 
+6 B B B B W W W B 
+7 B . B . W W . . 
+message type: 1
+
+Opponent placing piece in row: 7, column 6
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . W B B B W W . 
+2 . B B B . W W W 
+3 B B W B W W W W 
+4 B B W W W W W W 
+5 B W B W B W B W 
+6 B B B B W B B B 
+7 B . B . W W B . 
+message type: 2
+
+Placing piece in row: 0, column 2
+  0 1 2 3 4 5 6 7 
+0 . W W . W . . . 
+1 . W W B B W W . 
+2 . B W B . W W W 
+3 B B W B W W W W 
+4 B B W W W W W W 
+5 B W B W B W B W 
+6 B B B B W B B B 
+7 B . B . W W B . 
+message type: 1
+
+Opponent placing piece in row: 7, column 3
+  0 1 2 3 4 5 6 7 
+0 . W W . W . . . 
+1 . W W B B W W . 
+2 . B W B . W W W 
+3 B B W B W W W W 
+4 B B W W W W W W 
+5 B W B W B W B W 
+6 B B B B W B B B 
+7 B . B B B B B . 
+message type: 2
+
+Placing piece in row: 0, column 3
+  0 1 2 3 4 5 6 7 
+0 . W W W W . . . 
+1 . W W W W W W . 
+2 . B W W . W W W 
+3 B B W W W W W W 
+4 B B W W W W W W 
+5 B W B W B W B W 
+6 B B B B W B B B 
+7 B . B B B B B . 
+message type: 1
+
+Opponent placing piece in row: 0, column 7
+  0 1 2 3 4 5 6 7 
+0 . W W W W . . B 
+1 . W W W W W B . 
+2 . B W W . B W W 
+3 B B W W B W W W 
+4 B B W B W W W W 
+5 B W B W B W B W 
+6 B B B B W B B B 
+7 B . B B B B B . 
+message type: 2
+
+Placing piece in row: 1, column 0
+  0 1 2 3 4 5 6 7 
+0 . W W W W . . B 
+1 W W W W W W B . 
+2 . W W W . B W W 
+3 B B W W B W W W 
+4 B B W B W W W W 
+5 B W B W B W B W 
+6 B B B B W B B B 
+7 B . B B B B B . 
+message type: 1
+
+Opponent placing piece in row: 0, column 5
+  0 1 2 3 4 5 6 7 
+0 . W W W W B . B 
+1 W W W W B B B . 
+2 . W W B . B W W 
+3 B B B W B W W W 
+4 B B W B W W W W 
+5 B W B W B W B W 
+6 B B B B W B B B 
+7 B . B B B B B . 
+message type: 2
+
+Placing piece in row: 7, column 1
+  0 1 2 3 4 5 6 7 
+0 . W W W W B . B 
+1 W W W W B B B . 
+2 . W W B . B W W 
+3 B B B W B W W W 
+4 B B W B W W W W 
+5 B W B W B W B W 
+6 B W W B W B B B 
+7 B W B B B B B . 
+message type: 1
+
+Opponent placing piece in row: 2, column 4
+  0 1 2 3 4 5 6 7 
+0 . W W W W B . B 
+1 W W W W B B B . 
+2 . W W B B B W W 
+3 B B B B B W W W 
+4 B B B B W W W W 
+5 B B B W B W B W 
+6 B W W B W B B B 
+7 B W B B B B B . 
+message type: 2
+
+Placing piece in row: 2, column 0
+  0 1 2 3 4 5 6 7 
+0 . W W W W B . B 
+1 W W W W B B B . 
+2 W W W B B B W W 
+3 B W B B B W W W 
+4 B B W B W W W W 
+5 B B B W B W B W 
+6 B W W B W B B B 
+7 B W B B B B B . 
+message type: 1
+
+Opponent placing piece in row: 0, column 0
+  0 1 2 3 4 5 6 7 
+0 B B B B B B . B 
+1 B B W W B B B . 
+2 B W B B B B W W 
+3 B W B B B W W W 
+4 B B W B W W W W 
+5 B B B W B W B W 
+6 B W W B W B B B 
+7 B W B B B B B . 
+message type: 2
+
+Placing piece in row: 1, column 7
+  0 1 2 3 4 5 6 7 
+0 B B B B B B . B 
+1 B B W W W W W W 
+2 B W B B B B W W 
+3 B W B B B W W W 
+4 B B W B W W W W 
+5 B B B W B W B W 
+6 B W W B W B B B 
+7 B W B B B B B . 
+message type: 1
+
+Opponent placing piece in row: 0, column 6
+  0 1 2 3 4 5 6 7 
+0 B B B B B B B B 
+1 B B W W W B B W 
+2 B W B B B B B W 
+3 B W B B B W B W 
+4 B B W B W W B W 
+5 B B B W B W B W 
+6 B W W B W B B B 
+7 B W B B B B B . 
+message type: 2
+
+Placing piece in row: 7, column 7
+  0 1 2 3 4 5 6 7 
+0 B B B B B B B B 
+1 B B W W W B B W 
+2 B W B B B B B W 
+3 B W B B B W B W 
+4 B B W B W W B W 
+5 B B B W B W B W 
+6 B W W B W B W W 
+7 B W W W W W W W 
+message type: 1
+Match reset.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~ NEW MATCH ~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+New board state:
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . . W B . . . 
+4 . . . B W . . . 
+5 . . . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 3
+Game terminated.

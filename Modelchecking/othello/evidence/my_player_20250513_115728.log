@@ -1,0 +1,3243 @@
+Initialising communication.
+Communication initialised 
+Let the game begin...
+My name: my_player.log
+My colour: 1
+Board size: 8
+Time limit: 5000
+-----------------------------------
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . . W B . . . 
+4 . . . B W . . . 
+5 . . . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Opponent placing piece in row: 3, column: 2
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . B B B . . . 
+4 . . . B W . . . 
+5 . . . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 20, with the evaluation 982 and the alpha 982 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 18, with the evaluation 982 and the alpha 982 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 34, with the evaluation 1148 and the alpha 1148 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 34 with the score 1148
+
+Placing piece in row: 4, column: 2
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . B B B . . . 
+4 . . W W W . . . 
+5 . . . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 5, column: 1
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . B B B . . . 
+4 . . B W W . . . 
+5 . B . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 33, with the evaluation 484 and the alpha 484 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 21, with the evaluation 384 and the alpha 384 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 20, with the evaluation 377 and the alpha 377 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 19, with the evaluation 483 and the alpha 484 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 18, with the evaluation 676 and the alpha 676 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 17, with the evaluation 676 and the alpha 676 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 18 with the score 676
+
+Placing piece in row: 2, column: 2
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . W . . . . . 
+3 . . B W B . . . 
+4 . . B W W . . . 
+5 . B . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 1, column: 2
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B . . . . . 
+2 . . B . . . . . 
+3 . . B W B . . . 
+4 . . B W W . . . 
+5 . B . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 48, with the evaluation 302 and the alpha 302 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 29, with the evaluation 657 and the alpha 657 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 21, with the evaluation 653 and the alpha 657 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 20, with the evaluation 661 and the alpha 661 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 25, with the evaluation 528 and the alpha 528 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 33, with the evaluation 369 and the alpha 369 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 9, with the evaluation 657 and the alpha 661 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 17, with the evaluation 657 and the alpha 661 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 20 with the score 661
+
+Placing piece in row: 2, column: 4
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B . . . . . 
+2 . . B . W . . . 
+3 . . B W W . . . 
+4 . . B W W . . . 
+5 . B . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 1, column: 5
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B . . B . . 
+2 . . B . B . . . 
+3 . . B B W . . . 
+4 . . B W W . . . 
+5 . B . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 25, with the evaluation 387 and the alpha 387 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 33, with the evaluation 567 and the alpha 567 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 17, with the evaluation 639 and the alpha 639 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 9, with the evaluation 599 and the alpha 639 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 19, with the evaluation 724 and the alpha 724 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 12, with the evaluation 611 and the alpha 611 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 19 with the score 724
+
+Placing piece in row: 2, column: 3
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B . . B . . 
+2 . . B W B . . . 
+3 . . B W W . . . 
+4 . . B W W . . . 
+5 . B . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 1, column: 4
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B . B B . . 
+2 . . B B B . . . 
+3 . . B W W . . . 
+4 . . B W W . . . 
+5 . B . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 48, with the evaluation 295 and the alpha 295 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 25, with the evaluation 765 and the alpha 765 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 11, with the evaluation 872 and the alpha 872 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 33, with the evaluation 984 and the alpha 984 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 17, with the evaluation 587 and the alpha 587 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 9, with the evaluation 855 and the alpha 872 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 6, with the evaluation 936 and the alpha 984 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 1, with the evaluation 940 and the alpha 984 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 4, with the evaluation 940 and the alpha 984 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 33 with the score 984
+
+Placing piece in row: 4, column: 1
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B . B B . . 
+2 . . B B B . . . 
+3 . . B W W . . . 
+4 . W W W W . . . 
+5 . B . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 5, column: 4
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B . B B . . 
+2 . . B B B . . . 
+3 . . B W B . . . 
+4 . W W B B . . . 
+5 . B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 48, with the evaluation 611 and the alpha 611 from process 2
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 49, with the evaluation 566 and the alpha 566 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 45, with the evaluation 722 and the alpha 722 from process 3
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 43, with the evaluation 726 and the alpha 726 from process 2
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 25, with the evaluation 723 and the alpha 726 from process 2
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 11, with the evaluation 877 and the alpha 877 from process 2
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 37, with the evaluation 852 and the alpha 852 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 9, with the evaluation 876 and the alpha 877 from process 2
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 5, with the evaluation 870 and the alpha 877 from process 2
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 29, with the evaluation 736 and the alpha 736 from process 3
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation 877 and the alpha 877 from process 2
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 6, with the evaluation 869 and the alpha 877 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Final move 11 with the score 877
+
+Placing piece in row: 1, column: 3
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B W B B . . 
+2 . . B W B . . . 
+3 . . B W B . . . 
+4 . W W B B . . . 
+5 . B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 5, column: 0
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B W B B . . 
+2 . . B W B . . . 
+3 . . B W B . . . 
+4 . B W B B . . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 43, with the evaluation 760 and the alpha 760 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 48, with the evaluation 720 and the alpha 720 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 45, with the evaluation 759 and the alpha 759 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 749 and the alpha 760 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 25, with the evaluation 757 and the alpha 760 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 37, with the evaluation 878 and the alpha 878 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 17, with the evaluation 858 and the alpha 878 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 29, with the evaluation 847 and the alpha 847 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 21, with the evaluation 890 and the alpha 890 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 9, with the evaluation 852 and the alpha 878 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 6, with the evaluation 866 and the alpha 890 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 5, with the evaluation 864 and the alpha 890 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 1, with the evaluation 864 and the alpha 890 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation 860 and the alpha 890 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 876 and the alpha 878 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 21 with the score 890
+
+Placing piece in row: 2, column: 5
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B W B B . . 
+2 . . B W W W . . 
+3 . . B W B . . . 
+4 . B W B B . . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 3, column: 6
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B W B B . . 
+2 . . B W W B . . 
+3 . . B W B . B . 
+4 . B W B B . . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 48, with the evaluation 820 and the alpha 820 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 43, with the evaluation 872 and the alpha 872 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 45, with the evaluation 765 and the alpha 765 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 37, with the evaluation 877 and the alpha 877 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 854 and the alpha 872 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 29, with the evaluation 885 and the alpha 885 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 25, with the evaluation 872 and the alpha 877 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 17, with the evaluation 870 and the alpha 885 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 22, with the evaluation 937 and the alpha 937 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 881 and the alpha 885 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 52, with the evaluation 670 and the alpha 670 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 6, with the evaluation 926 and the alpha 937 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 4, with the evaluation 916 and the alpha 937 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 5, with the evaluation 750 and the alpha 937 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 1, with the evaluation 916 and the alpha 937 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation 925 and the alpha 937 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 9, with the evaluation 926 and the alpha 937 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 22 with the score 937
+
+Placing piece in row: 2, column: 6
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B W B B . . 
+2 . . B W W W W . 
+3 . . B W B . B . 
+4 . B W B B . . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 3, column: 7
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B W B B . . 
+2 . . B W W W B . 
+3 . . B W B . B B 
+4 . B W B B . . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 48, with the evaluation 831 and the alpha 831 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 43, with the evaluation 847 and the alpha 847 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 45, with the evaluation 796 and the alpha 796 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 42, with the evaluation 847 and the alpha 847 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 39, with the evaluation 845 and the alpha 847 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 37, with the evaluation 914 and the alpha 914 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 29, with the evaluation 914 and the alpha 914 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 52, with the evaluation 677 and the alpha 677 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 25, with the evaluation 913 and the alpha 914 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 847 and the alpha 847 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 907 and the alpha 914 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 17, with the evaluation 910 and the alpha 914 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 23, with the evaluation 914 and the alpha 914 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 6, with the evaluation 904 and the alpha 914 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 4, with the evaluation 897 and the alpha 914 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 5, with the evaluation 910 and the alpha 914 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 9, with the evaluation 914 and the alpha 914 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 3, with the evaluation 914 and the alpha 914 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 1, with the evaluation 914 and the alpha 914 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation 914 and the alpha 914 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 37 with the score 914
+
+Placing piece in row: 4, column: 5
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B W B B . . 
+2 . . B W W W B . 
+3 . . B W W . B B 
+4 . B W W W W . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 0, column: 4
+  0 1 2 3 4 5 6 7 
+0 . . . . B . . . 
+1 . . B B B B . . 
+2 . . B W W W B . 
+3 . . B W W . B B 
+4 . B W W W W . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 53, with the evaluation 955 and the alpha 955 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 52, with the evaluation 907 and the alpha 907 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 48, with the evaluation 955 and the alpha 955 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 51, with the evaluation 907 and the alpha 907 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 39, with the evaluation 948 and the alpha 955 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 954 and the alpha 955 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 23, with the evaluation 953 and the alpha 955 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 17, with the evaluation 955 and the alpha 955 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 25, with the evaluation 954 and the alpha 955 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 9, with the evaluation 950 and the alpha 955 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 6, with the evaluation 952 and the alpha 955 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 3, with the evaluation 955 and the alpha 955 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation 950 and the alpha 955 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 1, with the evaluation 1012 and the alpha 1012 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 5, with the evaluation 1048 and the alpha 1048 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 5 with the score 1048
+
+Placing piece in row: 0, column: 5
+  0 1 2 3 4 5 6 7 
+0 . . . . B W . . 
+1 . . B B W W . . 
+2 . . B W W W B . 
+3 . . B W W . B B 
+4 . B W W W W . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 0, column: 3
+  0 1 2 3 4 5 6 7 
+0 . . . B B W . . 
+1 . . B B B W . . 
+2 . . B W W B B . 
+3 . . B W W . B B 
+4 . B W W W W . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 53, with the evaluation 822 and the alpha 822 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 51, with the evaluation 823 and the alpha 823 from process 3
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 823 and the alpha 823 from process 3
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 52, with the evaluation 767 and the alpha 767 from process 2
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 29, with the evaluation 1046 and the alpha 1046 from process 3
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 48, with the evaluation 820 and the alpha 822 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 17, with the evaluation 1043 and the alpha 1046 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 23, with the evaluation 1042 and the alpha 1046 from process 3
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 25, with the evaluation 823 and the alpha 823 from process 2
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 1044 and the alpha 1046 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 9, with the evaluation 1042 and the alpha 1046 from process 3
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 1, with the evaluation 1042 and the alpha 1046 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation 1039 and the alpha 1046 from process 2
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Final move 29 with the score 1046
+
+Placing piece in row: 3, column: 5
+  0 1 2 3 4 5 6 7 
+0 . . . B B W . . 
+1 . . B B B W . . 
+2 . . B W W W B . 
+3 . . B W W W B B 
+4 . B W W W W . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 0, column: 6
+  0 1 2 3 4 5 6 7 
+0 . . . B B B B . 
+1 . . B B B B . . 
+2 . . B W B W B . 
+3 . . B B W W B B 
+4 . B B W W W . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 51, with the evaluation 1145 and the alpha 1145 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 53, with the evaluation 1147 and the alpha 1147 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 39, with the evaluation 1254 and the alpha 1254 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 52, with the evaluation 1122 and the alpha 1122 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 25, with the evaluation 1253 and the alpha 1254 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 1172 and the alpha 1172 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 17, with the evaluation 1272 and the alpha 1272 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 23, with the evaluation 1311 and the alpha 1311 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 15, with the evaluation 1253 and the alpha 1254 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 9, with the evaluation 1271 and the alpha 1272 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 1, with the evaluation 1305 and the alpha 1311 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation 1305 and the alpha 1311 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 23 with the score 1311
+
+Placing piece in row: 2, column: 7
+  0 1 2 3 4 5 6 7 
+0 . . . B B B B . 
+1 . . B B B B . . 
+2 . . B W B W W W 
+3 . . B B W W W B 
+4 . B B W W W . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 5, column: 5
+  0 1 2 3 4 5 6 7 
+0 . . . B B B B . 
+1 . . B B B B . . 
+2 . . B W B B W W 
+3 . . B B W B W B 
+4 . B B W B B . . 
+5 B B . . B B . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 51, with the evaluation 2147483371 and the alpha 2147483371 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 53, with the evaluation 2147483350 and the alpha 2147483350 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 46, with the evaluation 2147483369 and the alpha 2147483371 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 39, with the evaluation 1222 and the alpha 2147483371 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 43, with the evaluation 1450 and the alpha 2147483371 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 38, with the evaluation 1544 and the alpha 2147483371 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 25, with the evaluation 1491 and the alpha 2147483371 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 1294 and the alpha 2147483371 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 1415 and the alpha 2147483371 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 17, with the evaluation 1497 and the alpha 2147483371 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 1, with the evaluation 1507 and the alpha 2147483371 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 52, with the evaluation 2147483260 and the alpha 2147483260 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 51 with the score 2147483371
+
+Placing piece in row: 6, column: 3
+  0 1 2 3 4 5 6 7 
+0 . . . B B B B . 
+1 . . B B B B . . 
+2 . . B W B B W W 
+3 . . B B W B W B 
+4 . B B W B W . . 
+5 B B . . W B . . 
+6 . . . W . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 6, column: 4
+  0 1 2 3 4 5 6 7 
+0 . . . B B B B . 
+1 . . B B B B . . 
+2 . . B W B B W W 
+3 . . B B W B W B 
+4 . B B W B W . . 
+5 B B . . B B . . 
+6 . . . W B . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 43, with the evaluation 2147483292 and the alpha 2147483292 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 39, with the evaluation 1433 and the alpha 2147483292 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 60, with the evaluation 2147483241 and the alpha 2147483241 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 2147483304 and the alpha 2147483304 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 25, with the evaluation 1524 and the alpha 2147483292 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 53, with the evaluation 2147483319 and the alpha 2147483319 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 17, with the evaluation 2147483410 and the alpha 2147483410 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 1, with the evaluation 2147483435 and the alpha 2147483435 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 2147483435 and the alpha 2147483435 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 1 with the score 2147483435
+
+Placing piece in row: 0, column: 1
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . . W B B B . . 
+2 . . B W B B W W 
+3 . . B B W B W B 
+4 . B B W B W . . 
+5 B B . . B B . . 
+6 . . . W B . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 5, column: 2
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . . W B B B . . 
+2 . . B W B B W W 
+3 . . B B B B W B 
+4 . B B B B W . . 
+5 B B B . B B . . 
+6 . . . W B . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 43, with the evaluation 1188 and the alpha 1188 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 39, with the evaluation 1166 and the alpha 1188 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 50, with the evaluation 2147483427 and the alpha 2147483427 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 25, with the evaluation 1590 and the alpha 2147483427 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 1188 and the alpha 1188 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 53, with the evaluation 2147483175 and the alpha 2147483175 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 24, with the evaluation 2147483415 and the alpha 2147483427 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 17, with the evaluation 2147483420 and the alpha 2147483427 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 2147483420 and the alpha 2147483427 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 50 with the score 2147483427
+
+Placing piece in row: 6, column: 2
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . . W B B B . . 
+2 . . W W B B W W 
+3 . . W B B B W B 
+4 . B W B B W . . 
+5 B B W . B B . . 
+6 . . W W B . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 5, column: 3
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . . W B B B . . 
+2 . . W W B B W W 
+3 . . W B B B W B 
+4 . B W B B W . . 
+5 B B B B B B . . 
+6 . . W W B . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 61, with the evaluation 2147483647 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 48, with the evaluation 752 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 39, with the evaluation 960 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 785 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 24, with the evaluation 631 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 504 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 53, with the evaluation 2147483647 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 54, with the evaluation 2147483647 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 61 with the score 2147483647
+
+Placing piece in row: 7, column: 5
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . . W B B B . . 
+2 . . W W B B W W 
+3 . . W B B B W B 
+4 . B W B B W . . 
+5 B B B W B B . . 
+6 . . W W W . . . 
+7 . . . . . W . . 
+message type: 1
+
+Opponent placing piece in row: 4, column: 7
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . . W B B B . . 
+2 . . W W B B W W 
+3 . . W B B B B B 
+4 . B W B B W . B 
+5 B B B W B B . . 
+6 . . W W W . . . 
+7 . . . . . W . . 
+message type: 2
+Received move 54, with the evaluation 2147483647 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 47, with the evaluation 1066 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 46, with the evaluation 639 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 38, with the evaluation -1272 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 820 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 24, with the evaluation 597 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 449 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 48, with the evaluation 2147483647 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 53, with the evaluation 2147483647 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 54 with the score 2147483647
+
+Placing piece in row: 6, column: 6
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . . W B B B . . 
+2 . . W W B B W W 
+3 . . W W B B B B 
+4 . B W B W W . B 
+5 B B B W B W . . 
+6 . . W W W . W . 
+7 . . . . . W . . 
+message type: 1
+
+Opponent placing piece in row: 1, column: 1
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . B B B B B . . 
+2 . . W W B B W W 
+3 . . W W B B B B 
+4 . B W B W W . B 
+5 B B B W B W . . 
+6 . . W W W . W . 
+7 . . . . . W . . 
+message type: 2
+Received move 53, with the evaluation 1222 and the alpha 1222 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 47, with the evaluation 1328 and the alpha 1328 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 38, with the evaluation 1216 and the alpha 1222 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 24, with the evaluation 2147483647 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 17, with the evaluation -1375 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation 851 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 0, with the evaluation 851 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 48, with the evaluation 1190 and the alpha 1190 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 1273 and the alpha 1328 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 24 with the score 2147483647
+
+Placing piece in row: 3, column: 0
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . B B B B B . . 
+2 . . W W B B W W 
+3 W . W W B B B B 
+4 . W W B W W . B 
+5 B B W W B W . . 
+6 . . W W W . W . 
+7 . . . . . W . . 
+message type: 1
+
+Opponent placing piece in row: 4, column: 0
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . B B B B B . . 
+2 . . W W B B W W 
+3 W . W W B B B B 
+4 B B B B W W . B 
+5 B B W W B W . . 
+6 . . W W W . W . 
+7 . . . . . W . . 
+message type: 2
+Received move 53, with the evaluation 1300 and the alpha 1300 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 48, with the evaluation 1196 and the alpha 1196 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 47, with the evaluation 1115 and the alpha 1115 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 38, with the evaluation 1293 and the alpha 1300 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 25, with the evaluation 1295 and the alpha 1300 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 17, with the evaluation 1300 and the alpha 1300 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 1298 and the alpha 1300 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation 1299 and the alpha 1300 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 0, with the evaluation 1299 and the alpha 1300 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 53 with the score 1300
+
+Placing piece in row: 6, column: 5
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . B B B B B . . 
+2 . . W W B B W W 
+3 W . W W B B B B 
+4 B B B W W W . B 
+5 B B W W W W . . 
+6 . . W W W W W . 
+7 . . . . . W . . 
+message type: 1
+
+Opponent placing piece in row: 1, column: 7
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . B B B B B . B 
+2 . . W W B B B B 
+3 W . W W B B B B 
+4 B B B W W W . B 
+5 B B W W W W . . 
+6 . . W W W W W . 
+7 . . . . . W . . 
+message type: 2
+Received move 17, with the evaluation 2147483647 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 346 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation 361 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 0, with the evaluation 361 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 25, with the evaluation 1371 and the alpha 1371 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 48, with the evaluation 1289 and the alpha 1289 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 17 with the score 2147483647
+
+Placing piece in row: 2, column: 1
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 . W W W B B B B 
+3 W . W W B B B B 
+4 B B B W W W . B 
+5 B B W W W W . . 
+6 . . W W W W W . 
+7 . . . . . W . . 
+message type: 1
+
+Opponent placing piece in row: 7, column: 2
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 . W W W B B B B 
+3 W . W W B B B B 
+4 B B B W W B . B 
+5 B B B W B W . . 
+6 . . B B W W W . 
+7 . . B . . W . . 
+message type: 2
+Received move 57, with the evaluation 2147483647 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 49, with the evaluation -656 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 48, with the evaluation -1140 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 60, with the evaluation 2147483647 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 46, with the evaluation -1240 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 38, with the evaluation -874 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 25, with the evaluation -874 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 1175 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation -2147483648 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 59, with the evaluation 1106 and the alpha 1106 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 57 with the score 2147483647
+
+Placing piece in row: 7, column: 1
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 . W W W B B B B 
+3 W . W W B B B B 
+4 B B B W W B . B 
+5 B B B W B W . . 
+6 . . W B W W W . 
+7 . W B . . W . . 
+message type: 1
+
+Opponent placing piece in row: 7, column: 3
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 . W W W B B B B 
+3 W . W W B B B B 
+4 B B B W W B . B 
+5 B B B W B W . . 
+6 . . B B W W W . 
+7 . W B B . W . . 
+message type: 2
+Received move 60, with the evaluation 2147483647 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 46, with the evaluation -891 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 49, with the evaluation 2147483647 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 38, with the evaluation -658 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 25, with the evaluation -658 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation 948 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 1146 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 48, with the evaluation 2147483647 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 60 with the score 2147483647
+
+Placing piece in row: 7, column: 4
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 . W W W B B B B 
+3 W . W W B B B B 
+4 B W B W W B . B 
+5 B B W W B W . . 
+6 . . B W W W W . 
+7 . W W W W W . . 
+message type: 1
+
+Opponent placing piece in row: 6, column: 7
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 . W W W B B B B 
+3 W . W W B B B B 
+4 B W B W W B . B 
+5 B B W W B W . . 
+6 . . B B B B B B 
+7 . W W W W W . . 
+message type: 2
+Received move 63, with the evaluation 3100 and the alpha 3100 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 62, with the evaluation 2400 and the alpha 2400 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 48, with the evaluation 4400 and the alpha 4400 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 49, with the evaluation 1800 and the alpha 1800 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 47, with the evaluation 3700 and the alpha 3700 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 46, with the evaluation 4400 and the alpha 4400 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 25, with the evaluation -2147483648 and the alpha 4400 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 38, with the evaluation 4400 and the alpha 4400 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 3400 and the alpha 4400 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation 4400 and the alpha 4400 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 48 with the score 4400
+
+Placing piece in row: 6, column: 0
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 . W W W B B B B 
+3 W . W W B B B B 
+4 W W W W W B . B 
+5 W W W W B W . . 
+6 W . B B B B B B 
+7 . W W W W W . . 
+message type: 1
+
+Opponent placing piece in row: 5, column: 6
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 . W W W B B B B 
+3 W . W W B B B B 
+4 W W W W W B . B 
+5 W W W W B B B . 
+6 W . B B B B B B 
+7 . W W W W W . . 
+message type: 2
+Received move 62, with the evaluation 2147483647 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 38, with the evaluation 1400 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation -1100 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation 3300 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 63, with the evaluation 4900 and the alpha 4900 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 47, with the evaluation 5500 and the alpha 5500 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 62 with the score 2147483647
+
+Placing piece in row: 7, column: 6
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 . W W W B B B B 
+3 W . W W B B B B 
+4 W W W W W B . B 
+5 W W W W W B B . 
+6 W . B B B W B B 
+7 . W W W W W W . 
+message type: 1
+
+Opponent placing piece in row: 2, column: 0
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 B B B B B B B B 
+3 W . W W B B B B 
+4 W W W W W B . B 
+5 W W W W W B B . 
+6 W . B B B W B B 
+7 . W W W W W W . 
+message type: 2
+Received move 49, with the evaluation 2147483647 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 38, with the evaluation 2147483647 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 25, with the evaluation -14000 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 63, with the evaluation 27000 and the alpha 27000 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 47, with the evaluation 28000 and the alpha 28000 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 8, with the evaluation 2147483647 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 18000 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation 18000 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 49 with the score 2147483647
+
+Placing piece in row: 6, column: 1
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 B B B B B B B B 
+3 W . W W B B B B 
+4 W W W W W B . B 
+5 W W W W W B B . 
+6 W W W W W W B B 
+7 . W W W W W W . 
+message type: 1
+
+Opponent placing piece in row: 1, column: 0
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 B B B B B B . B 
+2 B B B B B B B B 
+3 W . W W B B B B 
+4 W W W W W B . B 
+5 W W W W W B B . 
+6 W W W W W W B B 
+7 . W W W W W W . 
+message type: 2
+Received move 38, with the evaluation 8000 and the alpha 8000 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 63, with the evaluation -2147483648 and the alpha -2147483648 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 47, with the evaluation 8000 and the alpha 8000 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 25, with the evaluation -2147483648 and the alpha 8000 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 2147483647 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation -2147483648 and the alpha 8000 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 0, with the evaluation -2147483648 and the alpha 8000 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 14 with the score 2147483647
+
+Placing piece in row: 1, column: 6
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 B B B B B B W B 
+2 B B B B B W B B 
+3 W . W W W B B B 
+4 W W W W W B . B 
+5 W W W W W B B . 
+6 W W W W W W B B 
+7 . W W W W W W . 
+message type: 1
+
+Opponent placing piece in row: 7, column: 0
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 B B B B B B W B 
+2 B B B B B W B B 
+3 B . W W W B B B 
+4 B W W W W B . B 
+5 B W W W W B B . 
+6 B W W W W W B B 
+7 B W W W W W W . 
+message type: 2
+Received move 63, with the evaluation 4000 and the alpha 4000 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 38, with the evaluation 2147483647 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 47, with the evaluation 6000 and the alpha 6000 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 25, with the evaluation 2147483647 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation -2147483648 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 0, with the evaluation -2147483648 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 38 with the score 2147483647
+
+Placing piece in row: 4, column: 6
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 B B B B B B W B 
+2 B B B B B W W B 
+3 B . W W W B W B 
+4 B W W W W W W B 
+5 B W W W W W W . 
+6 B W W W W W W B 
+7 B W W W W W W . 
+message type: 1
+
+Opponent placing piece in row: 3, column: 1
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 B B B B B B W B 
+2 B B B B B W W B 
+3 B B B B B B W B 
+4 B W W W W W W B 
+5 B W W W W W W . 
+6 B W W W W W W B 
+7 B W W W W W W . 
+message type: 2
+Received move 2, with the evaluation 2147483647 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 0, with the evaluation 2147483647 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 2 with the score 2147483647
+
+Placing piece in row: 0, column: 2
+  0 1 2 3 4 5 6 7 
+0 . W W B B B B . 
+1 B B W W B B W B 
+2 B B W B W W W B 
+3 B B W B B W W B 
+4 B W W W W W W B 
+5 B W W W W W W . 
+6 B W W W W W W B 
+7 B W W W W W W . 
+message type: 1
+
+Opponent placing piece in row: 0, column: 7
+  0 1 2 3 4 5 6 7 
+0 . W W B B B B B 
+1 B B W W B B B B 
+2 B B W B W B W B 
+3 B B W B B W W B 
+4 B W W W W W W B 
+5 B W W W W W W . 
+6 B W W W W W W B 
+7 B W W W W W W . 
+message type: 2
+Received move 0, with the evaluation 2147483647 and the alpha -2147483648 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 0 with the score 2147483647
+
+Placing piece in row: 0, column: 0
+  0 1 2 3 4 5 6 7 
+0 W W W B B B B B 
+1 B W W W B B B B 
+2 B B W B W B W B 
+3 B B W B B W W B 
+4 B W W W W W W B 
+5 B W W W W W W . 
+6 B W W W W W W B 
+7 B W W W W W W . 
+message type: 1
+
+Opponent placing piece in row: 7, column: 7
+  0 1 2 3 4 5 6 7 
+0 W W W B B B B B 
+1 B W W W B B B B 
+2 B B W B W B W B 
+3 B B W B B W W B 
+4 B W W W B W W B 
+5 B W W W W B W . 
+6 B W W W W W B B 
+7 B B B B B B B B 
+message type: 2
+Final move -1 with the score -2147483648
+
+ Only move is to pass
+  0 1 2 3 4 5 6 7 
+0 W W W B B B B B 
+1 B W W W B B B B 
+2 B B W B W B W B 
+3 B B W B B W W B 
+4 B W W W B W W B 
+5 B W W W W B W . 
+6 B W W W W W B B 
+7 B B B B B B B B 
+message type: 1
+
+Opponent placing piece in row: 5, column: 7
+  0 1 2 3 4 5 6 7 
+0 W W W B B B B B 
+1 B W W W B B B B 
+2 B B W B W B W B 
+3 B B W B B W W B 
+4 B W W W B W W B 
+5 B W W W W B B B 
+6 B W W W W W B B 
+7 B B B B B B B B 
+message type: 2
+Match reset.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~ NEW MATCH ~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+New board state:
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . . W B . . . 
+4 . . . B W . . . 
+5 . . . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 3
+Received move 44, with the evaluation 6000 and the alpha -2147483648 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 37, with the evaluation 6000 and the alpha -2147483648 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 26, with the evaluation 6000 and the alpha -2147483648 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 19, with the evaluation 6000 and the alpha -2147483648 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 44 with the score 6000
+
+Placing piece in row: 5, column: 4
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . . W B . . . 
+4 . . . B B . . . 
+5 . . . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 5, column: 5
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . . W B . . . 
+4 . . . B W . . . 
+5 . . . . B W . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 37, with the evaluation 256 and the alpha 256 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 19, with the evaluation 237 and the alpha 256 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 46, with the evaluation 181 and the alpha 181 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 26, with the evaluation 139 and the alpha 139 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 37 with the score 256
+
+Placing piece in row: 4, column: 5
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . . W B . . . 
+4 . . . B B B . . 
+5 . . . . B W . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 5, column: 3
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . . W B . . . 
+4 . . . W B B . . 
+5 . . . W W W . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 54, with the evaluation 280 and the alpha 280 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 51, with the evaluation 280 and the alpha 280 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 53, with the evaluation 250 and the alpha 250 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 52, with the evaluation 310 and the alpha 310 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 50, with the evaluation 305 and the alpha 305 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 42, with the evaluation 280 and the alpha 280 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 26, with the evaluation 310 and the alpha 310 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 34, with the evaluation 390 and the alpha 390 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 18, with the evaluation 390 and the alpha 390 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 34 with the score 390
+
+Placing piece in row: 4, column: 2
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . . W B . . . 
+4 . . B B B B . . 
+5 . . . W W W . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 3, column: 1
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . W . W B . . . 
+4 . . W B B B . . 
+5 . . . W W W . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 53, with the evaluation 425 and the alpha 425 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 52, with the evaluation 240 and the alpha 240 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 51, with the evaluation 389 and the alpha 425 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 54, with the evaluation 395 and the alpha 395 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 33, with the evaluation 406 and the alpha 425 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 50, with the evaluation 425 and the alpha 425 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 26, with the evaluation 454 and the alpha 454 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 18, with the evaluation 475 and the alpha 475 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 19, with the evaluation 425 and the alpha 425 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 18 with the score 475
+
+Placing piece in row: 2, column: 2
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B . . . . . 
+3 . W . B B . . . 
+4 . . W B B B . . 
+5 . . . W W W . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 3, column: 5
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B . . . . . 
+3 . W . B B W . . 
+4 . . W B W W . . 
+5 . . . W W W . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 53, with the evaluation 536 and the alpha 536 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 54, with the evaluation 470 and the alpha 470 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 52, with the evaluation 400 and the alpha 400 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 41, with the evaluation 536 and the alpha 536 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 46, with the evaluation 611 and the alpha 611 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 51, with the evaluation 510 and the alpha 536 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 33, with the evaluation 585 and the alpha 611 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 560 and the alpha 611 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 38, with the evaluation 535 and the alpha 536 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 30, with the evaluation 560 and the alpha 611 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 46 with the score 611
+
+Placing piece in row: 5, column: 6
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B . . . . . 
+3 . W . B B W . . 
+4 . . W B W B . . 
+5 . . . W W W B . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 3, column: 6
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B . . . . . 
+3 . W . B B W W . 
+4 . . W B W W . . 
+5 . . . W W W B . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 54, with the evaluation 524 and the alpha 524 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 52, with the evaluation 385 and the alpha 385 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 51, with the evaluation 476 and the alpha 524 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 53, with the evaluation 510 and the alpha 510 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 41, with the evaluation 523 and the alpha 524 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 33, with the evaluation 498 and the alpha 524 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 42, with the evaluation 524 and the alpha 524 from process 3
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 512 and the alpha 524 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 31, with the evaluation 512 and the alpha 524 from process 3
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 38, with the evaluation 586 and the alpha 586 from process 2
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Final move 38 with the score 586
+
+Placing piece in row: 4, column: 6
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B . . . . . 
+3 . W . B B W W . 
+4 . . W B B B B . 
+5 . . . W W W B . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 5, column: 7
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B . . . . . 
+3 . W . B B W W . 
+4 . . W B B B W . 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 55, with the evaluation 605 and the alpha 605 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 53, with the evaluation 617 and the alpha 617 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 51, with the evaluation 616 and the alpha 617 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 52, with the evaluation 604 and the alpha 605 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 41, with the evaluation 598 and the alpha 617 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 54, with the evaluation 498 and the alpha 498 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 33, with the evaluation 605 and the alpha 617 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 50, with the evaluation 609 and the alpha 617 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 39, with the evaluation 636 and the alpha 636 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 23, with the evaluation 635 and the alpha 636 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 652 and the alpha 652 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 31, with the evaluation 614 and the alpha 617 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 22, with the evaluation 806 and the alpha 806 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 21, with the evaluation 650 and the alpha 652 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 22 with the score 806
+
+Placing piece in row: 2, column: 6
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B . . . B . 
+3 . W . B B B W . 
+4 . . W B B B W . 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 2, column: 3
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B W . . B . 
+3 . W . W W B W . 
+4 . . W W B W W . 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 53, with the evaluation 794 and the alpha 794 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 50, with the evaluation 782 and the alpha 794 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 39, with the evaluation 788 and the alpha 794 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 33, with the evaluation 784 and the alpha 794 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 52, with the evaluation 433 and the alpha 433 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 54, with the evaluation 418 and the alpha 418 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 31, with the evaluation 793 and the alpha 794 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 794 and the alpha 794 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 20, with the evaluation 843 and the alpha 843 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 26, with the evaluation 847 and the alpha 847 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 26 with the score 847
+
+Placing piece in row: 3, column: 2
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B W . . B . 
+3 . W B B B B W . 
+4 . . W W B W W . 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 2, column: 5
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B W . W B . 
+3 . W B B W W W . 
+4 . . W W B W W . 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 53, with the evaluation 725 and the alpha 725 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 54, with the evaluation 446 and the alpha 446 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 50, with the evaluation 731 and the alpha 731 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 52, with the evaluation 579 and the alpha 579 from process 3
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 51, with the evaluation 733 and the alpha 733 from process 2
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 42, with the evaluation 795 and the alpha 795 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 41, with the evaluation 731 and the alpha 731 from process 3
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 39, with the evaluation 732 and the alpha 733 from process 2
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 33, with the evaluation 794 and the alpha 795 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 795 and the alpha 795 from process 3
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 31, with the evaluation 877 and the alpha 877 from process 2
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 24, with the evaluation 794 and the alpha 795 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 12, with the evaluation 876 and the alpha 877 from process 2
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 11, with the evaluation 874 and the alpha 877 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 20, with the evaluation 795 and the alpha 795 from process 3
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Final move 31 with the score 877
+
+Placing piece in row: 3, column: 7
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B W . W B . 
+3 . W B B B B B B 
+4 . . W W B W W . 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 1, column: 2
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . W . . . . . 
+2 . . W W . W B . 
+3 . W W B B B B B 
+4 . . W W B W W . 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 55, with the evaluation 616 and the alpha 616 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 53, with the evaluation 830 and the alpha 830 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 54, with the evaluation 422 and the alpha 422 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 51, with the evaluation 824 and the alpha 830 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 50, with the evaluation 828 and the alpha 830 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 41, with the evaluation 830 and the alpha 830 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 42, with the evaluation 830 and the alpha 830 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 39, with the evaluation 860 and the alpha 860 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 24, with the evaluation 849 and the alpha 860 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 20, with the evaluation 858 and the alpha 860 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 851 and the alpha 860 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 52, with the evaluation 631 and the alpha 631 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 13, with the evaluation 858 and the alpha 860 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 12, with the evaluation 859 and the alpha 860 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 11, with the evaluation 902 and the alpha 902 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 33, with the evaluation 828 and the alpha 830 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 1, with the evaluation 902 and the alpha 902 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 9, with the evaluation 900 and the alpha 900 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 11 with the score 902
+
+Placing piece in row: 1, column: 3
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . W B . . . . 
+2 . . W B . W B . 
+3 . W W B B B B B 
+4 . . W W B W W . 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 4, column: 7
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . W B . . . . 
+2 . . W B . W B . 
+3 . W W B B B W B 
+4 . . W W B W W W 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 55, with the evaluation 792 and the alpha 792 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 53, with the evaluation 722 and the alpha 722 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 54, with the evaluation 460 and the alpha 460 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 52, with the evaluation 789 and the alpha 792 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 51, with the evaluation 780 and the alpha 792 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 42, with the evaluation 792 and the alpha 792 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 41, with the evaluation 790 and the alpha 792 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 50, with the evaluation 792 and the alpha 792 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 33, with the evaluation 786 and the alpha 792 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 792 and the alpha 792 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 20, with the evaluation 788 and the alpha 792 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 24, with the evaluation 791 and the alpha 792 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 17, with the evaluation 792 and the alpha 792 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 786 and the alpha 792 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 1, with the evaluation 842 and the alpha 842 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 13, with the evaluation 816 and the alpha 816 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 9, with the evaluation 885 and the alpha 885 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 9 with the score 885
+
+Placing piece in row: 1, column: 1
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . B B B . . . . 
+2 . . B B . W B . 
+3 . W W B B B W B 
+4 . . W W B W W W 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 0, column: 1
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W B . 
+3 . W W B W B W B 
+4 . . W W B W W W 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 55, with the evaluation 1114 and the alpha 1114 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 54, with the evaluation 2147483186 and the alpha 2147483186 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 53, with the evaluation 2147483391 and the alpha 2147483391 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 52, with the evaluation 2147483254 and the alpha 2147483254 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 50, with the evaluation 2147483364 and the alpha 2147483391 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 51, with the evaluation 1232 and the alpha 2147483186 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 42, with the evaluation 1228 and the alpha 2147483391 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 41, with the evaluation 2147483445 and the alpha 2147483445 from process 3
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 2147483335 and the alpha 2147483391 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 24, with the evaluation 1261 and the alpha 2147483445 from process 3
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 20, with the evaluation 2147483394 and the alpha 2147483445 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation 1400 and the alpha 2147483445 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 13, with the evaluation 1388 and the alpha 2147483445 from process 3
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 33, with the evaluation 1233 and the alpha 2147483391 from process 2
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Final move 41 with the score 2147483445
+
+Placing piece in row: 5, column: 1
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W B . 
+3 . W W B W B W B 
+4 . . B W B W W W 
+5 . B . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 2, column: 7
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . B W B W W W 
+5 . B . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 2
+Received move 54, with the evaluation 2147483087 and the alpha 2147483087 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 53, with the evaluation 2147483349 and the alpha 2147483349 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 50, with the evaluation 2147483205 and the alpha 2147483349 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 2147483144 and the alpha 2147483349 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 24, with the evaluation 1245 and the alpha 2147483349 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 51, with the evaluation 2147483097 and the alpha 2147483097 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 20, with the evaluation 2147483135 and the alpha 2147483349 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 16, with the evaluation 2147483150 and the alpha 2147483349 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 15, with the evaluation 1222 and the alpha 2147483349 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 13, with the evaluation 1249 and the alpha 2147483349 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation 1194 and the alpha 2147483349 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 52, with the evaluation 2147483248 and the alpha 2147483248 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 53 with the score 2147483349
+
+Placing piece in row: 6, column: 5
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . B W B B W W 
+5 . B . W W B W W 
+6 . . . . . B . . 
+7 . . . . . . . . 
+message type: 1
+
+Opponent placing piece in row: 7, column: 4
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . B W B B W W 
+5 . B . W W B W W 
+6 . . . . . W . . 
+7 . . . . W . . . 
+message type: 2
+Received move 61, with the evaluation 2147483273 and the alpha 2147483273 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 55, with the evaluation 2147483150 and the alpha 2147483150 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 50, with the evaluation 2147483385 and the alpha 2147483385 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 52, with the evaluation 2147483282 and the alpha 2147483282 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 2147483247 and the alpha 2147483385 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 51, with the evaluation 2147483359 and the alpha 2147483359 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 24, with the evaluation 2147483317 and the alpha 2147483385 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 20, with the evaluation 2147483312 and the alpha 2147483385 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 42, with the evaluation 2147483345 and the alpha 2147483385 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 16, with the evaluation 2147483373 and the alpha 2147483385 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation 1192 and the alpha 2147483385 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 13, with the evaluation 1260 and the alpha 2147483385 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 15, with the evaluation 2147483373 and the alpha 2147483385 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 50 with the score 2147483385
+
+Placing piece in row: 6, column: 2
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . B W B B W W 
+5 . B . B W B W W 
+6 . . B . . W . . 
+7 . . . . W . . . 
+message type: 1
+
+Opponent placing piece in row: 6, column: 3
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . B W B B W W 
+5 . B . W W B W W 
+6 . . B W . W . . 
+7 . . . . W . . . 
+message type: 2
+Received move 58, with the evaluation 2147483325 and the alpha 2147483325 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 59, with the evaluation 2147483155 and the alpha 2147483155 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 61, with the evaluation 2147483345 and the alpha 2147483345 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 55, with the evaluation 2147483295 and the alpha 2147483325 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 42, with the evaluation 2147483366 and the alpha 2147483366 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 52, with the evaluation 2147483311 and the alpha 2147483325 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 24, with the evaluation 2147483348 and the alpha 2147483366 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 2147483297 and the alpha 2147483345 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 20, with the evaluation 2147483360 and the alpha 2147483366 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 16, with the evaluation 2147483360 and the alpha 2147483366 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation 1206 and the alpha 2147483366 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 13, with the evaluation 2147483103 and the alpha 2147483366 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 15, with the evaluation 2147483356 and the alpha 2147483366 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 42 with the score 2147483366
+
+Placing piece in row: 5, column: 2
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . B W B B W W 
+5 . B B B B B W W 
+6 . . B W . W . . 
+7 . . . . W . . . 
+message type: 1
+
+Opponent placing piece in row: 6, column: 4
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . W W W B W W 
+5 . B B W W W W W 
+6 . . B W W W . . 
+7 . . . . W . . . 
+message type: 2
+Received move 58, with the evaluation 2147483079 and the alpha 2147483079 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 59, with the evaluation 2147483265 and the alpha 2147483265 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 55, with the evaluation 2147483298 and the alpha 2147483298 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 54, with the evaluation 2147483264 and the alpha 2147483265 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 61, with the evaluation 2147483279 and the alpha 2147483279 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 33, with the evaluation 1309 and the alpha 2147483298 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 20, with the evaluation 2147483296 and the alpha 2147483298 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 24, with the evaluation 2147483295 and the alpha 2147483298 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 2147483264 and the alpha 2147483298 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 13, with the evaluation 1185 and the alpha 2147483298 from process 2
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 15, with the evaluation 1096 and the alpha 2147483298 from process 3
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation 1195 and the alpha 2147483298 from process 2
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 1236 and the alpha 2147483298 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Final move 55 with the score 2147483298
+
+Placing piece in row: 6, column: 7
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . W W W B W W 
+5 . B B W W W B W 
+6 . . B W W W . B 
+7 . . . . W . . . 
+message type: 1
+
+Opponent placing piece in row: 6, column: 1
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . W W W B W W 
+5 . B W W W W B W 
+6 . W W W W W . B 
+7 . . . . W . . . 
+message type: 2
+Received move 59, with the evaluation 921 and the alpha 921 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 58, with the evaluation 1013 and the alpha 1013 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 61, with the evaluation 789 and the alpha 789 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 57, with the evaluation 2147483061 and the alpha 2147483061 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 54, with the evaluation 1013 and the alpha 1013 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 33, with the evaluation 1016 and the alpha 1016 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 32, with the evaluation 2147483254 and the alpha 2147483254 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 20, with the evaluation 1357 and the alpha 2147483061 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 24, with the evaluation 1132 and the alpha 2147483061 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 15, with the evaluation 1392 and the alpha 2147483254 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation 1365 and the alpha 2147483254 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 13, with the evaluation 1374 and the alpha 2147483254 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 1450 and the alpha 2147483254 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 32 with the score 2147483254
+
+Placing piece in row: 4, column: 0
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . B W B W B W W 
+4 B . W W W B W W 
+5 . B W W W W B W 
+6 . W W W W W . B 
+7 . . . . W . . . 
+message type: 1
+
+Opponent placing piece in row: 1, column: 4
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W W W . . . 
+2 . . B W . W W W 
+3 . B W B W B W W 
+4 B . W W W B W W 
+5 . B W W W W B W 
+6 . W W W W W . B 
+7 . . . . W . . . 
+message type: 2
+Received move 59, with the evaluation 986 and the alpha 986 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 61, with the evaluation 877 and the alpha 877 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 58, with the evaluation 1043 and the alpha 1043 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 33, with the evaluation 1043 and the alpha 1043 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 54, with the evaluation 986 and the alpha 986 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 57, with the evaluation 1013 and the alpha 1013 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 15, with the evaluation 1183 and the alpha 1183 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 20, with the evaluation 1043 and the alpha 1043 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 4, with the evaluation 1181 and the alpha 1183 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 1143 and the alpha 1143 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 2, with the evaluation 1181 and the alpha 1183 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 3, with the evaluation 1179 and the alpha 1183 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 13, with the evaluation 1195 and the alpha 1195 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 13 with the score 1195
+
+Placing piece in row: 1, column: 5
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B B B B B . . 
+2 . . B W . B W W 
+3 . B W B W B W W 
+4 B . W W W B W W 
+5 . B W W W W B W 
+6 . W W W W W . B 
+7 . . . . W . . . 
+message type: 1
+
+Opponent placing piece in row: 4, column: 1
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B B B B B . . 
+2 . . B W . B W W 
+3 . B W B W B W W 
+4 B W W W W B W W 
+5 . W W W W W B W 
+6 . W W W W W . B 
+7 . . . . W . . . 
+message type: 2
+Received move 58, with the evaluation 1248 and the alpha 1248 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 61, with the evaluation 1069 and the alpha 1069 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 56, with the evaluation 1247 and the alpha 1248 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 59, with the evaluation 1218 and the alpha 1218 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 54, with the evaluation 1248 and the alpha 1248 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 48, with the evaluation 1248 and the alpha 1248 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 57, with the evaluation 1207 and the alpha 1248 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 15, with the evaluation 1248 and the alpha 1248 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 20, with the evaluation 1248 and the alpha 1248 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 1242 and the alpha 1248 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 40, with the evaluation 1399 and the alpha 1399 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 40 with the score 1399
+
+Placing piece in row: 5, column: 0
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B B B B B . . 
+2 . . B B . B W W 
+3 . B B B W B W W 
+4 B B W W W B W W 
+5 B B B B B B B W 
+6 . W W W W W . B 
+7 . . . . W . . . 
+message type: 1
+
+Opponent placing piece in row: 0, column: 4
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . B B B B W . . 
+2 . . B B . B W W 
+3 . B B B W B W W 
+4 B B W W W B W W 
+5 B B B B B B B W 
+6 . W W W W W . B 
+7 . . . . W . . . 
+message type: 2
+Received move 62, with the evaluation 1041 and the alpha 1041 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 58, with the evaluation 2147483647 and the alpha 2147483647 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 57, with the evaluation -954 and the alpha 2147483647 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 56, with the evaluation -601 and the alpha 2147483647 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 20, with the evaluation -589 and the alpha 2147483647 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 15, with the evaluation 81 and the alpha 2147483647 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation -556 and the alpha 2147483647 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 5, with the evaluation -314 and the alpha 2147483647 from process 1
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 59, with the evaluation 1171 and the alpha 1171 from process 3
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Received move 61, with the evaluation 1026 and the alpha 1026 from process 2
+Elapsed (1000 seconds elapsed) time limit 5000
+
+Final move 58 with the score 2147483647
+
+Placing piece in row: 7, column: 2
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . B B B B W . . 
+2 . . B B . B W W 
+3 . B B B W B W W 
+4 B B W W W B W W 
+5 B B B B B B B W 
+6 . B B B W W . B 
+7 . . B . W . . . 
+message type: 1
+
+Opponent placing piece in row: 2, column: 1
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . W B B B W . . 
+2 . W B B . B W W 
+3 . B W B W B W W 
+4 B B W W W B W W 
+5 B B B B B B B W 
+6 . B B B W W . B 
+7 . . B . W . . . 
+message type: 2
+Received move 62, with the evaluation 1386 and the alpha 1386 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 54, with the evaluation 2147483647 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 24, with the evaluation 873 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 20, with the evaluation 949 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 16, with the evaluation 727 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 15, with the evaluation 921 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 887 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 8, with the evaluation -521 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 5, with the evaluation 354 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 0, with the evaluation 711 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 61, with the evaluation 1427 and the alpha 1427 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 59, with the evaluation 1348 and the alpha 1348 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 54 with the score 2147483647
+
+Placing piece in row: 6, column: 6
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . W B B B W . . 
+2 . W B B . B W W 
+3 . B W B W B W W 
+4 B B W W W B W W 
+5 B B B B B B B W 
+6 . B B B B B B B 
+7 . . B . W . . . 
+message type: 1
+
+Opponent placing piece in row: 6, column: 0
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . W B B B W . . 
+2 . W B B . B W W 
+3 . B W B W B W W 
+4 B B W W W B W W 
+5 B W B B B B B W 
+6 W B B B B B B B 
+7 . . B . W . . . 
+message type: 2
+Received move 56, with the evaluation 2147483647 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 16, with the evaluation 516 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 15, with the evaluation 684 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 14, with the evaluation 712 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 8, with the evaluation -468 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 5, with the evaluation 314 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 0, with the evaluation 472 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 24, with the evaluation 2147483647 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 20, with the evaluation 1325 and the alpha 1325 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 56 with the score 2147483647
+
+Placing piece in row: 7, column: 0
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . W B B B W . . 
+2 . W B B . B W W 
+3 . B W B W B W W 
+4 B B W W W B W W 
+5 B W B B B B B W 
+6 B B B B B B B B 
+7 B . B . W . . . 
+message type: 1
+
+Opponent placing piece in row: 1, column: 6
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . W B B B W W . 
+2 . W B B . W W W 
+3 . B W B W B W W 
+4 B B W W W B W W 
+5 B W B B B B B W 
+6 B B B B B B B B 
+7 B . B . W . . . 
+message type: 2
+Received move 24, with the evaluation 2147483647 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 20, with the evaluation 2147483647 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 16, with the evaluation 2147483647 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 15, with the evaluation 4600 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 8, with the evaluation 3600 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 7, with the evaluation 4600 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 6, with the evaluation 3600 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 5, with the evaluation 4600 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 0, with the evaluation 6000 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 24 with the score 2147483647
+
+Placing piece in row: 3, column: 0
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . W B B B W W . 
+2 . B B B . W W W 
+3 B B W B W B W W 
+4 B B W W W B W W 
+5 B W B B B B B W 
+6 B B B B B B B B 
+7 B . B . W . . . 
+message type: 1
+
+Opponent placing piece in row: 7, column: 5
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . W B B B W W . 
+2 . B B B . W W W 
+3 B B W B W W W W 
+4 B B W W W W W W 
+5 B W B W B W B W 
+6 B B B B W W W B 
+7 B . B . W W . . 
+message type: 2
+Received move 63, with the evaluation 4800 and the alpha 4800 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 20, with the evaluation 4100 and the alpha 4100 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 62, with the evaluation 6400 and the alpha 6400 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 15, with the evaluation 5400 and the alpha 5400 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 7, with the evaluation 5800 and the alpha 6400 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 8, with the evaluation 4800 and the alpha 4800 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 6, with the evaluation 4800 and the alpha 6400 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 0, with the evaluation 4800 and the alpha 6400 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 62 with the score 6400
+
+Placing piece in row: 7, column: 6
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . W B B B W W . 
+2 . B B B . W W W 
+3 B B W B W W W W 
+4 B B W W W W W W 
+5 B W B W B W B W 
+6 B B B B W B B B 
+7 B . B . W W B . 
+message type: 1
+
+Opponent placing piece in row: 0, column: 2
+  0 1 2 3 4 5 6 7 
+0 . W W . W . . . 
+1 . W W B B W W . 
+2 . B W B . W W W 
+3 B B W B W W W W 
+4 B B W W W W W W 
+5 B W B W B W B W 
+6 B B B B W B B B 
+7 B . B . W W B . 
+message type: 2
+Received move 59, with the evaluation 2147483647 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 20, with the evaluation 2147483647 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 15, with the evaluation 2147483647 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 8, with the evaluation 2147483647 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 7, with the evaluation 2147483647 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 6, with the evaluation 2147483647 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 5, with the evaluation 2147483647 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 3, with the evaluation 2147483647 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 0, with the evaluation 2147483647 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 59 with the score 2147483647
+
+Placing piece in row: 7, column: 3
+  0 1 2 3 4 5 6 7 
+0 . W W . W . . . 
+1 . W W B B W W . 
+2 . B W B . W W W 
+3 B B W B W W W W 
+4 B B W W W W W W 
+5 B W B W B W B W 
+6 B B B B W B B B 
+7 B . B B B B B . 
+message type: 1
+
+Opponent placing piece in row: 0, column: 3
+  0 1 2 3 4 5 6 7 
+0 . W W W W . . . 
+1 . W W W W W W . 
+2 . B W W . W W W 
+3 B B W W W W W W 
+4 B B W W W W W W 
+5 B W B W B W B W 
+6 B B B B W B B B 
+7 B . B B B B B . 
+message type: 2
+Received move 7, with the evaluation 2147483647 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 20, with the evaluation 2147483647 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 15, with the evaluation 2147483647 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 6, with the evaluation 2147483647 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 5, with the evaluation 2147483647 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 0, with the evaluation 2147483647 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 7 with the score 2147483647
+
+Placing piece in row: 0, column: 7
+  0 1 2 3 4 5 6 7 
+0 . W W W W . . B 
+1 . W W W W W B . 
+2 . B W W . B W W 
+3 B B W W B W W W 
+4 B B W B W W W W 
+5 B W B W B W B W 
+6 B B B B W B B B 
+7 B . B B B B B . 
+message type: 1
+
+Opponent placing piece in row: 1, column: 0
+  0 1 2 3 4 5 6 7 
+0 . W W W W . . B 
+1 W W W W W W B . 
+2 . W W W . B W W 
+3 B B W W B W W W 
+4 B B W B W W W W 
+5 B W B W B W B W 
+6 B B B B W B B B 
+7 B . B B B B B . 
+message type: 2
+Received move 5, with the evaluation 2147483647 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 20, with the evaluation 2147483647 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 15, with the evaluation 2147483647 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 0, with the evaluation 2147483647 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 5 with the score 2147483647
+
+Placing piece in row: 0, column: 5
+  0 1 2 3 4 5 6 7 
+0 . W W W W B . B 
+1 W W W W B B B . 
+2 . W W B . B W W 
+3 B B B W B W W W 
+4 B B W B W W W W 
+5 B W B W B W B W 
+6 B B B B W B B B 
+7 B . B B B B B . 
+message type: 1
+
+Opponent placing piece in row: 7, column: 1
+  0 1 2 3 4 5 6 7 
+0 . W W W W B . B 
+1 W W W W B B B . 
+2 . W W B . B W W 
+3 B B B W B W W W 
+4 B B W B W W W W 
+5 B W B W B W B W 
+6 B W W B W B B B 
+7 B W B B B B B . 
+message type: 2
+Received move 20, with the evaluation 2147483647 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 16, with the evaluation 2147483647 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 15, with the evaluation 2147483647 and the alpha 2147483647 from process 3
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 0, with the evaluation 2147483647 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 20 with the score 2147483647
+
+Placing piece in row: 2, column: 4
+  0 1 2 3 4 5 6 7 
+0 . W W W W B . B 
+1 W W W W B B B . 
+2 . W W B B B W W 
+3 B B B B B W W W 
+4 B B B B W W W W 
+5 B B B W B W B W 
+6 B W W B W B B B 
+7 B W B B B B B . 
+message type: 1
+
+Opponent placing piece in row: 2, column: 0
+  0 1 2 3 4 5 6 7 
+0 . W W W W B . B 
+1 W W W W B B B . 
+2 W W W B B B W W 
+3 B W B B B W W W 
+4 B B W B W W W W 
+5 B B B W B W B W 
+6 B W W B W B B B 
+7 B W B B B B B . 
+message type: 2
+Received move 0, with the evaluation 2147483647 and the alpha 2147483647 from process 2
+Elapsed (0 seconds elapsed) time limit 5000
+
+Received move 15, with the evaluation 2147483647 and the alpha 2147483647 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 0 with the score 2147483647
+
+Placing piece in row: 0, column: 0
+  0 1 2 3 4 5 6 7 
+0 B B B B B B . B 
+1 B B W W B B B . 
+2 B W B B B B W W 
+3 B W B B B W W W 
+4 B B W B W W W W 
+5 B B B W B W B W 
+6 B W W B W B B B 
+7 B W B B B B B . 
+message type: 1
+
+Opponent placing piece in row: 1, column: 7
+  0 1 2 3 4 5 6 7 
+0 B B B B B B . B 
+1 B B W W W W W W 
+2 B W B B B B W W 
+3 B W B B B W W W 
+4 B B W B W W W W 
+5 B B B W B W B W 
+6 B W W B W B B B 
+7 B W B B B B B . 
+message type: 2
+Received move 6, with the evaluation 2147483647 and the alpha -2147483648 from process 1
+Elapsed (0 seconds elapsed) time limit 5000
+
+Final move 6 with the score 2147483647
+
+Placing piece in row: 0, column: 6
+  0 1 2 3 4 5 6 7 
+0 B B B B B B B B 
+1 B B W W W B B W 
+2 B W B B B B B W 
+3 B W B B B W B W 
+4 B B W B W W B W 
+5 B B B W B W B W 
+6 B W W B W B B B 
+7 B W B B B B B . 
+message type: 1
+
+Opponent placing piece in row: 7, column: 7
+  0 1 2 3 4 5 6 7 
+0 B B B B B B B B 
+1 B B W W W B B W 
+2 B W B B B B B W 
+3 B W B B B W B W 
+4 B B W B W W B W 
+5 B B B W B W B W 
+6 B W W B W B W W 
+7 B W W W W W W W 
+message type: 2
+Match reset.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~ NEW MATCH ~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+New board state:
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . . W B . . . 
+4 . . . B W . . . 
+5 . . . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+message type: 3
+Game terminated.

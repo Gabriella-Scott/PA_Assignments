@@ -1,0 +1,1033 @@
+Initialising worker process 2
+Let the game begin...
+Worker process: 2
+My colour: 1
+Board size: 8
+-----------------------------------
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . . W B . . . 
+4 . . . B W . . . 
+5 . . . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . B B B . . . 
+4 . . . B W . . . 
+5 . . . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 20, using alpha -2147483648 and depth 12
+Move 20 has a score 982
+
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . B B B . . . 
+4 . . B W W . . . 
+5 . B . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 21, using alpha -2147483648 and depth 11
+Move 21 has a score 384
+Going to evaluate move 18, using alpha 484 and depth 11
+Move 18 has a score 676
+
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B . . . . . 
+2 . . B . . . . . 
+3 . . B W B . . . 
+4 . . B W W . . . 
+5 . B . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 33, using alpha -2147483648 and depth 11
+Move 33 has a score 369
+
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B . . B . . 
+2 . . B . B . . . 
+3 . . B B W . . . 
+4 . . B W W . . . 
+5 . B . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 25, using alpha -2147483648 and depth 11
+Move 25 has a score 387
+Going to evaluate move 17, using alpha 387 and depth 11
+Move 17 has a score 639
+Going to evaluate move 9, using alpha 639 and depth 11
+Move 9 has a score 599
+
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B . B B . . 
+2 . . B B B . . . 
+3 . . B W W . . . 
+4 . . B W W . . . 
+5 . B . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 33, using alpha -2147483648 and depth 11
+Move 33 has a score 984
+Going to evaluate move 6, using alpha 984 and depth 11
+Move 6 has a score 936
+
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B . B B . . 
+2 . . B B B . . . 
+3 . . B W B . . . 
+4 . W W B B . . . 
+5 . B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 48, using alpha -2147483648 and depth 11
+Move 48 has a score 611
+Going to evaluate move 43, using alpha 611 and depth 11
+Move 43 has a score 726
+Going to evaluate move 25, using alpha 726 and depth 11
+Move 25 has a score 723
+Going to evaluate move 11, using alpha 726 and depth 11
+Move 11 has a score 877
+Going to evaluate move 9, using alpha 877 and depth 11
+Move 9 has a score 876
+Going to evaluate move 5, using alpha 877 and depth 11
+Move 5 has a score 870
+Going to evaluate move 2, using alpha 877 and depth 11
+Move 2 has a score 877
+
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B W B B . . 
+2 . . B W B . . . 
+3 . . B W B . . . 
+4 . B W B B . . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 45, using alpha -2147483648 and depth 11
+Move 45 has a score 759
+Going to evaluate move 29, using alpha 760 and depth 11
+Move 29 has a score 847
+Going to evaluate move 9, using alpha 878 and depth 11
+Move 9 has a score 852
+Going to evaluate move 5, using alpha 890 and depth 11
+Move 5 has a score 864
+Going to evaluate move 1, using alpha 890 and depth 11
+Move 1 has a score 864
+
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B W B B . . 
+2 . . B W W B . . 
+3 . . B W B . B . 
+4 . B W B B . . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 48, using alpha -2147483648 and depth 11
+Move 48 has a score 820
+Going to evaluate move 43, using alpha 820 and depth 11
+Move 43 has a score 872
+Going to evaluate move 37, using alpha 872 and depth 11
+Move 37 has a score 877
+Going to evaluate move 29, using alpha 877 and depth 11
+Move 29 has a score 885
+Going to evaluate move 22, using alpha 885 and depth 11
+Move 22 has a score 937
+Going to evaluate move 9, using alpha 937 and depth 11
+Move 9 has a score 926
+
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . B W B B . . 
+2 . . B W W W B . 
+3 . . B W B . B B 
+4 . B W B B . . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 48, using alpha -2147483648 and depth 11
+Move 48 has a score 831
+Going to evaluate move 43, using alpha 831 and depth 11
+Move 43 has a score 847
+Going to evaluate move 42, using alpha 847 and depth 11
+Move 42 has a score 847
+Going to evaluate move 37, using alpha 847 and depth 11
+Move 37 has a score 914
+Going to evaluate move 29, using alpha 914 and depth 11
+Move 29 has a score 914
+Going to evaluate move 25, using alpha 914 and depth 11
+Move 25 has a score 913
+Going to evaluate move 17, using alpha 914 and depth 11
+Move 17 has a score 910
+Going to evaluate move 6, using alpha 914 and depth 11
+Move 6 has a score 904
+Going to evaluate move 4, using alpha 914 and depth 11
+Move 4 has a score 897
+Going to evaluate move 3, using alpha 914 and depth 11
+Move 3 has a score 914
+
+  0 1 2 3 4 5 6 7 
+0 . . . . B . . . 
+1 . . B B B B . . 
+2 . . B W W W B . 
+3 . . B W W . B B 
+4 . B W W W W . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 52, using alpha -2147483648 and depth 11
+Move 52 has a score 907
+Going to evaluate move 39, using alpha 955 and depth 11
+Move 39 has a score 948
+Going to evaluate move 23, using alpha 955 and depth 11
+Move 23 has a score 953
+Going to evaluate move 9, using alpha 955 and depth 11
+Move 9 has a score 950
+Going to evaluate move 3, using alpha 955 and depth 11
+Move 3 has a score 955
+Going to evaluate move 1, using alpha 955 and depth 11
+Move 1 has a score 1012
+
+  0 1 2 3 4 5 6 7 
+0 . . . B B W . . 
+1 . . B B B W . . 
+2 . . B W W B B . 
+3 . . B W W . B B 
+4 . B W W W W . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 52, using alpha -2147483648 and depth 11
+Move 52 has a score 767
+Going to evaluate move 25, using alpha 823 and depth 11
+Move 25 has a score 823
+Going to evaluate move 2, using alpha 1046 and depth 11
+Move 2 has a score 1039
+
+  0 1 2 3 4 5 6 7 
+0 . . . B B B B . 
+1 . . B B B B . . 
+2 . . B W B W B . 
+3 . . B B W W B B 
+4 . B B W W W . . 
+5 B B . . B . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 52, using alpha -2147483648 and depth 11
+Move 52 has a score 1122
+Going to evaluate move 23, using alpha 1254 and depth 11
+Move 23 has a score 1311
+Going to evaluate move 2, using alpha 1311 and depth 11
+Move 2 has a score 1305
+
+  0 1 2 3 4 5 6 7 
+0 . . . B B B B . 
+1 . . B B B B . . 
+2 . . B W B B W W 
+3 . . B B W B W B 
+4 . B B W B B . . 
+5 B B . . B B . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 52, using alpha -2147483648 and depth 11
+Move 52 has a score 2147483260
+
+  0 1 2 3 4 5 6 7 
+0 . . . B B B B . 
+1 . . B B B B . . 
+2 . . B W B B W W 
+3 . . B B W B W B 
+4 . B B W B W . . 
+5 B B . . B B . . 
+6 . . . W B . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 53, using alpha -2147483648 and depth 11
+Move 53 has a score 2147483319
+Going to evaluate move 1, using alpha 2147483319 and depth 11
+Move 1 has a score 2147483435
+
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . . W B B B . . 
+2 . . B W B B W W 
+3 . . B B B B W B 
+4 . B B B B W . . 
+5 B B B . B B . . 
+6 . . . W B . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 50, using alpha -2147483648 and depth 11
+Move 50 has a score 2147483427
+Going to evaluate move 25, using alpha 2147483427 and depth 11
+Move 25 has a score 1590
+Going to evaluate move 24, using alpha 2147483427 and depth 11
+Move 24 has a score 2147483415
+
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . . W B B B . . 
+2 . . W W B B W W 
+3 . . W B B B W B 
+4 . B W B B W . . 
+5 B B B B B B . . 
+6 . . W W B . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 54, using alpha -2147483648 and depth 11
+Move 54 has a score 2147483647
+
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . . W B B B . . 
+2 . . W W B B W W 
+3 . . W B B B B B 
+4 . B W B B W . B 
+5 B B B W B B . . 
+6 . . W W W . . . 
+7 . . . . . W . . 
+
+Going to evaluate move 53, using alpha -2147483648 and depth 11
+Move 53 has a score 2147483647
+
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . B B B B B . . 
+2 . . W W B B W W 
+3 . . W W B B B B 
+4 . B W B W W . B 
+5 B B B W B W . . 
+6 . . W W W . W . 
+7 . . . . . W . . 
+
+Going to evaluate move 48, using alpha -2147483648 and depth 11
+Move 48 has a score 1190
+
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . B B B B B . . 
+2 . . W W B B W W 
+3 W . W W B B B B 
+4 B B B B W W . B 
+5 B B W W B W . . 
+6 . . W W W . W . 
+7 . . . . . W . . 
+
+Going to evaluate move 48, using alpha -2147483648 and depth 11
+Move 48 has a score 1196
+Going to evaluate move 25, using alpha 1300 and depth 11
+Move 25 has a score 1295
+Going to evaluate move 2, using alpha 1300 and depth 11
+Move 2 has a score 1299
+
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . B B B B B . B 
+2 . . W W B B B B 
+3 W . W W B B B B 
+4 B B B W W W . B 
+5 B B W W W W . . 
+6 . . W W W W W . 
+7 . . . . . W . . 
+
+Going to evaluate move 25, using alpha -2147483648 and depth 11
+Move 25 has a score 1371
+
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 . W W W B B B B 
+3 W . W W B B B B 
+4 B B B W W B . B 
+5 B B B W B W . . 
+6 . . B B W W W . 
+7 . . B . . W . . 
+
+Going to evaluate move 59, using alpha -2147483648 and depth 11
+Move 59 has a score 1106
+
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 . W W W B B B B 
+3 W . W W B B B B 
+4 B B B W W B . B 
+5 B B B W B W . . 
+6 . . B B W W W . 
+7 . W B B . W . . 
+
+Going to evaluate move 49, using alpha -2147483648 and depth 11
+Move 49 has a score 2147483647
+Going to evaluate move 25, using alpha 2147483647 and depth 11
+Move 25 has a score -658
+Going to evaluate move 2, using alpha 2147483647 and depth 11
+Move 2 has a score 948
+
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 . W W W B B B B 
+3 W . W W B B B B 
+4 B W B W W B . B 
+5 B B W W B W . . 
+6 . . B B B B B B 
+7 . W W W W W . . 
+
+Going to evaluate move 62, using alpha -2147483648 and depth 11
+Move 62 has a score 2400
+Going to evaluate move 47, using alpha 3100 and depth 11
+Move 47 has a score 3700
+Going to evaluate move 25, using alpha 4400 and depth 11
+Move 25 has a score -2147483648
+Going to evaluate move 2, using alpha 4400 and depth 11
+Move 2 has a score 4400
+
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 . W W W B B B B 
+3 W . W W B B B B 
+4 W W W W W B . B 
+5 W W W W B B B . 
+6 W . B B B B B B 
+7 . W W W W W . . 
+
+Going to evaluate move 62, using alpha -2147483648 and depth 11
+Move 62 has a score 2147483647
+Going to evaluate move 38, using alpha 2147483647 and depth 11
+Move 38 has a score 1400
+Going to evaluate move 14, using alpha 2147483647 and depth 11
+Move 14 has a score -1100
+Going to evaluate move 2, using alpha 2147483647 and depth 11
+Move 2 has a score 3300
+
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 . W B B B B . B 
+2 B B B B B B B B 
+3 W . W W B B B B 
+4 W W W W W B . B 
+5 W W W W W B B . 
+6 W . B B B W B B 
+7 . W W W W W W . 
+
+Going to evaluate move 49, using alpha -2147483648 and depth 11
+Move 49 has a score 2147483647
+Going to evaluate move 38, using alpha 2147483647 and depth 11
+Move 38 has a score 2147483647
+Going to evaluate move 25, using alpha 2147483647 and depth 11
+Move 25 has a score -14000
+Going to evaluate move 14, using alpha 2147483647 and depth 11
+Move 14 has a score 18000
+
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 B B B B B B . B 
+2 B B B B B B B B 
+3 W . W W B B B B 
+4 W W W W W B . B 
+5 W W W W W B B . 
+6 W W W W W W B B 
+7 . W W W W W W . 
+
+Going to evaluate move 47, using alpha -2147483648 and depth 11
+Move 47 has a score 8000
+Going to evaluate move 2, using alpha 8000 and depth 11
+Move 2 has a score -2147483648
+
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 B B B B B B W B 
+2 B B B B B W B B 
+3 B . W W W B B B 
+4 B W W W W B . B 
+5 B W W W W B B . 
+6 B W W W W W B B 
+7 B W W W W W W . 
+
+Going to evaluate move 47, using alpha -2147483648 and depth 11
+Move 47 has a score 6000
+Going to evaluate move 0, using alpha 2147483647 and depth 11
+Move 0 has a score -2147483648
+
+  0 1 2 3 4 5 6 7 
+0 . W . B B B B . 
+1 B B B B B B W B 
+2 B B B B B W W B 
+3 B B B B B B W B 
+4 B W W W W W W B 
+5 B W W W W W W . 
+6 B W W W W W W B 
+7 B W W W W W W . 
+
+Going to evaluate move 0, using alpha -2147483648 and depth 13
+Move 0 has a score 2147483647
+
+  0 1 2 3 4 5 6 7 
+0 . W W B B B B B 
+1 B B W W B B B B 
+2 B B W B W B W B 
+3 B B W B B W W B 
+4 B W W W W W W B 
+5 B W W W W W W . 
+6 B W W W W W W B 
+7 B W W W W W W . 
+
+
+  0 1 2 3 4 5 6 7 
+0 W W W B B B B B 
+1 B W W W B B B B 
+2 B B W B W B W B 
+3 B B W B B W W B 
+4 B W W W B W W B 
+5 B W W W W B W . 
+6 B W W W W W B B 
+7 B B B B B B B B 
+
+
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . . W B . . . 
+4 . . . B W . . . 
+5 . . . . . . . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 37, using alpha -2147483648 and depth 11
+Move 37 has a score 6000
+
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . . W B . . . 
+4 . . . B W . . . 
+5 . . . . B W . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 37, using alpha -2147483648 and depth 11
+Move 37 has a score 256
+Going to evaluate move 19, using alpha 256 and depth 11
+Move 19 has a score 237
+
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . . . W B . . . 
+4 . . . W B B . . 
+5 . . . W W W . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 53, using alpha -2147483648 and depth 11
+Move 53 has a score 250
+Going to evaluate move 42, using alpha 280 and depth 11
+Move 42 has a score 280
+Going to evaluate move 18, using alpha 310 and depth 11
+Move 18 has a score 390
+
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . . . . . . . 
+3 . W . W B . . . 
+4 . . W B B B . . 
+5 . . . W W W . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 53, using alpha -2147483648 and depth 11
+Move 53 has a score 425
+Going to evaluate move 51, using alpha 425 and depth 11
+Move 51 has a score 389
+Going to evaluate move 33, using alpha 425 and depth 11
+Move 33 has a score 406
+Going to evaluate move 19, using alpha 425 and depth 11
+Move 19 has a score 425
+
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B . . . . . 
+3 . W . B B W . . 
+4 . . W B W W . . 
+5 . . . W W W . . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 53, using alpha -2147483648 and depth 11
+Move 53 has a score 536
+Going to evaluate move 51, using alpha 536 and depth 11
+Move 51 has a score 510
+Going to evaluate move 32, using alpha 611 and depth 11
+Move 32 has a score 560
+
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B . . . . . 
+3 . W . B B W W . 
+4 . . W B W W . . 
+5 . . . W W W B . 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 53, using alpha -2147483648 and depth 11
+Move 53 has a score 510
+Going to evaluate move 38, using alpha 524 and depth 11
+Move 38 has a score 586
+
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B . . . . . 
+3 . W . B B W W . 
+4 . . W B B B W . 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 54, using alpha -2147483648 and depth 11
+Move 54 has a score 498
+Going to evaluate move 33, using alpha 617 and depth 11
+Move 33 has a score 605
+Going to evaluate move 32, using alpha 617 and depth 11
+Move 32 has a score 652
+Going to evaluate move 21, using alpha 652 and depth 11
+Move 21 has a score 650
+
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B W . . B . 
+3 . W . W W B W . 
+4 . . W W B W W . 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 53, using alpha -2147483648 and depth 11
+Move 53 has a score 794
+Going to evaluate move 50, using alpha 794 and depth 11
+Move 50 has a score 782
+Going to evaluate move 39, using alpha 794 and depth 11
+Move 39 has a score 788
+Going to evaluate move 33, using alpha 794 and depth 11
+Move 33 has a score 784
+Going to evaluate move 32, using alpha 794 and depth 11
+Move 32 has a score 794
+
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . . . . . . . 
+2 . . B W . W B . 
+3 . W B B W W W . 
+4 . . W W B W W . 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 53, using alpha -2147483648 and depth 11
+Move 53 has a score 725
+Going to evaluate move 51, using alpha 725 and depth 11
+Move 51 has a score 733
+Going to evaluate move 39, using alpha 733 and depth 11
+Move 39 has a score 732
+Going to evaluate move 31, using alpha 795 and depth 11
+Move 31 has a score 877
+Going to evaluate move 12, using alpha 877 and depth 11
+Move 12 has a score 876
+
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . W . . . . . 
+2 . . W W . W B . 
+3 . W W B B B B B 
+4 . . W W B W W . 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 54, using alpha -2147483648 and depth 11
+Move 54 has a score 422
+Going to evaluate move 50, using alpha 830 and depth 11
+Move 50 has a score 828
+Going to evaluate move 41, using alpha 830 and depth 11
+Move 41 has a score 830
+Going to evaluate move 39, using alpha 830 and depth 11
+Move 39 has a score 860
+Going to evaluate move 24, using alpha 860 and depth 11
+Move 24 has a score 849
+Going to evaluate move 20, using alpha 860 and depth 11
+Move 20 has a score 858
+Going to evaluate move 14, using alpha 860 and depth 11
+Move 14 has a score 851
+Going to evaluate move 13, using alpha 860 and depth 11
+Move 13 has a score 858
+Going to evaluate move 11, using alpha 860 and depth 11
+Move 11 has a score 902
+Going to evaluate move 1, using alpha 902 and depth 11
+Move 1 has a score 902
+
+  0 1 2 3 4 5 6 7 
+0 . . . . . . . . 
+1 . . W B . . . . 
+2 . . W B . W B . 
+3 . W W B B B W B 
+4 . . W W B W W W 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 54, using alpha -2147483648 and depth 11
+Move 54 has a score 460
+Going to evaluate move 50, using alpha 792 and depth 11
+Move 50 has a score 792
+Going to evaluate move 24, using alpha 792 and depth 11
+Move 24 has a score 791
+Going to evaluate move 13, using alpha 792 and depth 11
+Move 13 has a score 816
+
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W B . 
+3 . W W B W B W B 
+4 . . W W B W W W 
+5 . . . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 54, using alpha -2147483648 and depth 11
+Move 54 has a score 2147483186
+Going to evaluate move 51, using alpha 2147483186 and depth 11
+Move 51 has a score 1232
+Going to evaluate move 33, using alpha 2147483391 and depth 11
+Move 33 has a score 1233
+
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . B W B W W W 
+5 . B . W W W W W 
+6 . . . . . . . . 
+7 . . . . . . . . 
+
+Going to evaluate move 53, using alpha -2147483648 and depth 11
+Move 53 has a score 2147483349
+Going to evaluate move 50, using alpha 2147483349 and depth 11
+Move 50 has a score 2147483205
+Going to evaluate move 32, using alpha 2147483349 and depth 11
+Move 32 has a score 2147483144
+Going to evaluate move 24, using alpha 2147483349 and depth 11
+Move 24 has a score 1245
+Going to evaluate move 20, using alpha 2147483349 and depth 11
+Move 20 has a score 2147483135
+Going to evaluate move 15, using alpha 2147483349 and depth 11
+Move 15 has a score 1222
+Going to evaluate move 2, using alpha 2147483349 and depth 11
+Move 2 has a score 1194
+
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . B W B B W W 
+5 . B . W W B W W 
+6 . . . . . W . . 
+7 . . . . W . . . 
+
+Going to evaluate move 55, using alpha -2147483648 and depth 11
+Move 55 has a score 2147483150
+Going to evaluate move 50, using alpha 2147483273 and depth 11
+Move 50 has a score 2147483385
+Going to evaluate move 42, using alpha 2147483385 and depth 11
+Move 42 has a score 2147483345
+Going to evaluate move 13, using alpha 2147483385 and depth 11
+Move 13 has a score 1260
+
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . B W B B W W 
+5 . B . W W B W W 
+6 . . B W . W . . 
+7 . . . . W . . . 
+
+Going to evaluate move 59, using alpha -2147483648 and depth 11
+Move 59 has a score 2147483155
+Going to evaluate move 52, using alpha 2147483325 and depth 11
+Move 52 has a score 2147483311
+Going to evaluate move 20, using alpha 2147483366 and depth 11
+Move 20 has a score 2147483360
+Going to evaluate move 13, using alpha 2147483366 and depth 11
+Move 13 has a score 2147483103
+
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . W W W B W W 
+5 . B B W W W W W 
+6 . . B W W W . . 
+7 . . . . W . . . 
+
+Going to evaluate move 59, using alpha -2147483648 and depth 11
+Move 59 has a score 2147483265
+Going to evaluate move 54, using alpha 2147483265 and depth 11
+Move 54 has a score 2147483264
+Going to evaluate move 32, using alpha 2147483298 and depth 11
+Move 32 has a score 2147483264
+Going to evaluate move 13, using alpha 2147483298 and depth 11
+Move 13 has a score 1185
+Going to evaluate move 2, using alpha 2147483298 and depth 11
+Move 2 has a score 1195
+
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W B . . . . 
+2 . . B W . W W W 
+3 . W W B W B W W 
+4 . . W W W B W W 
+5 . B W W W W B W 
+6 . W W W W W . B 
+7 . . . . W . . . 
+
+Going to evaluate move 59, using alpha -2147483648 and depth 11
+Move 59 has a score 921
+Going to evaluate move 57, using alpha 921 and depth 11
+Move 57 has a score 2147483061
+Going to evaluate move 32, using alpha 2147483061 and depth 11
+Move 32 has a score 2147483254
+Going to evaluate move 15, using alpha 2147483254 and depth 11
+Move 15 has a score 1392
+Going to evaluate move 2, using alpha 2147483254 and depth 11
+Move 2 has a score 1365
+
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B W W W . . . 
+2 . . B W . W W W 
+3 . B W B W B W W 
+4 B . W W W B W W 
+5 . B W W W W B W 
+6 . W W W W W . B 
+7 . . . . W . . . 
+
+Going to evaluate move 59, using alpha -2147483648 and depth 11
+Move 59 has a score 986
+Going to evaluate move 57, using alpha 986 and depth 11
+Move 57 has a score 1013
+Going to evaluate move 14, using alpha 1043 and depth 11
+Move 14 has a score 1143
+Going to evaluate move 2, using alpha 1183 and depth 11
+Move 2 has a score 1181
+
+  0 1 2 3 4 5 6 7 
+0 . W . . . . . . 
+1 . B B B B B . . 
+2 . . B W . B W W 
+3 . B W B W B W W 
+4 B W W W W B W W 
+5 . W W W W W B W 
+6 . W W W W W . B 
+7 . . . . W . . . 
+
+Going to evaluate move 59, using alpha -2147483648 and depth 11
+Move 59 has a score 1218
+Going to evaluate move 48, using alpha 1248 and depth 11
+Move 48 has a score 1248
+Going to evaluate move 20, using alpha 1248 and depth 11
+Move 20 has a score 1248
+
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . B B B B W . . 
+2 . . B B . B W W 
+3 . B B B W B W W 
+4 B B W W W B W W 
+5 B B B B B B B W 
+6 . W W W W W . B 
+7 . . . . W . . . 
+
+Going to evaluate move 61, using alpha -2147483648 and depth 11
+Move 61 has a score 1026
+
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . W B B B W . . 
+2 . W B B . B W W 
+3 . B W B W B W W 
+4 B B W W W B W W 
+5 B B B B B B B W 
+6 . B B B W W . B 
+7 . . B . W . . . 
+
+Going to evaluate move 61, using alpha -2147483648 and depth 11
+Move 61 has a score 1427
+
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . W B B B W . . 
+2 . W B B . B W W 
+3 . B W B W B W W 
+4 B B W W W B W W 
+5 B W B B B B B W 
+6 W B B B B B B B 
+7 . . B . W . . . 
+
+Going to evaluate move 24, using alpha -2147483648 and depth 11
+Move 24 has a score 2147483647
+
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . W B B B W W . 
+2 . W B B . W W W 
+3 . B W B W B W W 
+4 B B W W W B W W 
+5 B W B B B B B W 
+6 B B B B B B B B 
+7 B . B . W . . . 
+
+Going to evaluate move 20, using alpha -2147483648 and depth 11
+Move 20 has a score 2147483647
+Going to evaluate move 8, using alpha 2147483647 and depth 11
+Move 8 has a score 3600
+Going to evaluate move 5, using alpha 2147483647 and depth 11
+Move 5 has a score 4600
+
+  0 1 2 3 4 5 6 7 
+0 . W . . W . . . 
+1 . W B B B W W . 
+2 . B B B . W W W 
+3 B B W B W W W W 
+4 B B W W W W W W 
+5 B W B W B W B W 
+6 B B B B W W W B 
+7 B . B . W W . . 
+
+Going to evaluate move 62, using alpha -2147483648 and depth 11
+Move 62 has a score 6400
+Going to evaluate move 7, using alpha 6400 and depth 11
+Move 7 has a score 5800
+Going to evaluate move 0, using alpha 6400 and depth 11
+Move 0 has a score 4800
+
+  0 1 2 3 4 5 6 7 
+0 . W W . W . . . 
+1 . W W B B W W . 
+2 . B W B . W W W 
+3 B B W B W W W W 
+4 B B W W W W W W 
+5 B W B W B W B W 
+6 B B B B W B B B 
+7 B . B . W W B . 
+
+Going to evaluate move 20, using alpha -2147483648 and depth 11
+Move 20 has a score 2147483647
+Going to evaluate move 7, using alpha 2147483647 and depth 11
+Move 7 has a score 2147483647
+Going to evaluate move 3, using alpha 2147483647 and depth 11
+Move 3 has a score 2147483647
+
+  0 1 2 3 4 5 6 7 
+0 . W W W W . . . 
+1 . W W W W W W . 
+2 . B W W . W W W 
+3 B B W W W W W W 
+4 B B W W W W W W 
+5 B W B W B W B W 
+6 B B B B W B B B 
+7 B . B B B B B . 
+
+Going to evaluate move 15, using alpha -2147483648 and depth 11
+Move 15 has a score 2147483647
+Going to evaluate move 0, using alpha 2147483647 and depth 11
+Move 0 has a score 2147483647
+
+  0 1 2 3 4 5 6 7 
+0 . W W W W . . B 
+1 W W W W W W B . 
+2 . W W W . B W W 
+3 B B W W B W W W 
+4 B B W B W W W W 
+5 B W B W B W B W 
+6 B B B B W B B B 
+7 B . B B B B B . 
+
+Going to evaluate move 15, using alpha -2147483648 and depth 11
+Move 15 has a score 2147483647
+
+  0 1 2 3 4 5 6 7 
+0 . W W W W B . B 
+1 W W W W B B B . 
+2 . W W B . B W W 
+3 B B B W B W W W 
+4 B B W B W W W W 
+5 B W B W B W B W 
+6 B W W B W B B B 
+7 B W B B B B B . 
+
+Going to evaluate move 16, using alpha -2147483648 and depth 11
+Move 16 has a score 2147483647
+
+  0 1 2 3 4 5 6 7 
+0 . W W W W B . B 
+1 W W W W B B B . 
+2 W W W B B B W W 
+3 B W B B B W W W 
+4 B B W B W W W W 
+5 B B B W B W B W 
+6 B W W B W B B B 
+7 B W B B B B B . 
+
+Going to evaluate move 0, using alpha -2147483648 and depth 13
+Move 0 has a score 2147483647
+
+  0 1 2 3 4 5 6 7 
+0 B B B B B B . B 
+1 B B W W W W W W 
+2 B W B B B B W W 
+3 B W B B B W W W 
+4 B B W B W W W W 
+5 B B B W B W B W 
+6 B W W B W B B B 
+7 B W B B B B B . 
+
+
+Game terminated.
