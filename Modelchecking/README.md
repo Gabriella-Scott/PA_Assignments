@@ -3,101 +3,124 @@
 SPIN/Promela models and verification of two concurrent systems.
 
 * **Program 1** — the multicore process scheduler from RW314 Project 1 (`manager.c`)
-* **Program 2** — *(to be added)*
+* **Program 2** — Othello MPI engine (`my_player.c`)
 
 ## Requirements
 
 * SPIN 6.5+ (`spin -V`)
 * a C compiler (`gcc`)
-* GNU make
 
 ## Layout
 
 ```
-models/         Promela models (one per program / variant)
-properties/     LTL claims, kept out of the model so that pan's
-                invalid-end-state check can be enabled separately
-scripts/        reproduction driver
-results/        captured SPIN output quoted in the report
-report/         the report source
-build/          generated (pan.c, pan, trails) — gitignored
+scheduler/
+    model.pml           Promela model with all LTL claims embedded
+    pan, pan_noclaim    compiled verifier binaries (generated)
+    pan.c / pan.[bhmt]  generated verifier source (generated)
+    model.pml.trail     last counterexample trail (generated)
+    results/            saved trails and run notes
+        run_commands.md     full reproduction log with commands and output
+        pcb_mutex.trail
+        no_self_wait.trail
+        waiting_consistent.trail
+        no_dup_ready (holds — no trail)
+        all_terminate_fair.trail
+        ready_dispatched_fair.trail
+        deadlock.trail
+othello/
+    model.pml           Promela model of the MPI master/worker protocol
+    results/            saved trails (in progress)
+report/
+    Report.tex          LaTeX source
 ```
-
-## Reproducing the results
-
-```
-make safety MODEL=sched_fcfs                 # assertions + invalid end states
-make ltl    MODEL=sched_fcfs P=p_mutual_dispatch
-make trail  MODEL=sched_fcfs                 # replay last counterexample
-bash scripts/run_all.sh                      # everything -> results/
-```
-
-### Why two builds
-
-`pan` disables its invalid-end-state (deadlock) check whenever a never claim is
-compiled in. The `safety` target therefore builds from the bare model with no
-claim; the `ltl` target concatenates `models/*.pml` with `properties/*.ltl` and
-selects one claim with `-N`.
-
-### Flags used
-
-| flag | meaning |
-|---|---|
-| `-a`   | search for acceptance cycles (needed for liveness claims) |
-| `-f`   | weak fairness |
-| `-N n` | select never claim `n` |
-| `-m N` | maximum search depth |
-| `-w N` | hash table size 2^N |
-| `-DCOLLAPSE` | state compression, for the larger scenarios |
 
 ## Model configuration
 
-`models/sched_fcfs.pml` is parameterised at the top:
+### Scheduler (`scheduler/model.pml`)
 
 | constant | value | meaning |
 |---|---|---|
-| `NP` | 3 | simulated processes |
-| `NR` | 2 | resources that exist |
-| `NT` | 2 | scheduler threads ("cores") |
-| `NI` | 4 | instruction slots per process |
+| `NUM_PROCS` | 3 | simulated processes |
+| `NUM_RESOURCES` | 2 | shared resources |
+| `NUM_WORKERS` | 2 | scheduler threads ("cores") |
+| `MAX_INSTR` | 3 | instruction slots per process (override with `-DMAX_INSTR=N`) |
 
-Prepend `#define SCEN_DEADLOCK` to select the circular-wait workload instead of
-the default contention workload. That scenario exceeds 5x10^7 states with
-`NP=3`; run it with `NP=2` or with `-DCOLLAPSE -w28`.
+### Othello (`othello/model.pml`)
 
-## Variants
-
-| file | description |
-|---|---|
-| `sched_fcfs.pml`     | faithful model of `schedule_fcfs()` as written |
-| `sched_fcfs_fix.pml` | with the proposed fix: the thread tracks the outcome of an instruction in a **local** variable and drops the PCB pointer at hand-off, instead of re-reading `pcb->state` after the PCB may already belong to another core |
-
-## Results summary
-
-| property | `sched_fcfs` | `sched_fcfs_fix` |
+| constant | value | meaning |
 |---|---|---|
-| safety (assertions, invalid end states) | **fails** — `qlen[TERMQ]` overflows: a PCB is enqueued on the terminated queue twice | holds (1 163 685 states) |
-| `p_mutual_dispatch` | **fails** — two threads hold the same PCB | holds |
-| `p_no_premature_stop` | **fails** (consequence of the above) | holds |
-| `p_termination` (with `-f`) | **fails** | **fails** — see report: not provable under weak fairness with non-queueing mutexes |
+| `NUM_WORKERS` | 3 | MPI worker ranks (rank 0 is master) |
+| `MAX_MOVES` | 3 | moves considered per round |
+| `MAX_ROUNDS` | 2 | game rounds modelled |
 
-## Running
-```
-spin -a model.pml
-gcc -o pan pan.c
-./pan -a -N pcb_mutex
-```
-With several ltl blocks in one file, spin -a model.pml compiles all of them into pan.c and you pick one per run:
-```
+## Building the verifier
+
+Two binaries are built from the same generated `pan.c`.
+
+```bash
+# Standard verifier — used for all LTL property checks
 spin -a model.pml
 gcc -O2 -o pan pan.c
-./pan -a -N no_self_wait
+
+# Claim-free verifier — re-enables the invalid end state (deadlock) check
+# (pan disables that check whenever a never claim is compiled in)
+gcc -O2 -DNOCLAIM -o pan_noclaim pan.c
 ```
 
+## Running
 
-Each ./pan run overwrites model.pml.trail, so save the ones you want to keep:
+`spin -a` compiles all `ltl` blocks in the model into `pan.c`; select one per
+run with `-N`:
 
+```bash
+./pan -a -N pcb_mutex
+./pan -a -N no_self_wait
+./pan -a -N waiting_consistent
+./pan -a -N no_dup_ready
+./pan -a -f -N all_terminate      # -f for weak fairness
+./pan -a -f -N ready_dispatched
+
+./pan_noclaim                      # deadlock / invalid end state check
+```
+
+Each `./pan` run overwrites `model.pml.trail`. Copy it before the next run:
+
+```bash
 ./pan -a -N waiting_consistent
 cp model.pml.trail results/waiting_consistent.trail
+```
 
-To replay a saved one later, copy it back to model.pml.trail first, then spin -t -p model.pml. Watch for the "model.pml is newer than model.pml.trail" warning, which means the trail is stale and belongs to an earlier version of the model.
+To replay a saved trail:
+
+```bash
+cp results/waiting_consistent.trail model.pml.trail
+spin -t -p model.pml
+spin -t -p -c model.pml            # column format: one column per process
+```
+
+If Spin warns that `model.pml` is newer than `model.pml.trail`, the trail
+belongs to an earlier version of the model and must not be used.
+
+## Flags
+
+| flag | meaning |
+|---|---|
+| `-a`   | search for acceptance cycles (required for liveness claims) |
+| `-f`   | weak fairness |
+| `-N n` | select never claim `n` |
+| `-DNOCLAIM` | compile out never claims to re-enable deadlock detection |
+| `-DMAX_INSTR=N` | override `MAX_INSTR` at parse time without editing the model |
+
+## Scheduler results summary
+
+| property | category | config | result |
+|---|---|---|---|
+| `pcb_mutex` | safety, mutual exclusion | `MAX_INSTR 3` | **violated** — depth 901, 65,957 states |
+| `no_self_wait` | safety, resource ownership | `MAX_INSTR 3` | **violated** — depth 379, 188 states |
+| `waiting_consistent` | safety, state consistency | `MAX_INSTR 3` | **violated** — depth 962, 69,699 states |
+| `no_dup_ready` | safety, queue integrity | `MAX_INSTR 2` | **holds** — 20,861,451 states, 0 errors |
+| `all_terminate` | liveness | `MAX_INSTR 3`, `-f` | **violated** — depth 1069, 493 states |
+| `ready_dispatched` | liveness | `MAX_INSTR 3`, `-f` | **violated** — depth 1088, 11,372,991 states |
+| deadlock | safety, invalid end state | `MAX_INSTR 3` | **violated** — depth 504, 67,872 states |
+
+See `scheduler/results/run_commands.md` for full reproduction details.

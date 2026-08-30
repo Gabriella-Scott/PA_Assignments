@@ -8,6 +8,8 @@ pan.t
 
 # Compiled verifier binary
 pan
+pan_noclaim
+pan.[chmbt]
 
 # Counterexample trail files
 *.trail
@@ -15,3 +17,5 @@ pan
 # SPIN verification artifacts
 *.pml.trail
 _spin_nvr.tmp
+
+*.o

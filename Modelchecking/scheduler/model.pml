@@ -146,8 +146,7 @@ active [NUM_WORKERS] proctype Worker() {
 					}
 					
 					/* Advance to the next instruction only if
-						* the process did not block
-						*/ 
+						* the process did not block*/ 
 						if
 						:: pcb_state[pcb_id] == WAITING -> skip
 						:: pcb_state[pcb_id] != WAITING -> 
@@ -156,7 +155,7 @@ active [NUM_WORKERS] proctype Worker() {
 					fi
 				:: pcb_state[pcb_id] != RUNNING -> break
 				od;
-				executing[pcb_id]--// Decrement executing count for the PCB
+				executing[pcb_id]--// Decr executing count for the PCB
 			:: !got_one -> skip
 				fi;		
 // Termination check
@@ -192,7 +191,7 @@ active [NUM_WORKERS] proctype Worker() {
 		#define no_dup_ready_p (in_ready[1] <= 1 && in_ready[2] <= 1 && in_ready[3] <= 1)
 	ltl no_dup_ready { [] no_dup_ready_p }
 		
-		/* Every process eventually reaches TERMINATED.	*/ 
+		/* Every process eventually reaches TERMINATED*/ 
 		#define all_done (pcb_state[1] == TERMINATED && pcb_state[2] == TERMINATED && pcb_state[3] == TERMINATED)
 	ltl all_terminate { <> all_done }
 		

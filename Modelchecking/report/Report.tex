@@ -1,13 +1,3 @@
-% =====================================================================
-% RW796 Software Verification and Analysis
-% Model Checking Assignment
-%
-% Compile with: latexmk -pdf main
-%
-% House rule: no em dashes anywhere, in text or in code comments. In
-% LaTeX an em dash is written as three hyphens, so do not use "---".
-% =====================================================================
-
 \documentclass[11pt,a4paper]{article}
 
 \usepackage[T1]{fontenc}
@@ -48,7 +38,7 @@
 
 \title{Model Checking Two Concurrent Programs with SPIN\\
        \large RW796 Software Verification and Analysis}
-\author{Gabriella \todo{surname} \\ \todo{student number}}
+\author{Gabriella Scott \\ 25935453}
 \date{\today}
 
 \begin{document}
@@ -241,13 +231,13 @@ reported by \code{pan}.}
 \toprule
 \textbf{Property} & \textbf{Config} & \textbf{Result} & \textbf{Depth} & \textbf{States} \\
 \midrule
-\code{pcb\_mutex}          & \code{MAX\_INSTR 3} & violated & 901  & 65\,957 \\
-\code{no\_self\_wait}      & \code{MAX\_INSTR 3} & violated & 379  & 188 \\
+\code{pcb\_mutex} & \code{MAX\_INSTR 3} & violated & 901  & 65\,957 \\
+\code{no\_self\_wait} & \code{MAX\_INSTR 3} & violated & 379  & 188 \\
 \code{waiting\_consistent} & \code{MAX\_INSTR 3} & violated & 962  & 69\,699 \\
-\code{no\_dup\_ready}      & \code{MAX\_INSTR 2} & holds    & n/a  & 20\,861\,451 \\
-\code{all\_terminate}      & \code{MAX\_INSTR 3}, \code{-f} & violated & 1069 & 493 \\
-\code{ready\_dispatched}   & \code{MAX\_INSTR 3}, \code{-f} & violated & 1088 & 11\,372\,991 \\
-deadlock                   & \code{MAX\_INSTR 3}, \code{-DNOCLAIM} & violated & 504 & 67\,872 \\
+\code{no\_dup\_ready} & \code{MAX\_INSTR 2} & holds    & n/a  & 20\,861\,451 \\
+\code{all\_terminate} & \code{MAX\_INSTR 3}, \code{-f} & violated & 1069 & 493 \\
+\code{ready\_dispatched} & \code{MAX\_INSTR 3}, \code{-f} & violated & 1088 & 11\,372\,991 \\
+deadlock & \code{MAX\_INSTR 3}, \code{-DNOCLAIM} & violated & 504 & 67\,872 \\
 \bottomrule
 \end{tabular}
 \end{table}
