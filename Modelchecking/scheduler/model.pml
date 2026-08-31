@@ -191,7 +191,7 @@ active [NUM_WORKERS] proctype Worker() {
 		#define no_dup_ready_p (in_ready[1] <= 1 && in_ready[2] <= 1 && in_ready[3] <= 1)
 	ltl no_dup_ready { [] no_dup_ready_p }
 		
-		/* Every process eventually reaches TERMINATED*/ 
+		/* Every process eventually reaches TERMINATED.	*/ 
 		#define all_done (pcb_state[1] == TERMINATED && pcb_state[2] == TERMINATED && pcb_state[3] == TERMINATED)
 	ltl all_terminate { <> all_done }
 		

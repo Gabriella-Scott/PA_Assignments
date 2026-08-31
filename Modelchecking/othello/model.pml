@@ -282,6 +282,10 @@ proctype Referee()
 	byte budget = MAX_ROUNDS;
 	
 	do
+	:: from_referee!GAME_TERMINATION;break
+	:: from_referee!UNKNOWN;break
+	:: from_referee!RECV_FAILED;break
+	:: from_referee!CLIENT_DISCONNECTED;break
 	:: budget > 0 -> 
 		budget--;
 		if
@@ -289,10 +293,6 @@ proctype Referee()
 		:: from_referee!PLAY_MOVE
 		:: from_referee!MATCH_RESET
 		fi
-	:: from_referee!GAME_TERMINATION;break
-	:: from_referee!UNKNOWN;break
-	:: from_referee!RECV_FAILED;break
-	:: from_referee!CLIENT_DISCONNECTED;break
 	od
 }
 
@@ -314,7 +314,7 @@ init {
 * independent causes of best_is_maximal failing,so that verification can
 * establish which cause is responsible rather than only that a fault
 * exists. best_is_maximal holds only when both are defined.
-*/
+*/ 
 
 /* The master finalised a round on a score that is not an evaluation at
 * all,but the INT_MAX that minimax uses to initialise minEval.*/ 

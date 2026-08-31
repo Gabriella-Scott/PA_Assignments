@@ -8,6 +8,7 @@ pan.t
 
 # Compiled verifier binary
 pan
+pan_bit
 pan_noclaim
 pan.[chmbt]
 
@@ -19,3 +20,6 @@ pan.[chmbt]
 _spin_nvr.tmp
 
 *.o
+
+# Verification results (generated trails and logs)
+results/
