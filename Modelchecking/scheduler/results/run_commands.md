@@ -12,7 +12,7 @@ model, in enough detail to reproduce each result from a clean checkout.
 | Platform | Ubuntu Linux |
 | Model file | `scheduler/model.pml` |
 | Repository | `PA_Assignments/Modelchecking` |
-| Model version | commit `<FILL IN COMMIT HASH>` |
+| Model version | commit `517e9be` |
 
 All results below were produced from the single committed `model.pml` at the
 commit above. No local edits to the model were made between runs. Where a
