@@ -3,46 +3,46 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Report.aux
 The style file: plainnat.bst
 Database file #1: refs.bib
-Warning--empty year in spin_atomic
-You've used 2 entries,
+Warning--I didn't find a database entry for "spin_roadmap"
+You've used 8 entries,
             2773 wiz_defined-function locations,
-            603 strings with 5063 characters,
-and the built_in function-call counts, 750 in all, are:
-= -- 59
-> -- 40
-< -- 1
-+ -- 14
-- -- 12
-* -- 51
-:= -- 123
-add.period$ -- 7
-call.type$ -- 2
-change.case$ -- 10
-chr.to.int$ -- 2
-cite$ -- 5
-duplicate$ -- 36
-empty$ -- 66
-format.name$ -- 14
-if$ -- 151
-int.to.chr$ -- 1
+            627 strings with 5654 characters,
+and the built_in function-call counts, 2561 in all, are:
+= -- 224
+> -- 100
+< -- 7
++ -- 41
+- -- 30
+* -- 139
+:= -- 401
+add.period$ -- 29
+call.type$ -- 8
+change.case$ -- 34
+chr.to.int$ -- 5
+cite$ -- 16
+duplicate$ -- 126
+empty$ -- 258
+format.name$ -- 38
+if$ -- 544
+int.to.chr$ -- 4
 int.to.str$ -- 1
 missing$ -- 2
-newline$ -- 19
-num.names$ -- 8
-pop$ -- 30
+newline$ -- 53
+num.names$ -- 32
+pop$ -- 98
 preamble$ -- 1
-purify$ -- 8
+purify$ -- 26
 quote$ -- 0
-skip$ -- 24
+skip$ -- 94
 stack$ -- 0
-substring$ -- 4
-swap$ -- 2
+substring$ -- 16
+swap$ -- 13
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 17
-warning$ -- 1
-while$ -- 6
+type$ -- 83
+warning$ -- 0
+while$ -- 24
 width$ -- 0
-write$ -- 33
+write$ -- 114
 (There was 1 warning)

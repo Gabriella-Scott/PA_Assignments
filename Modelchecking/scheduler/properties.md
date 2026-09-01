@@ -357,22 +357,3 @@ here is which accesses are protected and which are not.
 dequeue, dispatch and resource machinery with `schedule_fcfs`, so the defects
 found here are present in them too. Modelling them would have multiplied the
 state space without exposing a different class of defect.
-
----
-
-## Citations to attach in the report
-
-Claims made in this file that are not covered by the four course PDFs:
-
-- the safety and liveness classification, and the claim that safety
-  violations have finite counterexamples: Lamport 1977, Alpern and
-  Schneider 1985
-- LTL as a specification language: Pnueli 1977
-- never claims as Buchi automata: Vardi and Wolper 1986
-- conditions for deadlock, for the discussion of `detect_deadlock`:
-  Coffman et al. 1971
-- `atomic`, `inline` and `-DNOCLAIM`: the spinroot manual pages and
-  Holzmann's SPIN book
-- the OpenMP execution model, including that a runnable thread is not passed
-  over indefinitely: the OpenMP specification
-- process states and scheduler terminology: Silberschatz et al.

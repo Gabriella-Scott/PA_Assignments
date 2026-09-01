@@ -46,7 +46,7 @@
 
 \section*{Introduction}
 
-This report presents Promela models of two concurrent programs and the
+This report covers Promela models of two concurrent programs and the
 verification of their correctness properties using Spin. The first
 program is a first-come first-served (FCFS) process scheduler, one of
 three policies supported by a shared-memory process manager. A team of
@@ -62,15 +62,29 @@ turn clock runs down. It communicates over three channels: MPI
 collectives to start a round, point-to-point messages to distribute and
 collect work, and a socket to the referee.
 
-The models are intentionally small. Parts of each program were omitted, 
-some behaviour was replaced with nondeterministic choices, and the remaining 
-parameters were fixed to small values. For these abstractions, one must
-assume that omitted behaviour does not affect the properties being checked. 
-In contrast, the smaller parameter values limit the scope of a passing result 
-but do not weaken a counterexample, since a counterexample still represents a 
-valid execution. Each abstraction is justified when introduced, while 
-Section~\ref{sec:limits-1} and Section~\ref{sec:limits-2} discuss the 
-resulting limitations.
+Parts of each program were omitted, some behaviour was replaced with
+nondeterministic choices, and the remaining parameters were fixed to small
+values. These three moves do not affect the results in the same way, so it
+helps to separate them with the usual pair of terms. An abstraction is
+\emph{sound} for a property if every counterexample it reports corresponds to
+a real execution of the implementation, meaning there are no false alarms. It
+is \emph{complete} if every violation the implementation can commit also
+appears in the model, meaning there are no missed defects.
+
+Replacing concrete behaviour with a nondeterministic choice adds executions
+rather than removing them, which is why Promela treats nondeterminism as the
+standard way to build an abstraction \cite{inggs_promela}. That direction
+keeps completeness but puts soundness at risk, because the model can now do
+things the implementation never would. Fixing the parameters to small values
+and leaving components out works the other way: it removes executions, so a
+counterexample that survives is still a real one, but a property that passes
+has only been shown to pass inside the bound. Neither model here is purely one
+or the other, so both directions are handled explicitly. Every counterexample
+is read back against the C source before it is called a defect, and every
+passing result is reported with its configuration attached rather than as a
+general claim. Each abstraction is justified where it is introduced, and
+Section~\ref{sec:limits-1} and Section~\ref{sec:limits-2} give the specific
+limits for each program.
 
 The analysis found defects in both programs. For the scheduler, 6 of the 
 7 checks failed, with the counterexamples tracing back to two faults in 
@@ -90,266 +104,362 @@ Implementation under analysis (Program 1): \todo{repo URL}\\
 Implementation under analysis (Program 2): \todo{repo URL}\\
 Promela models, properties and verification records:
 \url{https://github.com/Gabriella-Scott/PA_Assignments}
+
 % =====================================================================
 \section{Program 1: FCFS Process Scheduler}
 
 % ---------------------------------------------------------------------
 \subsection{The Promela Model}
 
-% Spec asks for: the design decisions, the relationship between model
-% and implementation, the extent to which it is an appropriate
-% abstraction and how that affects interpretation of results, and any
-% major refinements made during the analysis.
-%
-% Cover, in prose, with short code excerpts only:
-%
-% 1. Configuration and why. NUM_PROCS 3, NUM_WORKERS 2, NUM_RESOURCES 2,
-%    MAX_INSTR 3. Two workers is the smallest value at which any
-%    interleaving exists; three processes is the smallest at which a non
-%    trivial waiting queue exists; two resources allows a circular wait.
-%    Ids start at 1 so 0 encodes NULL.
-% 2. The mapping table below.
-% 3. Locks as atomic. The omp critical plus q_locks[0] dequeue becomes
-%    an atomic block \cite{holzmann2004}. Say explicitly where the
-%    implementation holds no lock, since that is where the double
-%    dispatch race lives, and note that those reads were deliberately
-%    left outside any atomic block.
-% 4. next_instruction as a bounded counter, with instruction type and
-%    target resource chosen nondeterministically. Nondeterminism gives a
-%    sound abstraction over all instruction sequences up to the bound
-%    \cite{inggs_promela}.
-% 5. Ghost arrays executing[] and in_ready[]. No counterpart in
-%    manager.c, never read by a guard, so they do not change reachable
-%    behaviour \cite{owicki1976}.
-% 6. Omitted and why: dynamic arrivals and a_lock, the RR and priority
-%    schedulers, names and strcmp, the nonexistent resource path,
-%    logging, terminatedq as an explicit queue, detect_deadlock. For
-%    each say what it costs. Two are not free: omitting arrivals removes
-%    the terminate() race, and omitting detect_deadlock means deadlock
-%    is checked by SPIN's invalid end state test rather than by the
-%    program's own detector, which is a different question.
-% 7. Refinements during the analysis: the blocking if with no
-%    complementary guard, the else combined with i/o restriction,
-%    active proctypes starting before init seeds ready_q, and the two
-%    ghost arrays added when properties needed observables.
-% 8. Limits on interpretation. The model is a hand built abstraction,
-%    not a refinement, so a counterexample implies a real defect only
-%    after checking by hand that the interleaving is permitted by the
-%    implementation and by OpenMP \cite{openmp52}. The bounds mean a
-%    property that holds establishes nothing outside them.
+The model abstracts the FCFS path of \code{manager.c}: \code{schedule\_fcfs}
+together with \code{execute\_instr}, \code{request\_resource},
+\code{release\_resource}, \code{enqueue\_pcb}, \code{dequeue\_pcb} and
+\code{terminate}. It consists of an \code{init} process that seeds the ready
+queue, three inlines standing for \code{terminate}, \code{request\_resource}
+and \code{release\_resource}, and a \code{Worker} proctype instantiated once
+per scheduling thread. The other two policies are not modelled: all three sit
+on the same queues, locks and resource table, so including them would have
+multiplied the state space without reaching a different class of defect.
 
-This model is an abstraction of the FCFS scheduler. The original code exists 
-in \code{manager.c} together with the functions it reaches:
-\begin{itemize}
-  \item \code{schedule\_fcfs}
-  \item \code{execute\_instr}
-  \item \code{request\_resource}
-  \item \code{release\_resource}
-  \item \code{enqueue\_pcb}
-  \item \code{dequeue\_pcb}
-  \item \code{terminate}
-\end{itemize}
-
-It consists of an \code{init} process that seeds the ready queue, three inlines that
-stand for \code{terminate}, \code{request\_resource} and
-\code{release\_resource}, and a single \code{Worker} proctype instantiated
-once per scheduling thread. The other two policies (\code{schedule\_rr}
-and \code{schedule\_priority}) are not modelled. All three sit on the same
-queues, the same locks and the same resource table, so including them
-would have multiplied the state space without reaching a different class
-of defect.
-
-The size of the model is fixed by 4 constants; each of them is the smallest
-value that shows the interesting behaviour.
-\code{NUM\_WORKERS} is 2, because a single thread cannot interleave with
-anything and every race the scheduler can have needs two threads at
-minimum. \code{NUM\_PROCS} is 3, because 2 processes are not enough to
-keep the ready queue occupied; with one running and one blocked the queue
-is empty, and a third is needed before a process can be dispatched while
-another is already blocked. \code{NUM\_RESOURCES} is 2; this is the
-smallest number that presents a circular wait, since 1 process holding a
-resource and requesting the same one is a different fault from 2
-processes each holding what the other wants \cite{silberschatz2018}.
-\code{MAX\_INSTR} is 3, which allows a process to request a resource,
-release it, and request again, so that a release can wake a blocked
-process and that process can then make progress.
-
-Process and resource identifiers start at 1 and not 0. The
-implementation uses \code{NULL} to mean both "no process holds this
-resource" and "this process is not waiting", and reserving 0 for that
-purpose keeps the same convention in the model, so that
-\code{resource\_owner[r] == 0} reads exactly as
-\code{resource->allocated == NULL} does.
-
-Only \code{MAX\_INSTR} is wrapped in an \code{\#ifndef} guard. It is the one 
-parameter that is varied between runs. Guarding it allows a different 
-configuration to be supplied with \code{spin -D} rather than by editing 
-the model. This ensures that every result in Section~\ref{sec:results-1} 
-comes from the same committed file.
+Four constants fix the size of the model, each the smallest value that still
+shows the behaviour of interest. \code{NUM\_WORKERS} is 2, because a single
+thread cannot interleave with anything. \code{NUM\_PROCS} is 3, because with 2
+processes one running and one blocked leaves the ready queue empty, and a
+third is needed before a process can be dispatched while another is already
+blocked. \code{NUM\_RESOURCES} is 2, the smallest number admitting a circular
+wait \cite{silberschatz2018}. \code{MAX\_INSTR} is 3, enough for a process to
+request a resource, release it and request again, so that a release can wake a
+blocked process. Identifiers start at 1 so that 0 can stand for \code{NULL}
+and \code{resource\_owner[r] == 0} reads exactly as
+\code{resource->allocated == NULL} does. Only \code{MAX\_INSTR} is wrapped in
+an \code{\#ifndef} guard, since it is the one parameter varied between runs;
+supplying it with \code{spin -D} means every result in
+Section~\ref{sec:results-1} comes from the same committed file.
+Table~\ref{tab:mapping} sets out the correspondence between the
+implementation and the model.
 
 \begin{table}[htbp]
 \centering
 \caption{Mapping between the implementation and the model.}
 \label{tab:mapping}
-\begin{tabular}{p{3.4cm} p{3.6cm} p{7cm}}
+\begin{tabular}{p{3.2cm} p{3.4cm} p{7.2cm}}
 \toprule
 \textbf{\code{manager.c}} & \textbf{Model} & \textbf{Reason} \\
 \midrule
 Thread in \code{schedule\_fcfs} &
 \code{active [NUM\_WORKERS] proctype Worker} &
-Parallel region runs the same threads over the same loop, so one
-proctype replicated twice captures every thread the scheduler creates. \\
-\bottomrule
+The parallel region runs identical threads over the same loop, so one
+proctype replicated twice covers every thread the scheduler creates. \\
+\addlinespace
 \code{readyq}, \code{waitingq} &
 Buffered channels \code{ready\_q}, \code{waiting\_q} &
-FIFO order is the only behaviour of the linked lists that FCFS depends on, 
-so buffered channels provide a direct abstraction. \code{waiting\_q} also 
-carries the resource id, which the implementation normally obtains from the 
-instruction record.\\
-\bottomrule
+FIFO order is the only behaviour of the linked lists FCFS depends on.
+\code{waiting\_q} also carries the resource id, which the implementation
+reads from the instruction record. \\
+\addlinespace
 \code{terminatedq} &
 \code{pcb\_state[] == TERMINATED} &
-Nothing gets dequeued from \code{terminatedq}, but it is appended to
-and counted; this means membership carries no information the state field
-does not already hold. \\
-\bottomrule
-
+Nothing is ever dequeued from it, so membership carries no information the
+state field does not already hold. \\
+\addlinespace
 \code{pcb\_t.state} &
 \code{pcb\_state[]} &
 Direct, indexed by process id instead of reached through a pointer. \\
-\bottomrule
+\addlinespace
 \code{next\_instruction} &
 \code{instr\_count[]} &
 The instruction list becomes a bounded counter, with
 \code{next\_instruction == NULL} represented by
-\code{instr\_count == MAX\_INSTR}. The type and target of each
-instruction are chosen non-deterministically rather than read from the
-list. \\
-\bottomrule
-
+\code{instr\_count == MAX\_INSTR}. \\
+\addlinespace
 \code{resource\_t.allocated} &
 \code{resource\_owner[]} &
-The resource list searched by \code{strcmp} becomes an array indexed by
-id, and \code{allocated == NULL} becomes owner 0. \\
-\bottomrule
-
+The list searched by \code{strcmp} becomes an array indexed by id, and
+\code{allocated == NULL} becomes owner 0. \\
+\addlinespace
 \code{q\_locks[0]}, \code{omp critical}, \code{i\_lock}, \code{r\_lock} &
 \code{atomic} blocks &
-Mutual exclusion (Mutex) is the only thing the locks provide here, and
-\code{atomic} supplies it without modelling lock acquisition itself
-\cite{spin_atomic}. Only the regions the implementation actually
-protects are made atomic. \\
-\bottomrule
-
+Mutual exclusion is all the locks provide here, and \code{atomic} supplies it
+without modelling acquisition \cite{spin_atomic}. Only the regions the
+implementation actually protects are made atomic. \\
+\addlinespace
 \code{terminate()} &
 \code{check\_terminate} inline &
-The same test, counting waiting and terminated processes and requiring an
-empty ready queue, evaluated over the state array rather than by walking
-the queues. \\
+The same test, evaluated over the state array rather than by walking the
+queues. \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-% Pair each excerpt with the manager.c fragment it abstracts, so the
-% origin of the abstraction is visible. Three or four pairs is enough.
+OpenMP nested locks were used to protect the shared structure in the implementation,
+which let a thread reacquire a lock it already holds \cite{openmp52};
+\code{schedule\_fcfs} takes \code{i\_lock} and then calls
+\code{execute\_instr}, which takes it again. The model represents no locks at
+all, only the \code{atomic} blocks standing for the regions they protect. That
+is sound provided the locks cannot deadlock against each other, which is
+checkable by inspection: every FCFS path acquires them in the same order, and
+\code{release\_resource}, the only function holding two queue locks at once,
+always takes \code{q\_locks[1]} before \code{q\_locks[0]}. With a consistent
+acquisition order no circular wait between locks is possible
+\cite{silberschatz2018}. One caveat to note is that a blocking statement inside an
+\code{atomic} sequence causes Spin to drop atomicity rather than report an
+error \cite{spin_atomic}, so the sends on \code{ready\_q} and
+\code{waiting\_q} could in principle interleave, but both channels are sized
+at \code{NUM\_PROCS} and can only fill if a PCB is enqueued twice, which is
+what \code{no\_dup\_ready} exists to rule out.
 
-\begin{lstlisting}[style=clang,caption={Dequeue in \code{schedule\_fcfs}}]
-#pragma omp critical
+What the model leaves outside an \code{atomic} block matters more. The
+assignment \code{running\_p->state = RUNNING}, the loop guard
+\code{while (running\_p->state == RUNNING)} and the test
+\code{if (running\_p->state == WAITING)} all touch shared PCB state with no
+lock held, since \code{i\_lock} is released as soon as \code{execute\_instr}
+returns. Those statements sit outside any atomic block in the \code{Worker}
+loop, so \code{pan} is free to interleave the second worker there. Wrapping
+them in \code{atomic} for tidiness would have left the model unable to find
+the defect in Section~\ref{sec:results-1}.
+
+\begin{lstlisting}[style=clang,caption={Unprotected reads in \code{schedule\_fcfs}, abridged}]
+running_p->state = RUNNING; /* no lock held */
+while (running_p->state == RUNNING) /* no lock held */
 {
-  omp_set_nest_lock(&q_locks[0]);
-  running_p = dequeue_pcb(&readyq);
-  omp_unset_nest_lock(&q_locks[0]);
+  ...
+  omp_set_nest_lock(&i_lock);
+  ...
+  execute_instr(running_p);
+  omp_unset_nest_lock(&i_lock); /* lock released here */
+
+  load_new_processes();
+
+  if (running_p->state == WAITING) /* no lock held */
+  {
+    break;
+  }
+  running_p->next_instruction = running_p->next_instruction->next;
+  ...
 }
 \end{lstlisting}
 
-\begin{lstlisting}[style=promela,caption={The same step in the model}]
-\todo{paste the atomic dequeue block from model.pml}
-\end{lstlisting}
+Two arrays in the model do not have direct counterparts in \code{manager.c};
+\code{executing[]} keeps track of how many workers are currently processing a 
+PCB, while \code{in\_ready[]} tracks how many times a PCB appears in the ready 
+queue. Since neither is used in a guard, they cannot enable or block any 
+transitions; only provide the state needed by \code{pcb\_mutex} and 
+\code{no\_dup\_ready}.
 
-% ---------------------------------------------------------------------
-\subsection{Correctness Properties}
-
-% For each property: informal statement, LTL formula, Promela form, and
-% why it matters for the scheduler. Keep the justification tied to the
-% implementation, not to the model.
-
-\subsubsection*{\code{pcb\_mutex}: mutual exclusion over process control blocks}
-
-\[ \always \bigwedge_{p=1}^{3} \mathit{executing}[p] \le 1 \]
-
-\begin{lstlisting}[style=promela]
-#define one_worker_per_pcb (executing[1] <= 1 && executing[2] <= 1 && executing[3] <= 1)
-ltl pcb_mutex { [] one_worker_per_pcb }
-\end{lstlisting}
-
-% A PCB is the unit of scheduling. Two threads in the instruction loop
-% for one PCB both advance next_instruction and both write state.
-\todo{Justification.}
-
-\subsubsection*{\code{no\_self\_wait}: no process waits for a resource it owns}
-
-\[ \always \bigwedge_{p=1}^{3}
-   \bigl( \mathit{waiting\_for}[p] = 0 \lor
-          \mathit{resource\_owner}[\mathit{waiting\_for}[p]] \neq p \bigr) \]
-
-% request_resource tests only resource->allocated == NULL and never
-% compares allocated against the requester.
-\todo{Promela form and justification.}
-
-\subsubsection*{\code{waiting\_consistent}: the waiting state is consistent}
-
-% pcb_state and waiting_for are two views of the same fact and a correct
-% scheduler keeps them in agreement.
-\todo{Formula, Promela form and justification.}
-
-\subsubsection*{\code{no\_dup\_ready}: ready queue integrity}
-
-% The only property expected to hold. Needs the in_ready ghost array,
-% since the implementation keeps no count of queue membership.
-\todo{Formula, Promela form and justification.}
-
-\subsubsection*{\code{all\_terminate}: every process eventually terminates}
-
-\[ \eventually \bigwedge_{p=1}^{3} \mathit{pcb\_state}[p] = \mathit{TERMINATED} \]
-
-\todo{Justification.}
-
-\subsubsection*{\code{ready\_dispatched}: a ready process is eventually dispatched}
-
-\[ \always \bigl( \mathit{pcb\_state}[1] = \mathit{READY} \rightarrow
-   \eventually\, \mathit{pcb\_state}[1] = \mathit{RUNNING} \bigr) \]
-
-% Stated for process 1 only. Justify by symmetry: no process has a
-% distinguishing attribute, so one instance is representative and the
-% never claim stays small. Say that this is an argument, not a proof.
-\todo{Justification.}
-
-\subsubsection*{Deadlock}
-
-% Not expressed in LTL. Checked with SPIN's invalid end state detection
-% \cite{inggs_properties}, which asks whether the system halted where it
-% should not have. That is a broader question than whether a circular
-% wait exists \cite{coffman1971}.
-\todo{Discussion.}
-
-% ---------------------------------------------------------------------
-\subsection{Verification Results and Analysis}
-
-% The spec says not to merely reproduce SPIN output. One table, then
-% interpretation.
-%
-% Setup, in two or three sentences: all properties are named ltl blocks
-% in one model.pml selected with ./pan -a -N name, since pan silently
-% uses the first claim if -N is omitted; an active never claim disables
-% the invalid end state check, so the deadlock run uses a second binary
-% compiled with -DNOCLAIM from the same pan.c \cite{spin_man}; MAX_INSTR
-% is overridden on the command line rather than by editing the model.
-
-\todo{Setup paragraph.}
+The instruction stream is where the model makes the biggest abstraction, because
+the implementation reads instructions from a linked list created by the loader, 
+where each instruction has a type and resource name. The model does not 
+include these instruction records; instead, \code{select} non-deterministically 
+chooses a resource, while a two-branch \code{if} non-deterministically 
+chooses between a request and a release \cite{inggs_promela}. 
+Because \code{pan} explores both branches, the model covers every possible 
+instruction sequence of up to \code{MAX\_INSTR} steps, including sequences that 
+the actual loader would not produce.
+Table~\ref{tab:omissions} lists what was left out and what each omission
+costs.
 
 \begin{table}[htbp]
 \centering
-\caption{Verification results, Spin 6.5.2. Depths and state counts as
+\caption{What the model leaves out, and what each omission costs.}
+\label{tab:omissions}
+\begin{tabular}{p{4.2cm} p{9.8cm}}
+\toprule
+\textbf{Omitted} & \textbf{Cost} \\
+\midrule
+Process names, \code{strcmp} lookup &
+None $\rightarrow$ Resources are found by index (instead of by walking a list). \\
+\addlinespace
+Logging &
+None $\rightarrow$ It writes to a file and touches no scheduling state. \\
+\addlinespace
+\code{omp barrier}, \code{omp single} &
+None $\rightarrow$ They run after every process has terminated, so no property here can
+distinguish them. \\
+\addlinespace
+The "resource does not exist" path &
+Small but real $\rightarrow$ The implementation reaches the same
+\code{enqueue\_pcb(..., WAITING)} branch whether a resource is held by
+another process or absent entirely; the model represents only the first. \\
+\addlinespace
+Dynamic arrivals and \code{a\_lock} &
+Not free $\rightarrow$ \code{load\_new\_processes} can add to the ready queue while
+\code{terminate()} is counting it, so omitting arrivals removes a race the
+model cannot then find. \\
+\addlinespace
+\code{detect\_deadlock} &
+Not free $\rightarrow$ Deadlock is checked by Spin's invalid end state detection instead,
+which asks whether the system halted where it should not have rather than
+whether a circular wait exists. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Three changes were needed because of how Promela works. An \code{if} 
+statement with no executable guard blocks, so the test after an instruction
+uses two explicit guards for \code{WAITING} instead of a guard and an 
+\code{else}. Spin also doesn't allow \code{else} to be used with channel 
+operations, so the dequeue uses \code{nempty(ready\_q)} and 
+\code{empty(ready\_q)} as two explicit cases.
+
+A worker can try to dequeue a process before the ready queue has been filled,
+because the \code{active} proctypes start at the same time as \code{init}. 
+The \code{empty(ready\_q)} branch handles this case, but it also 
+causes the simple liveness failures discussed in Section~\ref{sec:results-1}.
+
+\subsubsection*{Limits on interpretation}
+\label{sec:limits-1}
+
+The model was written by hand, so a counterexample is treated as a possible 
+defect until its interleaving has been checked against the source code. 
+This is done for each finding in Section~\ref{sec:results-1}. On the other 
+hand, a property that holds only applies to the model configuration of 3 
+processes, 2 workers, 2 resources, and \code{MAX\_INSTR} steps. One important 
+assumption is that the model treats unprotected reads of 
+\code{running\_p->state} as ordinary reads that see the most recent value 
+written. OpenMP does not guarantee this behaviour without a 
+\code{flush} \cite{openmp52}. Consequently, the real program may have behaviours 
+that are not represented in the model. This means that the identified defects are a 
+lower bound on the problems with the unlocked dispatch loop.
+
+% ---------------------------------------------------------------------
+\subsection{Correctness Properties}
+\label{sec:props-1}
+
+Seven checks were run: 6 properties written as named \code{ltl} blocks in
+\code{model.pml}, plus a deadlock check that is not an LTL property.
+Table~\ref{tab:props} gives each formula as it appears in the file, where
+\code{[]} is $\always$ and \code{<>} is $\eventually$ \cite{inggs_properties}. 4 are safety
+properties, which say a bad state is never reached and are violated by a
+finite prefix, and 2 are liveness properties, which say something good
+eventually happens and can only be violated by an infinite execution
+\cite{inggs_properties}. Promela has no quantifier, so every conjunction over
+the three process ids is written out by hand.
+
+\begin{table}[htbp]
+\centering
+\caption{The six LTL properties as written in \code{model.pml}.}
+\label{tab:props}
+\begin{tabular}{l l p{9.4cm}}
+\toprule
+\textbf{Property} & \textbf{Class} & \textbf{Formula} \\
+\midrule
+\code{pcb\_mutex} & safety &
+\code{[] (executing[p] <= 1)} for each \code{p} \\
+\addlinespace
+\code{no\_self\_wait} & safety &
+\code{[] (waiting\_for[p] == 0 || resource\_owner[waiting\_for[p]] != p)} \\
+\addlinespace
+\code{waiting\_consistent} & safety &
+\code{[] (pcb\_state[p] != WAITING || waiting\_for[p] != 0)} \\
+\addlinespace
+\code{no\_dup\_ready} & safety &
+\code{[] (in\_ready[p] <= 1)} \\
+\addlinespace
+\code{all\_terminate} & liveness &
+\code{<> (pcb\_state[1] == TERMINATED \&\& ... \&\& pcb\_state[3] == TERMINATED)} \\
+\addlinespace
+\code{ready\_dispatched} & liveness &
+\code{[] ((pcb\_state[1] == READY) -> <> (pcb\_state[1] == RUNNING))} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent
+\textbf{\code{pcb\_mutex}} is an important invariant because the PCB 
+represents a unit of work, so only one thread should process it at a time. 
+The dequeue operation is protected, but the code after it is not. This means 
+two threads could enter the instruction loop for the same PCB, causing both 
+to update \code{next\_instruction} and \code{state}.
+
+\medskip\noindent
+\textbf{\code{no\_self\_wait}} checks the behaviour of \code{request\_resource}. 
+The function only checks whether \code{resource->allocated == NULL} and does 
+not check whether the resource is already owned by the requesting process. 
+This results in a process being able to request a resource it already holds 
+and be placed on \code{waitingq}. Since the process is the one holding the 
+resource, it cannot release it while waiting. Unlike the other safety 
+properties, this failure does not depend on a particular thread interleaving
+(so it is considered separately).
+
+\medskip\noindent
+\textbf{\code{waiting\_consistent}} checks that a PCB in state 
+\code{WAITING} is actually waiting for a resource, since the state and resource
+information are updated separately without a lock protecting both operations. 
+This means a PCB can enter the \code{WAITING} state without having a resource 
+recorded. It can then remain on the waiting queue without anything being able 
+to wake it. This property is considered together with \code{pcb\_mutex}, 
+because it shows how overlapping access can lead to incorrect state that 
+affects later decisions.
+
+\medskip\noindent
+\textbf{\code{no\_dup\_ready}} checks the three places that add processes 
+to the ready queue: the long-term scheduler, \code{load\_new\_processes}, 
+and \code{release\_resource}. A duplicate entry could cause the same process 
+to be dispatched twice and lead to another \code{pcb\_mutex} violation that 
+cannot be prevented just by locking the dispatch loop.
+
+\medskip\noindent
+
+\textbf{\code{all\_terminate}} is checked separately from the program's own 
+stopping condition because they don't ask the same question. 
+\code{terminate()} returns TRUE when all processes have been placed in either 
+the waiting or terminated queues. This means a process that is blocked 
+forever can still allow the workers to exit and the scheduler to report that 
+it has finished.
+
+\medskip\noindent
+
+\textbf{\code{ready\_dispatched}} checks whether the system actually serves 
+processes before stopping. It is only checked for process 1 because the 3 
+processes are symmetric. FCFS does not use a priority field, and all 3 
+instruction sequences are generated using the same nondeterministic choice. 
+Therefore, checking one process represents the others and keeps the never 
+claim smaller. This is an assumption based on symmetry rather than a formal 
+proof, and it is the one property in Program 1 that was weakened to reduce 
+the verification cost. Both liveness properties are checked under weak 
+fairness, as discussed in Section~\ref{sec:results-1}.
+
+\medskip\noindent
+\textbf{Deadlock} is checked with Spin's invalid end state detection, which
+asks whether any process is stopped somewhere other than a valid halting
+point \cite{inggs_properties}. That is broader than asking whether a circular
+wait exists \cite{silberschatz2018}; it catches a process blocked on a guard
+that can never become executable, whatever the reason. Since \code{pan}
+disables the check while a never claim is active, this run uses a separate
+claim-free verifier \cite{spin_pan}.
+
+\medskip\noindent
+Three things were deliberately not checked, namely an assertion bounding
+\code{instr\_count} was removed, because the deadlock trail already shows the
+same overrun and an active assertion would let other runs stop on it rather
+than on their named property. \code{detect\_deadlock} is not verified, because
+it runs inside \code{\#pragma omp single} and contains no concurrency. Lock
+reentrancy is not modelled, because no property depends on nesting depth,
+only on which accesses are protected.
+
+% ---------------------------------------------------------------------
+\subsection{Verification Results and Analysis}
+\label{sec:results-1}
+
+Each run selects a specific claim using \code{./pan -a -N name}. If \code{-N} 
+is not provided, \code{pan} uses the first claim in the file by default. 
+The deadlock check uses a second binary compiled from the same generated 
+\code{pan.c} with \code{-DNOCLAIM}. This removes the claims from the verifier,
+rather than from the model itself \cite{spin_pan}. The value of 
+\code{MAX\_INSTR} is also supplied to \code{spin} on the command line, 
+ensuring that all results in Table~\ref{tab:results} use the same source file.
+
+Two flags are used throughout the verification. \code{-m} increases the maximum 
+search depth from the default of 10,000, while \code{-w26} increases the hash 
+table size to $2^{26}$ entries. The larger hash table was needed because the 
+default $2^{19}$ entries caused many hash conflicts at this scale 
+\cite{spin_pan}. All runs were performed from the command line using 
+Spin 6.5.2 on a machine with 7,GB of RAM. iSpin was not used.
+
+
+\begin{table}[htbp]
+\centering
+\caption{Verification results. Depths and state counts as
 reported by \code{pan}.}
 \label{tab:results}
 \begin{tabular}{l l l r r}
@@ -360,132 +470,712 @@ reported by \code{pan}.}
 \code{no\_self\_wait} & \code{MAX\_INSTR 3} & violated & 379  & 188 \\
 \code{waiting\_consistent} & \code{MAX\_INSTR 3} & violated & 962  & 69\,699 \\
 \code{no\_dup\_ready} & \code{MAX\_INSTR 2} & holds    & n/a  & 20\,861\,451 \\
+\code{all\_terminate} & \code{MAX\_INSTR 3}, no \code{-f} & violated & 14 & 25 \\
 \code{all\_terminate} & \code{MAX\_INSTR 3}, \code{-f} & violated & 1069 & 493 \\
+\code{ready\_dispatched} & \code{MAX\_INSTR 3}, no \code{-f} & violated & 14 & 25 \\
 \code{ready\_dispatched} & \code{MAX\_INSTR 3}, \code{-f} & violated & 1088 & 11\,372\,991 \\
 deadlock & \code{MAX\_INSTR 3}, \code{-DNOCLAIM} & violated & 504 & 67\,872 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
+Six of the seven checks failed, but they do not describe six problems. They
+collapse into two defects.
+
 \subsubsection*{The double dispatch race}
 
-% The headline finding, from pcb_mutex and waiting_consistent.
-% - The interleaving in terms of manager.c: worker A dequeues p, blocks
-%   it on a request, releases i_lock; before A reaches
-%   if (running_p->state == WAITING) break;
-%   worker B releases the resource, which moves p to readyq with state
-%   READY; p is dequeued and run while A is still in its loop for p.
-% - The cause: while (running_p->state == RUNNING) and the WAITING test
-%   both read shared PCB state with no lock held.
-% - Concrete harm: instr_count overshoots MAX_INSTR, which in the
-%   implementation is next_instruction advanced twice for one
-%   instruction, walking the pointer off the end of the list.
-% - waiting_consistent shows the worse symptom: a PCB left WAITING, on
-%   waiting_q, and owning a resource it will never release.
-% - Fix: hold a lock across the state test and the branch, not only
-%   across execution. Note the cost in lost parallelism.
-% A figure of the interleaving would help here if you have space.
+\code{pcb\_mutex} fails at depth 901 when \code{executing[]} reaches 2. After 
+checking the counterexample against \code{manager.c}, the interleaving is as 
+follows. Worker A dequeues process $p$ and runs an instruction requesting a 
+resource held by another process. \code{request\_resource} then sets $p$ to 
+\code{WAITING} and adds it to \code{waitingq}. A releases \code{i\_lock} and 
+is about to check \code{running\_p->state == WAITING} to decide whether to 
+leave the loop. Before this happens, worker B releases the resource, causing 
+\code{release\_resource} to move $p$ back to \code{readyq} and set its state to 
+\code{READY}. B then dequeues $p$ and starts running it. A reads the updated 
+\code{READY} state, does not leave the loop, and continues running $p$ as well.
 
-\todo{Analysis and fix.}
+\code{waiting\_consistent} fails 61 steps later in the same part of the execution. 
+The trail shows a PCB in the \code{WAITING} state even though the resource it 
+was waiting for has already been released by the other worker. Since 
+\code{release\_resource} only wakes a waiting process when the resource
+matches the one it is waiting for, this PCB remains in \code{waitingq} with 
+no way to return to the ready queue. It also continues holding a resource 
+that it will never release.
+
+The deadlock run is the same defect from the consequence side. Its final state
+has \code{instr\_count[2]} at 4 with \code{MAX\_INSTR} at 3, leaving a worker
+stuck at the selection on \code{instr\_count} because neither guard is
+executable. In \code{manager.c} that is two threads both running
+\code{running\_p->next\_instruction = running\_p->next\_instruction->next} for
+the same PCB, so the second advances a pointer already at the end of the list
+and dereferences past it. C defines no behaviour there, and a Promela control
+point with no executable transition is a state with no defined successor, so
+the abstraction has nothing defined exactly where the implementation has
+nothing defined.
+
+The fix is to hold a lock across the state test and the branch that follows
+it, not only across \code{execute\_instr}. Doing that with \code{i\_lock}
+costs parallelism, since \code{i\_lock} already serialises every instruction
+in the system; a per-PCB lock is the cheaper version, because then only
+threads touching the same PCB serialise.
 
 \subsubsection*{Self deadlock in \code{request\_resource}}
 
-% Not a race, and the counterexample proves it: 379 deep, 188 states,
-% one worker, executing[] never exceeds 1. Reachable single threaded.
-% Cause: no ownership test, so a process re-requesting a resource it
-% holds falls through with resource_found FALSE and is enqueued on
-% waitingq to wait for itself. Note that the same branch also handles a
-% resource that does not exist, which the model omits, so two different
-% situations share one path. Fix: test ownership first and separate
-% "not found" from "not available".
+This counterexample is much smaller than the others, failing at depth 379 
+after 188 states. The trail only contains one worker, and \code{executing[]} 
+never becomes greater than 1, so there is no thread interleaving involved. 
+This is simply a logic error that a single thread can reach on its own. The 
+fix is to add a check before the availability test so that 
+\code{resource->allocated == cur\_pcb} is treated as a successful request. 
+The same \code{!resource\_found} branch is also used when the requested 
+resource does not exist. These are two different cases, so the fix should 
+distinguish between a resource already owned by the process, a resource held 
+by another process, and a resource that does not exist.
 
-\todo{Analysis and fix.}
+This defect also explains both liveness failures and has another consequence 
+that is not checked by the model. \code{detect\_deadlock} searches for cycles 
+in the waiting queue, and a process waiting for a resource that it already 
+owns creates a cycle of length 1. The program would therefore report a 
+deadlock even though it is not the type of deadlock the diagnostic is 
+intended to detect. A single missing check therefore causes a safety 
+violation, 2 liveness violations, and an incorrect deadlock diagnosis.
 
 \subsubsection*{Liveness and fairness}
 
-% Both liveness properties fail trivially without -f, at depth 14 with
-% 25 states, in a cycle where init is never scheduled again so ready_q
-% is never seeded. That is a modelling artefact, not a defect. Weak
-% fairness excludes cycles in which a runnable process is passed over
-% forever \cite{inggs_properties}, and costs a great deal: 25 states
-% without -f against over eleven million with it for ready_dispatched.
-% The fair all_terminate counterexample ends with process 1 holding
-% resource 1 while waiting for resource 1, so it is the self wait defect
-% resurfacing as a liveness failure rather than an independent finding.
-% Say so, since a marker will notice.
+Both liveness properties also fail without \code{-f}, at depth 14 after 25
+states, and neither of those results is evidence of anything. The cycle they
+report is one in which \code{init} evaluates its loop guard and is never
+scheduled again, so \code{ready\_q} is never seeded and a worker spins on an
+empty queue forever. No OpenMP runtime passes over a thread that can make
+progress indefinitely \cite{openmp52}, and weak fairness excludes exactly
+those cycles \cite{inggs_properties}, so every liveness result reported here
+uses \code{-f}. Fairness is not free: \code{ready\_dispatched} finishes in 25
+states without it and explores 11\,372\,991 with it.
 
-\todo{Analysis.}
-
-\subsubsection*{The invalid end state}
-
-% Final state has instr_count = 4 with MAX_INSTR 3. A worker is blocked
-% at the selection statement on instr_count because no guard is
-% executable past the bound. In manager.c this is the instruction
-% pointer walked off the end of the list by two threads. Argue whether
-% modelling that as a blocked control point is faithful.
-
-\todo{Analysis.}
+The fair \code{all\_terminate} counterexample ends with all three processes
+\code{WAITING}, process 1 holding resource 1 while waiting for resource 1, and
+both workers already exited because \code{check\_terminate} counts every
+process as blocked. \code{ready\_dispatched} fails for the same reason but
+exposes a separate design consequence; which is the stopping condition retires the
+workers as soon as everything is blocked, so a process can still be on the
+ready path when the system decides it is finished.
 
 \subsubsection*{The property that holds}
 
-% What it establishes: within three processes, two workers, two
-% resources and two instructions, no reachable state has a PCB twice in
-% the ready queue, over 20,861,451 states with zero errors, and pan
-% reported zero unreached statements in init and Worker, so the result
-% is not an artefact of dead code \cite{inggs_spin}.
-% What it does not establish: nothing outside those bounds, and nothing
-% about the real linked list, since a channel cannot hold a duplicate
-% reference the way a badly maintained list can. Be honest that the
-% abstraction may have made this property easier to satisfy than it is
-% in the implementation.
-% Why MAX_INSTR 2: failing properties stop at the first counterexample,
-% but a property that holds must exhaust the space, and the space grows
-% by roughly 50 per instruction (420,705 at 1, 20,861,451 at 2, about
-% 10^9 at 3, roughly 100 GB). The shortest possible duplicate needs one
-% blocking request and one wakeup, so it fits within two instructions.
-% That is an argument about the shortest witness, not a proof.
+\code{no\_dup\_ready} was checked exhaustively at \code{MAX\_INSTR 2} with 0
+errors over 20\,861\,451 states in about 21 seconds, using 2\,421\,MB. The run
+also reported 0 of 12 states unreached in \code{init} and 0 of 119 unreached
+in \code{Worker}, which is what makes the pass worth quoting: every control
+point was visited, so the result is not an artefact of dead code in the 
+abstraction \cite{inggs_spin}.
 
-\todo{Analysis.}
+The reduced bound is necessary because of the size of the state space. Failed 
+properties are relatively cheap to check because the search stops when the 
+first counterexample is found. However, a property that passes must explore 
+all reachable states. The state space grows by about a factor of 50 for each 
+additional instruction. 420,705 states at \code{MAX\_INSTR\ 1} and 
+20\,861\,451 at 2, which would result in roughly $10^9$ states at 3. 
+With \code{pan} reporting 96 bytes per state, this would require around 
+100\,GB of memory, compared to the 7\,GB available.
+
+The bound of 2 is reasonable because the shortest possible duplicate requires 
+a PCB to be added to the queue twice before it is removed once. This requires 
+one blocking request followed by a wakeup, so two instructions are enough to 
+produce the smallest possible counterexample. Increasing the bound would 
+therefore mainly allow longer versions of the same behaviour. This argument is 
+based on the shortest witness rather than a formal proof.
+
+It is also important to note that the model uses a channel for the ready queue. 
+A channel cannot contain two references to the same PCB in the way that an 
+incorrectly maintained linked list could; this result checks the 
+enqueue and dequeue behaviour rather than the pointer manipulation performed 
+by \code{enqueue\_pcb}.
+
 
 % =====================================================================
-\section{Program 2: \todo{name}}
+\section{Program 2: MPI Master/Worker Othello Engine}
 
+% ---------------------------------------------------------------------
 \subsection{The Promela Model}
-\todo{}
 
+The model abstracts the MPI master and worker move evaluation in
+\code{my\_player.c}: \code{run\_master}, \code{execute\_master},
+\code{send\_init\_moves}, \code{send\_next\_move}, \code{pop\_move} and
+\code{run\_worker}. The referee is modelled as an environment process,
+\code{Referee}, because a Promela model must be closed and the
+communication flow through \code{comms.c} is fixed by the framework rather
+than by us. The board, the search recursion, \code{evaluate} and the
+Othello rules are all abstracted away. What survives of
+\code{minimax\_pruning} is only which of three outcomes a search produces,
+which is the least the properties in Section~\ref{sec:props-2} need.
+
+Three constants fix the size of the model, all wrapped in \code{\#ifndef}
+guards so they are supplied on the command line. \code{NUM\_WORKERS} is 3,
+not an arbitrary choice: \code{common/configs.py} in the Othello project
+sets \code{"threads": 4} for this game, so \code{comm\_sz} is 4, one master
+and three workers, and the model matches the deployed system.
+\code{MAX\_MOVES} must exceed \code{NUM\_WORKERS}, or \code{send\_init\_moves}
+empties the move stack before any result comes back and the dynamic
+work-redistribution branch is never taken. This was not decided in advance;
+it was caught by \code{pan}'s unreached statement report at
+\code{NUM\_WORKERS 3, MAX\_MOVES 3}, which named the redistribution send as
+dead code, the same kind of finding \code{pan} gave for the scheduler's
+duplicate-ready check. \code{MAX\_MOVES 4} is the smallest value that fixes
+it. \code{MAX\_ROUNDS} bounds the \code{Referee} process so every run
+terminates; it is 2 by default and varied per run in
+Section~\ref{sec:results-2}.
+Table~\ref{tab:mapping2} sets out thef
+correspondence between the implementation and the model.
+
+\begin{table}[htbp]
+\centering
+\caption{Mapping between the implementation and the model.}
+\label{tab:mapping2}
+\begin{tabular}{p{3.6cm} p{3.4cm} p{7cm}}
+\toprule
+\textbf{\code{my\_player.c}} & \textbf{Model} & \textbf{Reason} \\
+\midrule
+\code{MPI\_Bcast(\&my\_colour)}, \code{MPI\_Bcast(board)} &
+\code{bcast\_colour[]}, \code{bcast\_board[]} &
+One channel per worker for each collective. The board carries no
+information any property needs, so it is reduced to the round number. \\
+\addlinespace
+\code{MPI\_Send}/\code{MPI\_Recv} with \code{MOVE\_TAG}, \code{NO\_WORK\_TAG} &
+\code{to\_worker[]}, one buffered channel per worker &
+Direct: the tag distinguishes work from termination exactly as in the
+implementation. \\
+\addlinespace
+\code{MPI\_Iprobe(MPI\_ANY\_SOURCE)} + \code{MPI\_Recv} &
+\code{to\_master}, one shared channel &
+\code{MPI\_ANY\_SOURCE} does not distinguish senders, so a single channel
+every worker writes into is a direct abstraction, not a simplification. \\
+\addlinespace
+\code{move\_stack} (linked list) &
+\code{moves\_left} counter &
+Nothing else reads the stack and no other process touches it, so only its
+size can affect any interleaving. \\
+\addlinespace
+\code{minimax\_pruning} &
+\code{evaluate\_move} inline &
+The board, recursion and \code{evaluate} are removed. What survives is
+which of three outcomes a call produces, discussed below. \\
+\addlinespace
+\code{run\_master}'s if-chain over \code{comms.h} message types &
+\code{Master}'s \code{if} over \code{mtype} &
+Direct: the same branches are handled, and the same two are not. \\
+\addlinespace
+The Ingenious Framework referee (reached over a socket via \code{comms.c}) &
+\code{Referee}, an environment process &
+Promela models must be closed \cite{inggs_promela}; \code{budget} bounds
+the messages so every run terminates. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The headline abstraction is \code{evaluate\_move}, which stands for the call
+a worker makes into \code{minimax\_pruning} and, through it, the minimising
+branch of \code{minimax}. That branch initialises an accumulator to
+\code{INT\_MAX} and loops over the legal moves at that node:
+
+\begin{lstlisting}[style=clang,caption={The minimising branch of \code{minimax}}]
+minEval = INT_MAX;
+legal_moves(moves, &number_of_moves, my_colour);
+for (int i = 0; i < number_of_moves; i++)
+{
+  ...
+  minEval = minimum(minEval, eval);
+  beta = minimum(beta, eval);
+  if (beta <= *alpha)
+  {
+    break;
+  }
+}
+return minEval;
+\end{lstlisting}
+
+Three outcomes fall out of this: the loop never runs because there are no
+legal moves at that node, so the function returns its initial value
+unchanged; the loop runs once and stops, because the pruning test sits at
+the bottom rather than the top, so a poisoned or reduced-depth call returns
+its first child's value rather than a true minimum; or the loop runs to
+completion and returns a genuine evaluation. The model reproduces exactly
+these three outcomes as three branches of one \code{if}, resolved
+non-deterministically wherever more than one applies:
+
+\begin{lstlisting}[style=promela,caption={\code{evaluate\_move}, the abstraction of \code{minimax\_pruning}}]
+inline evaluate_move(m,in_alpha,in_depth,out_score,out_alpha)
+{
+	if
+	:: out_score = NO_EVAL
+	:: (in_alpha == NO_EVAL || in_depth == DEPTH_REDUCED) ->
+		select(out_score : 1 .. SCORE_MAX)
+	:: (in_alpha != NO_EVAL && in_depth == DEPTH_FULL) ->
+		out_score = true_score[m]
+	fi;
+	if
+	:: out_score > in_alpha -> out_alpha = out_score
+	:: out_score <= in_alpha -> out_alpha = in_alpha
+	fi
+}
+\end{lstlisting}
+
+\code{NO\_EVAL} stands for \code{INT\_MAX}, defined as 9, larger than every
+genuine score in the abstract domain \code{1..SCORE\_MAX}, which reproduces
+the one property of \code{INT\_MAX} that matters here: it wins every
+comparison the master makes. \code{true\_score[]} is verification state with
+no counterpart in the implementation. It fixes a genuine evaluation for
+each move at the start of a round, chosen non-deterministically, so that a
+property can compare the move the master played against the move it should
+have played; the implementation has no such array, since the true value of
+a move exists only implicitly, as whatever a correct full search would
+return.
+
+Two omissions in Table~\ref{tab:omissions2} are not free, and both are
+central to Section~\ref{sec:results-2}.
+
+\begin{table}[htbp]
+\centering
+\caption{What the model leaves out, and what each omission costs.}
+\label{tab:omissions2}
+\begin{tabular}{p{4.4cm} p{9.6cm}}
+\toprule
+\textbf{Omitted} & \textbf{Cost} \\
+\midrule
+Board contents, geometry, \code{is\_stable}, board weights &
+None. No property depends on where a piece sits, only on the score a
+search returns for it. \\
+\addlinespace
+Recursion inside \code{minimax} below the top call &
+None. It is thread-local and cannot affect any other process's
+interleaving. \\
+\addlinespace
+The \code{num\_moves}-to-depth mapping (11, 13, 12 or 14) &
+None. Nothing in the protocol depends on the specific depth, only on
+whether a search was cut short, so all four collapse to
+\code{DEPTH\_FULL} and \code{DEPTH\_REDUCED}. \\
+\addlinespace
+The \code{time()} cutoff clock &
+Small. A free nondeterministic choice can fire the cutoff at any point in
+a round, which over-approximates a real clock rather than modelling one;
+a counter would multiply the state space for no benefit to the properties
+checked. \\
+\addlinespace
+The \code{MPI\_Iprobe} busy-wait, replaced by a blocking receive &
+Not free. This changes what an unanswered result looks like to Spin,
+discussed in Section~\ref{sec:limits-2}. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+One refinement was forced by Promela semantics. \code{select} cannot bind
+directly to an array element, so \code{true\_score[i]} cannot appear as a
+\code{select} target; the model instead selects into a scratch variable and
+assigns it, the same workaround used nowhere in the scheduler but needed
+here because the scheduler has no array indexed by a loop variable at the
+point of a \code{select}. One correctness note also worth stating plainly:
+\code{bcast\_terminate} sends only the colour broadcast with a negative
+value and not the board broadcast, because a worker breaks out of its loop
+before reaching the board receive, so the collective sequences on both
+sides still match.
+
+\subsubsection*{Limits on interpretation}
+\label{sec:limits-2}
+
+As with Program 1, this model was written by hand, so a counterexample is a
+candidate defect until checked against the source, and a property that
+holds establishes nothing outside the worker, move and round counts it was
+checked at. One further limit is specific to this model. Both the
+\code{MPI\_Iprobe} busy-wait in \code{execute\_master} and the
+\code{while (running)} loop in \code{run\_master} are spin loops in the
+implementation; the model replaces both with blocking channel receives.
+That changes what Spin reports for the same underlying failure: a spinning
+\code{MPI\_Iprobe} that never receives anything is an infinite execution in
+the implementation, which Spin would only find as a non-progress cycle and
+only with \code{-l}, whereas a blocking receive on a channel nothing will
+ever write to is an invalid end state, caught by the default safety check.
+Both mean the master never returns, so the abstraction turns an
+implementation livelock into a model deadlock, cheaper to detect and with a
+shorter counterexample, and Section~\ref{sec:results-2} reports it on that
+understanding rather than as a literal match to the C control flow.
+
+% ---------------------------------------------------------------------
 \subsection{Correctness Properties}
-\todo{}
+\label{sec:props-2}
 
+Three variables have no counterpart in \code{my\_player.c} and exist only
+so a property can be stated, the same role \code{executing[]} and
+\code{in\_ready[]} play in the scheduler model. \code{round\_done} is false
+while a round is in progress and true once the collection loop has
+finished and \code{best\_move} is final. \code{best\_true} is the largest
+\code{true\_score} among the round's moves. \code{workers\_done} counts how
+many workers have left their loop and can reach \code{MPI\_Finalize}.
+
+Five checks were run: four properties as named \code{ltl} blocks, plus a
+deadlock check that is not an LTL property. Table~\ref{tab:props2} gives
+each formula as written in \code{model.pml}.
+
+\begin{table}[htbp]
+\centering
+\caption{The four LTL properties as written in \code{model.pml}.}
+\label{tab:props2}
+\begin{tabular}{l l p{9.2cm}}
+\toprule
+\textbf{Property} & \textbf{Class} & \textbf{Formula} \\
+\midrule
+\code{no\_eval\_chosen} & safety &
+\code{[] !(round\_done \&\& best\_score == NO\_EVAL)} \\
+\addlinespace
+\code{best\_is\_maximal} & safety &
+\code{[] ((round\_done \&\& num\_moves > 0) -> true\_score[best\_move] == best\_true)} \\
+\addlinespace
+\code{no\_lost\_results} & safety &
+\code{[] (round\_done -> len(to\_master) == 0)} \\
+\addlinespace
+\code{workers\_finish} & liveness &
+\code{<> (workers\_done == NUM\_WORKERS)} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent
+\textbf{\code{no\_eval\_chosen}} targets the leaf case of \code{minimax}'s
+minimising branch directly: there is no guard on
+\code{number\_of\_moves == 0}, so a node with no legal moves, an ordinary
+pass rather than an error, returns \code{minEval} still holding its initial
+\code{INT\_MAX}. That value reaches \code{execute\_master}'s comparison
+\code{if ((process\_score > max\_score) || (max\_move == -1))}, and since
+\code{INT\_MAX} exceeds every real evaluation, the move that was never
+searched always wins. This is a correctness property of the value the
+engine plays, not merely an internal invariant.
+
+\medskip\noindent
+\textbf{\code{best\_is\_maximal}} asks whether the move \code{execute\_master}
+selects is really one of the best available; \code{num\_moves > 0} excludes
+the pass case, where \code{best\_move} is 0 and \code{true\_score[0]} would
+be meaningless. Two independent things can break it. The first is the
+\code{NO\_EVAL} leak above. The second is that the master compares scores
+computed under different conditions: the search depth drops from 11 to 4
+partway through a round once the turn clock passes \code{cut\_off}, and the
+shared \code{alpha} means a worker that receives a high alpha prunes
+earlier than one that receives \code{INT\_MIN}. Because the pruning test
+\code{if (beta <= *alpha) break;} sits at the \emph{bottom} of the loop
+rather than the top, a poisoned or depth-reduced call still evaluates its
+first child in full and returns that child's ordinary-looking, in-range
+value instead of \code{INT\_MAX}, which is why this second cause is silent
+in a way the first is not. The fault injection results isolating the two
+are in Section~\ref{sec:results-2}.
+
+\medskip\noindent
+\textbf{\code{no\_lost\_results}} is the property the whole work-sharing
+protocol rests on, and the one expected to hold. \code{to\_master} stands
+for the \code{MPI\_Iprobe} plus \code{MPI\_Recv(MPI\_ANY\_SOURCE)} pair, and
+a single shared channel is the right abstraction because
+\code{MPI\_ANY\_SOURCE} does not distinguish senders \cite{mpi41}. The
+\code{Iprobe} loop has no escape: the time cutoff lowers \code{depth} but
+never breaks it, so if the send and receive counts were ever unbalanced the
+master would spin forever. This property confirms the balance is exact.
+
+\medskip\noindent
+\textbf{\code{workers\_finish}} asks whether every worker eventually leaves
+its loop and can reach \code{MPI\_Finalize}. A worker exits only on a
+negative broadcast colour, and only the \code{GAME\_TERMINATION} and
+\code{UNKNOWN} branches of \code{run\_master} issue that broadcast.
+\code{receive\_message} in \code{comms.c} can also return
+\code{RECV\_FAILED} or \code{CLIENT\_DISCONNECTED}, and \code{run\_master}'s
+if-chain has no branch for either; since \code{comms.h} is an interface the
+project specification fixed and forbade changing, handling all of its
+values is squarely the player's responsibility. Unlike the scheduler's
+liveness failures, this one fails both with and without \code{-f}: the
+cause is a missing branch, not a scheduling artefact, so the counterexample
+is genuine at either setting.
+
+\medskip\noindent
+\textbf{Deadlock} is checked the same way as in Program 1, with a
+claim-free verifier compiled with \code{-DNOCLAIM}, since \code{pan}
+disables the invalid end state check while a never claim is active
+\cite{spin_pan}. It asks whether any reachable state has a process blocked
+with no executable statement while the system has stopped making progress.
+This is worth stating alongside \code{workers\_finish} rather than instead
+of it, because the two catch the same underlying defect through different
+formulations: one says the workers never finish, the other says the system
+halted somewhere it should not have.
+
+\medskip\noindent
+Two things were considered and not verified. A property comparing the
+round number a worker receives against \code{round\_no} was drafted to
+check that the two broadcasts, \code{bcast\_colour} and \code{bcast\_board},
+stay matched; they are deliberately kept as two channels rather than
+merged into one so that such a mismatch would be observable, and this
+remains a natural extension rather than a checked result. Alpha
+monotonicity within a round, that \code{master\_alpha} never decreases, was
+also considered and dropped: it is true by construction in both the model
+and the implementation, since \code{alpha} is only ever raised by a
+comparison, so a property asserting it would hold trivially and establish
+nothing.
+
+% ---------------------------------------------------------------------
 \subsection{Verification Results and Analysis}
-\todo{}
+\label{sec:results-2}
+
+Each run selects one claim with \code{./pan -a -N name}, and the deadlock
+check uses a second binary built with \code{-DNOCLAIM} from the same
+generated \code{pan.c}, exactly as in Program 1 \cite{spin_pan}.
+\code{NUM\_WORKERS}, \code{MAX\_MOVES} and \code{MAX\_ROUNDS} are supplied
+to \code{spin} on the command line, and both binaries are rebuilt after
+every \code{spin -a}, since a stale binary silently reports results for the
+wrong configuration. All runs were on Spin 6.5.2 on the same 7\,GB machine
+used for Program 1. iSpin was not used.
+
+\begin{table}[htbp]
+\centering
+\caption{Verification results, Spin 6.5.2. Depths and state counts as
+reported by \code{pan}.}
+\label{tab:results2}
+\begin{tabular}{l l l r r}
+\toprule
+\textbf{Property} & \textbf{Config} & \textbf{Result} & \textbf{Depth} & \textbf{States} \\
+\midrule
+\code{no\_eval\_chosen} & \code{W3, M4, R1} & violated & 205 & 5\,336 \\
+\code{best\_is\_maximal} & \code{W3, M4, R1} & violated & 255 & 106\,138 \\
+\code{workers\_finish} & \code{W3, M4, R1} & violated & 31 & 203 \\
+deadlock & \code{W3, M4, R1}, \code{-DNOCLAIM} & violated & 20 & 205 \\
+\code{no\_eval\_chosen} & \code{W2, M3, R1} & violated & 172 & 1\,046 \\
+\code{best\_is\_maximal} & \code{W2, M3, R1} & violated & 222 & 17\,286 \\
+\code{workers\_finish} & \code{W2, M3, R1} & violated & 28 & 77 \\
+deadlock & \code{W2, M3, R1}, \code{-DNOCLAIM} & violated & 17 & 79 \\
+\code{no\_lost\_results} & \code{W2, M3, R1} & holds & n/a & 7\,676\,089 \\
+\code{no\_lost\_results} & \code{W3, M4, R1}, \code{-DBITSTATE} & 0 errors, approximate & 436 & 655\,692\,780 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\code{W}, \code{M} and \code{R} abbreviate \code{NUM\_WORKERS},
+\code{MAX\_MOVES} and \code{MAX\_ROUNDS}. \code{W3, M4, R1} matches the
+deployed system; \code{W2, M3, R1} is the reduced configuration, small
+enough to search exhaustively, used wherever a property must hold rather
+than merely fail fast.
+
+\subsubsection*{The \code{NO\_EVAL} leak}
+
+\code{no\_eval\_chosen} fails at depth 205 with a single worker hitting a
+node with no legal moves, small for the same reason \code{no\_self\_wait}
+was small in Program 1: it is a plain logic error, not a race. The defect
+is not confined to the first round either; at \code{MAX\_ROUNDS 2} the same
+property fails again at depth 341 after 5\,683 states, past the point
+where the first round has already closed. The match logs in
+\code{othello/evidence/} confirm this happens in practice, not only in the
+model: 22 of the 60 rounds in match \code{20250513\_115728} finalised on a
+score of 2147483647, and workers received an \code{alpha} of that value 76
+times over the same match.
+
+\subsubsection*{Two independent causes of a suboptimal move}
+
+\code{best\_is\_maximal} fails at depth 255, saying the engine played a
+worse move than one it had already evaluated, the same shape as round 47
+versus round 24 in the match log, where move 47 scored 1328 and move 24
+scored \code{INT\_MAX} and was played anyway. Section~\ref{sec:props-2}
+gives two mechanisms that can cause this on their own; the fault injection
+runs in Table~\ref{tab:fault} isolate them.
+
+\begin{table}[htbp]
+\centering
+\caption{Fault isolation on \code{best\_is\_maximal}, \code{W2, M3, R1}.}
+\label{tab:fault}
+\begin{tabular}{l l r r}
+\toprule
+\textbf{Flags} & \textbf{Result} & \textbf{Depth} & \textbf{States} \\
+\midrule
+none & violated & 222 & 17\,286 \\
+\code{-DNO\_TIME\_CUTOFF} & violated & 218 & 10\,026 \\
+\code{-DNO\_LEAK} & violated & 280 & 47\,056 \\
+\code{-DNO\_TIME\_CUTOFF -DNO\_LEAK} & holds & n/a & 626\,037 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Removing either cause alone leaves the property violated; only removing
+both together makes it hold. That confirms the two mechanisms are
+independent: the \code{NO\_EVAL} leak is sufficient to produce a
+suboptimal choice on its own, and so is comparing scores computed at
+different depths or under different alpha windows, so guarding
+\code{minimax} against the leak alone would not have fixed the property.
+
+\subsubsection*{The missing message-type branch}
+
+\code{workers\_finish} fails at depth 31, and the deadlock check finds an
+invalid end state at depth 20 in the same configuration; both trace to the
+same missing branch in \code{run\_master} for \code{RECV\_FAILED} and
+\code{CLIENT\_DISCONNECTED}. The smallest witness needs no move round at
+all: at \code{MAX\_ROUNDS 0} the deadlock still appears at depth 20 after
+205 states and \code{workers\_finish} still fails at depth 31 after 203
+states, identical to the \code{MAX\_ROUNDS 1} numbers, which shows the
+defect sits entirely in the referee message loop and has nothing to do
+with move evaluation. Unlike Program 1's liveness properties,
+\code{workers\_finish} fails both with and without \code{-f}: the cause is
+a genuinely missing branch, not a scheduling artefact that fairness would
+explain away, so no fairness argument is needed here the way one was for
+\code{all\_terminate} and \code{ready\_dispatched}.
+
+\subsubsection*{The property that probably holds}
+
+\code{no\_lost\_results} was checked exhaustively at \code{W2, M3, R1}
+with 0 errors over 7\,676\,089 states in 11.4 seconds, with zero unreached
+statements in all four proctypes. At the deployed configuration,
+\code{W3, M4, R1}, the same exhaustive search was killed by the kernel's
+out-of-memory killer: the state vector is 244 bytes, so 7\,GB holds
+roughly $2.6 \times 10^7$ states, and the search passed that without
+terminating. The fallback is bitstate storage, a compile-time option that
+replaces exact storage with a hash-indexed bit array so that distinct
+states can collide and be treated as already visited
+\cite{spin_roadmap}. That run found 0 errors over 655\,692\,780 states in
+around 1\,370 seconds, but its hash factor of 6.55 is well below the 100
+that indicates near-exhaustive coverage, so an appreciable fraction of the
+state space may have gone unexplored. The correct claim is that no
+counterexample was found in an approximate search of roughly $6.6 \times
+10^8$ states, not that the property holds at three workers; the
+exhaustive two-worker result is the stronger evidence, and both are
+reported here rather than only the more flattering one.
+
+The reduction to two workers is defensible for this specific property. A
+lost result requires the master to close a round while a message it
+should have consumed is still queued, and the shortest such witness needs
+only one worker whose result is accounted for and one whose result is
+not, which two workers already provide; a third worker would only admit
+longer instances of the same shape. That is an argument about the
+shortest witness, not a proof, and it establishes absence only within the
+verified bound.
+
+One search-order detail is worth recording because it affects how large
+these numbers look without changing what they mean. \code{proctype
+Referee}'s four terminal message branches are listed before its
+\code{budget > 0} branch. Depth-first search explores a nondeterministic
+\code{do} in the order written, so with the terminal branches first, a
+termination counterexample is found in a few hundred states rather than
+after an entire move round has already been explored, which is where the
+tens-of-millions-of-states figures in earlier drafts of this model came
+from. This changes only the order the search visits the state space, not
+the space itself: \code{no\_lost\_results} at \code{W2, M3, R1} reports
+exactly 7\,676\,089 states before and after the reordering, since that
+property's search must be exhaustive either way and visits every state
+regardless of order.
+
+\subsubsection*{Proposed fixes}
+
+Each of the three defects needs a different kind of fix.
+
+The \code{NO\_EVAL} leak is the easiest to close. The minimising branch of
+\code{minimax} needs a guard on \code{number\_of\_moves == 0} before the loop,
+because a node with no legal moves is an ordinary pass in Othello and not an
+error. What it should return there is a real evaluation of the current
+position, which the engine already has in \code{evaluate}, rather than the
+\code{INT\_MAX} the accumulator was initialised to. The maximising branch has
+the same shape with \code{INT\_MIN}, so both need the guard even though only
+the minimising one showed up here. A cheap second layer is to reject a score
+equal to \code{INT\_MAX} in \code{execute\_master} before it is compared
+against \code{max\_score}, so that a leak from anywhere else in the search
+cannot reach the shared \code{alpha}.
+
+The comparability defect is a design change rather than a missing test. The
+master lowers \code{depth} from 11 to 4 in the middle of a round, then
+compares results computed on either side of that change as though they were on
+the same scale. The smallest correct version is to apply the new depth only
+from the next round, so that every score within a round comes from a search of
+the same depth. If the turn clock genuinely cannot wait, the alternative is to
+tag each result with the depth it was computed at and keep the best move from
+the deepest completed depth, discarding the shallower results instead of
+mixing them in. Table~\ref{tab:fault} is what makes this worth the effort:
+fixing the leak alone leaves \code{best\_is\_maximal} violated.
+
+The missing message branch is the smallest fix of the three, and the safer
+form of it is not to add two more \code{else if} arms for
+\code{RECV\_FAILED} and \code{CLIENT\_DISCONNECTED}, but to give the
+if-chain a final \code{else} that sets \code{running = 0} and issues the
+termination broadcast. Naming the two values explicitly fixes today's defect;
+a default arm also covers any value \code{comms.h} might gain later, which
+matters because the interface is fixed by the framework and the player cannot
+change it. Either way the workers stop blocking in \code{MPI\_Bcast} and
+reach \code{MPI\_Finalize}, which is what \code{workers\_finish} asks for.
 
 % =====================================================================
 \appendix
 \section{Reproducing the verification results}
 
-% The submission requires the exact commands and flags, and the ispin
-% parameters if ispin was used. Record that ispin was not used.
+\begin{table}[htbp]
+\centering
+\caption{Environment for every run reported in this document.}
+\label{tab:env}
+\begin{tabular}{l l}
+\toprule
+Model checker & Spin Version 6.5.2, 6 December 2019 \\
+Compiler & gcc \\
+Platform & Ubuntu Linux \\
+Memory & 7\,GB RAM, 1\,GB swap \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:env} gives the environment. iSpin was not used for any result
+in either program, and all runs were performed from the command line.
+
+\subsection*{Program 1: FCFS scheduler}
+
+Model version: commit \code{517e9be}.
 
 \begin{lstlisting}[language=bash,caption={Build}]
+cd Modelchecking/scheduler
 spin -a model.pml
 gcc -O2 -o pan pan.c
 gcc -O2 -DNOCLAIM -o pan_noclaim pan.c
 \end{lstlisting}
 
-\begin{lstlisting}[language=bash,caption={Verification runs}]
+\begin{lstlisting}[language=bash,caption={Verification runs, default configuration (MAX\_INSTR 3)}]
 ./pan -a -N pcb_mutex
 ./pan -a -N no_self_wait
 ./pan -a -N waiting_consistent
+./pan -a -N all_terminate    -m50000
 ./pan -a -N all_terminate    -f -m50000
+./pan -a -N ready_dispatched -m50000
 ./pan -a -N ready_dispatched -f -m50000 -w26
 ./pan_noclaim
+\end{lstlisting}
 
+\begin{lstlisting}[language=bash,caption={Reduced configuration (MAX\_INSTR 2), for the property that holds}]
 spin -a -DMAX_INSTR=2 model.pml
 gcc -O2 -o pan pan.c
 ./pan -a -N no_dup_ready -m20000 -w26
 \end{lstlisting}
 
-\todo{State the commit hash the results were produced from.}
+\subsection*{Program 2: Othello}
+
+Model version: commit \code{70b73d2}.
+
+Every result in Table~\ref{tab:results2} and Table~\ref{tab:fault}, except
+the three-worker \code{no\_lost\_results} run below, is produced by a single
+script:
+
+\begin{lstlisting}[language=bash,caption={Build and run everything}]
+cd Modelchecking/othello
+./verify.sh
+\end{lstlisting}
+
+This regenerates \code{pan.c} and rebuilds both binaries before each group
+of runs, writes every error trail to \code{results/}, the full \code{pan}
+output of every run to \code{results/logs/}, and a summary table to
+\code{results/summary.txt}. Passing \code{quick} as the first argument
+skips the two exhaustive runs (configurations D and E) for a faster,
+partial regeneration.
+
+The three-worker exhaustive \code{no\_lost\_results} run is excluded from
+the script because it exceeds available memory; its bitstate fallback
+takes roughly 23 minutes and is a deliberate one-off rather than a routine
+result, so it is run manually:
+
+\begin{lstlisting}[language=bash,caption={Three-worker \code{no\_lost\_results}, bitstate fallback}]
+spin -DNUM_WORKERS=3 -DMAX_MOVES=4 -DMAX_ROUNDS=1 -a model.pml
+gcc -O2 -DBITSTATE -o pan_bit pan.c
+./pan_bit -a -N no_lost_results -m100000 -w32
+\end{lstlisting}
 
 \bibliographystyle{plainnat}
 \bibliography{refs}

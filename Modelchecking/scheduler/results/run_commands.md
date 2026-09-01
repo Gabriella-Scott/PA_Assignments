@@ -4,12 +4,12 @@ This file records every verification run reported for the FCFS scheduler
 model, in enough detail to reproduce each result from a clean checkout.
 
 ## Environment
-
 | Item | Value |
 | --- | --- |
 | Model checker | Spin Version 6.5.2, 6 December 2019 |
 | Compiler | gcc |
 | Platform | Ubuntu Linux |
+| Memory | 7 GB RAM, 1 GB swap |
 | Model file | `scheduler/model.pml` |
 | Repository | `PA_Assignments/Modelchecking` |
 | Model version | commit `517e9be` |
@@ -395,8 +395,8 @@ Measured with:
 
 The growth factor is close to 50 per additional instruction. At `MAX_INSTR 3`
 the state space is on the order of a billion states, which at the 96 bytes
-per state reported by pan is roughly 100 GB. That is out of reach on the
-hardware available, so `no_dup_ready` is verified at `MAX_INSTR 2`.
+per state reported by pan is roughly 100 GB. That is far beyond the 7 GB
+available, so `no_dup_ready` is verified at `MAX_INSTR 2`.
 
 Justification for the reduction, specific to this property: a duplicate ready
 queue entry requires a PCB to be enqueued twice before it is dequeued once,

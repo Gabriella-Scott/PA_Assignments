@@ -1,15 +1,52 @@
-\begin{thebibliography}{2}
+\begin{thebibliography}{8}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
-\bibitem[Holzmann()]{spin_atomic}
+\bibitem[Holzmann(2025{\natexlab{a}})]{spin_atomic}
 Gerard~J. Holzmann.
 \newblock Promela reference: \texttt{atomic}(3).
-\newblock \url{https://spinroot.com/spin/Man/atomic.html}.
+\newblock \url{https://spinroot.com/spin/Man/atomic.html}, 2025{\natexlab{a}}.
 \newblock Accessed 2025.
+
+\bibitem[Holzmann(2025{\natexlab{b}})]{spin_pan}
+Gerard~J. Holzmann.
+\newblock Pan verification options.
+\newblock \url{https://spinroot.com/spin/Man/Pan.html}, 2025{\natexlab{b}}.
+\newblock Accessed 2025.
+
+\bibitem[Inggs(2025{\natexlab{a}})]{inggs_promela}
+Cornelia~P. Inggs.
+\newblock Promela.
+\newblock Lecture slides, {CS796} Software Verification and Spin Model
+  Checking, Stellenbosch University, 2025{\natexlab{a}}.
+\newblock Source: {The Spin Model Checker}, G. J. Holzmann.
+
+\bibitem[Inggs(2025{\natexlab{b}})]{inggs_properties}
+Cornelia~P. Inggs.
+\newblock Properties.
+\newblock Lecture slides, {CS796} Software Verification and Spin Model
+  Checking, Stellenbosch University, 2025{\natexlab{b}}.
+\newblock Source: {The Spin Model Checker}, G. J. Holzmann.
+
+\bibitem[Inggs(2025{\natexlab{c}})]{inggs_spin}
+Cornelia~P. Inggs.
+\newblock Spin.
+\newblock Lecture slides, {CS796} Software Verification and Spin Model
+  Checking, Stellenbosch University, 2025{\natexlab{c}}.
+\newblock Source: {The Spin Model Checker}, G. J. Holzmann.
+
+\bibitem[{Message Passing Interface Forum}(2023)]{mpi41}
+{Message Passing Interface Forum}.
+\newblock {MPI}: A message-passing interface standard, version 4.1.
+\newblock \url{https://www.mpi-forum.org/docs/}, 2023.
+
+\bibitem[{OpenMP Architecture Review Board}(2021)]{openmp52}
+{OpenMP Architecture Review Board}.
+\newblock {OpenMP} application programming interface, version 5.2.
+\newblock \url{https://www.openmp.org/specifications/}, 2021.
 
 \bibitem[Silberschatz et~al.(2018)Silberschatz, Galvin, and
   Gagne]{silberschatz2018}

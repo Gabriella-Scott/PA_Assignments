@@ -23,3 +23,13 @@ _spin_nvr.tmp
 
 # Verification results (generated trails and logs)
 results/
+
+# LaTeX build artefacts
+report/*.aux
+report/*.bbl
+report/*.blg
+report/*.fdb_latexmk
+report/*.fls
+report/*.log
+report/*.out
+report/*.synctex.gz
