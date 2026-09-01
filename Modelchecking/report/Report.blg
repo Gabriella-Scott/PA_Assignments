@@ -2,47 +2,47 @@ This is BibTeX, Version 0.99d (TeX Live 2022/dev/Debian)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Report.aux
 The style file: plainnat.bst
-I found no \citation commands---while reading file Report.aux
 Database file #1: refs.bib
-You've used 0 entries,
+Warning--empty year in spin_atomic
+You've used 2 entries,
             2773 wiz_defined-function locations,
-            592 strings with 4828 characters,
-and the built_in function-call counts, 33 in all, are:
-= -- 0
-> -- 0
-< -- 0
-+ -- 0
-- -- 0
-* -- 2
-:= -- 10
-add.period$ -- 0
-call.type$ -- 0
-change.case$ -- 0
-chr.to.int$ -- 0
-cite$ -- 0
-duplicate$ -- 0
-empty$ -- 1
-format.name$ -- 0
-if$ -- 1
+            603 strings with 5063 characters,
+and the built_in function-call counts, 750 in all, are:
+= -- 59
+> -- 40
+< -- 1
++ -- 14
+- -- 12
+* -- 51
+:= -- 123
+add.period$ -- 7
+call.type$ -- 2
+change.case$ -- 10
+chr.to.int$ -- 2
+cite$ -- 5
+duplicate$ -- 36
+empty$ -- 66
+format.name$ -- 14
+if$ -- 151
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 0
-newline$ -- 8
-num.names$ -- 0
-pop$ -- 0
+missing$ -- 2
+newline$ -- 19
+num.names$ -- 8
+pop$ -- 30
 preamble$ -- 1
-purify$ -- 0
+purify$ -- 8
 quote$ -- 0
-skip$ -- 1
+skip$ -- 24
 stack$ -- 0
-substring$ -- 0
-swap$ -- 0
+substring$ -- 4
+swap$ -- 2
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 0
-warning$ -- 0
-while$ -- 0
+type$ -- 17
+warning$ -- 1
+while$ -- 6
 width$ -- 0
-write$ -- 7
-(There was 1 error message)
+write$ -- 33
+(There was 1 warning)

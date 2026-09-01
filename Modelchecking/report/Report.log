@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.2.25)  29 AUG 2026 15:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2026.2.25)  1 SEP 2026 12:05
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"/home/gabriella/Documents/CS Honours/Software Verification And Analysis 796/PA_Assignments/Modelchecking/Report/Report.tex"
-(/home/gabriella/Documents/CS Honours/Software Verification And Analysis 796/PA_Assignments/Modelchecking/Report/Report.tex
+**"/home/gabriella/Documents/CS Honours/Software Verification And Analysis 796/PA_Assignments/Modelchecking/report/Report.tex"
+(/home/gabriella/Documents/CS Honours/Software Verification And Analysis 796/PA_Assignments/Modelchecking/report/Report.tex
 LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2022-01-21> (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
@@ -398,30 +398,91 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 46.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 114.
- (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
-File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 114.
 
-Underfull \hbox (badness 10000) in paragraph at lines 116--116
+LaTeX Warning: Reference `sec:limits-1' on page 1 undefined on input line 72.
+
+
+LaTeX Warning: Reference `sec:limits-2' on page 1 undefined on input line 72.
+
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 77.
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+) [1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+
+LaTeX Warning: Reference `sec:results-1' on page 2 undefined on input line 187.
+
+LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10.95> not available
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 196.
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--198
 []\T1/cmr/m/n/10.95 Thread in
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 116--116
-[]\T1/cmtt/m/n/10.95 active [NUM_WORKERS]
+Underfull \hbox (badness 10000) in paragraph at lines 199--199
+[]\T1/cmtt/m/n/10.95 active
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 118--118
+Underfull \hbox (badness 10000) in paragraph at lines 199--199
+\T1/cmtt/m/n/10.95 [NUM_WORKERS]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 204--204
+[]\T1/cmr/m/n/10.95 Buffered chan-nels
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 211--211
 []\T1/cmtt/m/n/10.95 pcb_state[] ==
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 122--122
+Underfull \hbox (badness 10000) in paragraph at lines 223--228
+\T1/cmr/m/n/10.95 counter, with \T1/cmtt/m/n/10.95 next_instruction ==
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 223--228
+\T1/cmtt/m/n/10.95 NULL \T1/cmr/m/n/10.95 rep-re-sented by \T1/cmtt/m/n/10.95 instr_count
+ []
+
+
+Underfull \hbox (badness 5817) in paragraph at lines 223--228
+\T1/cmtt/m/n/10.95 == MAX_INSTR\T1/cmr/m/n/10.95 . The type and tar-get
+ []
+
+
+Underfull \hbox (badness 4805) in paragraph at lines 223--228
+\T1/cmr/m/n/10.95 of each in-struc-tion are cho-sen non-
+ []
+
+
+Overfull \hbox (16.42824pt too wide) in paragraph at lines 230--230
+[]\T1/cmtt/m/n/10.95 resource_t.allocated| 
+ []
+
+
+Underfull \hbox (badness 1635) in paragraph at lines 232--234
+[]\T1/cmr/m/n/10.95 The re-source list searched by \T1/cmtt/m/n/10.95 strcmp
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 236--236
 []\T1/cmtt/m/n/10.95 q_locks[0]\T1/cmr/m/n/10.95 , \T1/cmtt/m/n/10.95 omp
+ []
+
+
+Underfull \hbox (badness 4132) in paragraph at lines 236--236
+\T1/cmtt/m/n/10.95 critical\T1/cmr/m/n/10.95 , \T1/cmtt/m/n/10.95 i_lock\T1/cmr/m/n/10.95 ,
+ []
+
+
+Underfull \hbox (badness 1221) in paragraph at lines 238--242
+[]\T1/cmr/m/n/10.95 Mutual ex-clu-sion (Mu-tex) is the only
  []
 
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
@@ -430,34 +491,31 @@ File: lstlang1.sty 2020/03/24 1.8d listings language file
 File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
 )
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <9> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 132.
- [1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 257.
+ [2] [3] [4] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2020/03/24 1.8d listings language file
 ) (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2020/03/24 1.8d listings language file
-) [3] (./Report.bbl
+) [5] (./Report.bbl) [6] (./Report.aux)
 
-Package natbib Warning: Empty `thebibliography' environment on input line 8.
+LaTeX Warning: There were undefined references.
 
-) [4] (./Report.aux)
 Package rerunfilecheck Info: File `Report.out' has not changed.
 (rerunfilecheck)             Checksum: 0BD4CF9127A09010734C50A4DAF6D1C1;1718.
  ) 
 Here is how much of TeX's memory you used:
- 12939 strings out of 480247
- 192072 string characters out of 5896151
- 755496 words of memory out of 5000000
- 30651 multiletter control sequences out of 15000+600000
- 484824 words of font info for 67 fonts, out of 8000000 for 9000
+ 12957 strings out of 480247
+ 192356 string characters out of 5896151
+ 755684 words of memory out of 5000000
+ 30663 multiletter control sequences out of 15000+600000
+ 485854 words of font info for 69 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 60i,10n,63p,391b,1297s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/gabriella/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt0900.600pk> </home/gabriella/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1095.600pk> </home/gabriella/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/gabriella/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1095.600pk> </home/gabriella/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1095.600pk> </home/gabriella/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/gabriella/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/gabriella/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on Report.pdf (4 pages, 176580 bytes).
+ 60i,11n,63p,391b,1295s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/gabriella/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1095.600pk> </home/gabriella/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt0900.600pk> </home/gabriella/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.600pk> </home/gabriella/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/gabriella/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1095.600pk> </home/gabriella/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1095.600pk> </home/gabriella/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1095.600pk> </home/gabriella/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/gabriella/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/gabriella/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
+Output written on Report.pdf (6 pages, 196750 bytes).
 PDF statistics:
- 509 PDF objects out of 1000 (max. 8388607)
- 166 compressed objects within 2 object streams
- 57 named destinations out of 1000 (max. 500000)
+ 579 PDF objects out of 1000 (max. 8388607)
+ 189 compressed objects within 2 object streams
+ 61 named destinations out of 1000 (max. 500000)
  73 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -36,7 +36,7 @@
 \lstdefinestyle{promela}{language=Promela}
 \lstdefinestyle{clang}{language=C}
 
-\title{Model Checking Two Concurrent Programs with SPIN\\
+\title{Model Checking Concurrent Programs with SPIN\\
        \large RW796 Software Verification and Analysis}
 \author{Gabriella Scott \\ 25935453}
 \date{\today}
@@ -44,17 +44,52 @@
 \begin{document}
 \maketitle
 
-% Short. A paragraph or two at most: the two programs chosen, and the
-% repository URLs, which the lecturer requires because the abstraction
-% is marked with the implementation as reference.
 \section*{Introduction}
 
-\todo{One paragraph: which two programs were modelled and what the
-analysis found.}
+This report presents Promela models of two concurrent programs and the
+verification of their correctness properties using Spin. The first
+program is a first-come first-served (FCFS) process scheduler, one of
+three policies supported by a shared-memory process manager. A team of
+OpenMP threads dispatches processes from a common ready queue, moves
+them to a waiting queue when a resource is unavailable, and updates a
+shared resource table, with nested locks protecting these structures
+and new processes arriving while the threads are already running. The
+second program is a distributed Othello engine running a parallel
+alpha-beta search. An MPI master hands candidate moves out to worker
+processes as they report back, propagates a shared alpha bound between
+them, and reduces the search depth partway through a round when the
+turn clock runs down. It communicates over three channels: MPI
+collectives to start a round, point-to-point messages to distribute and
+collect work, and a socket to the referee.
 
-Implementation under analysis: \todo{repo URL}\\
-Promela models, properties and verification records: \todo{repo URL}
+The models are intentionally small. Parts of each program were omitted, 
+some behaviour was replaced with nondeterministic choices, and the remaining 
+parameters were fixed to small values. For these abstractions, one must
+assume that omitted behaviour does not affect the properties being checked. 
+In contrast, the smaller parameter values limit the scope of a passing result 
+but do not weaken a counterexample, since a counterexample still represents a 
+valid execution. Each abstraction is justified when introduced, while 
+Section~\ref{sec:limits-1} and Section~\ref{sec:limits-2} discuss the 
+resulting limitations.
 
+The analysis found defects in both programs. For the scheduler, 6 of the 
+7 checks failed, with the counterexamples tracing back to two faults in 
+\code{manager.c}: a resource request that does not check whether the requester 
+already owns the resource, and a dispatch loop that accesses shared process 
+state without holding a lock. For the Othello engine, 4 of the 5 checks 
+failed, with 3 faults identified in \code{my\_player.c}, namely an initialiser 
+escaping from the minimax minimising branch as if it were a score, comparisons 
+between scores calculated at different search depths, and two referee message 
+types for which the master loop has no corresponding branch. The last fault 
+did not occur in any recorded match, illustrating the value of model checking 
+in finding behaviours that testing may not expose.
+
+\medskip
+\noindent
+Implementation under analysis (Program 1): \todo{repo URL}\\
+Implementation under analysis (Program 2): \todo{repo URL}\\
+Promela models, properties and verification records:
+\url{https://github.com/Gabriella-Scott/PA_Assignments}
 % =====================================================================
 \section{Program 1: FCFS Process Scheduler}
 
@@ -103,24 +138,114 @@ Promela models, properties and verification records: \todo{repo URL}
 %    implementation and by OpenMP \cite{openmp52}. The bounds mean a
 %    property that holds establishes nothing outside them.
 
-\todo{Model description.}
+This model is an abstraction of the FCFS scheduler. The original code exists 
+in \code{manager.c} together with the functions it reaches:
+\begin{itemize}
+  \item \code{schedule\_fcfs}
+  \item \code{execute\_instr}
+  \item \code{request\_resource}
+  \item \code{release\_resource}
+  \item \code{enqueue\_pcb}
+  \item \code{dequeue\_pcb}
+  \item \code{terminate}
+\end{itemize}
+
+It consists of an \code{init} process that seeds the ready queue, three inlines that
+stand for \code{terminate}, \code{request\_resource} and
+\code{release\_resource}, and a single \code{Worker} proctype instantiated
+once per scheduling thread. The other two policies (\code{schedule\_rr}
+and \code{schedule\_priority}) are not modelled. All three sit on the same
+queues, the same locks and the same resource table, so including them
+would have multiplied the state space without reaching a different class
+of defect.
+
+The size of the model is fixed by 4 constants; each of them is the smallest
+value that shows the interesting behaviour.
+\code{NUM\_WORKERS} is 2, because a single thread cannot interleave with
+anything and every race the scheduler can have needs two threads at
+minimum. \code{NUM\_PROCS} is 3, because 2 processes are not enough to
+keep the ready queue occupied; with one running and one blocked the queue
+is empty, and a third is needed before a process can be dispatched while
+another is already blocked. \code{NUM\_RESOURCES} is 2; this is the
+smallest number that presents a circular wait, since 1 process holding a
+resource and requesting the same one is a different fault from 2
+processes each holding what the other wants \cite{silberschatz2018}.
+\code{MAX\_INSTR} is 3, which allows a process to request a resource,
+release it, and request again, so that a release can wake a blocked
+process and that process can then make progress.
+
+Process and resource identifiers start at 1 and not 0. The
+implementation uses \code{NULL} to mean both "no process holds this
+resource" and "this process is not waiting", and reserving 0 for that
+purpose keeps the same convention in the model, so that
+\code{resource\_owner[r] == 0} reads exactly as
+\code{resource->allocated == NULL} does.
+
+Only \code{MAX\_INSTR} is wrapped in an \code{\#ifndef} guard. It is the one 
+parameter that is varied between runs. Guarding it allows a different 
+configuration to be supplied with \code{spin -D} rather than by editing 
+the model. This ensures that every result in Section~\ref{sec:results-1} 
+comes from the same committed file.
 
 \begin{table}[htbp]
 \centering
 \caption{Mapping between the implementation and the model.}
 \label{tab:mapping}
-\begin{tabular}{p{4cm} p{4cm} p{6cm}}
+\begin{tabular}{p{3.4cm} p{3.6cm} p{7cm}}
 \toprule
 \textbf{\code{manager.c}} & \textbf{Model} & \textbf{Reason} \\
 \midrule
-Thread in \code{schedule\_fcfs} & \code{active [NUM\_WORKERS] proctype Worker} & \todo{} \\
-\code{readyq}, \code{waitingq} & buffered channels & \todo{} \\
-\code{terminatedq} & \code{pcb\_state[] == TERMINATED} & \todo{} \\
-\code{pcb\_t.state} & \code{pcb\_state[]} & \todo{} \\
-\code{next\_instruction} & \code{instr\_count[]} & \todo{} \\
-\code{resource\_t.allocated} & \code{resource\_owner[]} & \todo{} \\
-\code{q\_locks[0]}, \code{omp critical} & \code{atomic} block & \todo{} \\
-\code{terminate()} & \code{check\_terminate} inline & \todo{} \\
+Thread in \code{schedule\_fcfs} &
+\code{active [NUM\_WORKERS] proctype Worker} &
+Parallel region runs the same threads over the same loop, so one
+proctype replicated twice captures every thread the scheduler creates. \\
+\bottomrule
+\code{readyq}, \code{waitingq} &
+Buffered channels \code{ready\_q}, \code{waiting\_q} &
+FIFO order is the only behaviour of the linked lists that FCFS depends on, 
+so buffered channels provide a direct abstraction. \code{waiting\_q} also 
+carries the resource id, which the implementation normally obtains from the 
+instruction record.\\
+\bottomrule
+\code{terminatedq} &
+\code{pcb\_state[] == TERMINATED} &
+Nothing gets dequeued from \code{terminatedq}, but it is appended to
+and counted; this means membership carries no information the state field
+does not already hold. \\
+\bottomrule
+
+\code{pcb\_t.state} &
+\code{pcb\_state[]} &
+Direct, indexed by process id instead of reached through a pointer. \\
+\bottomrule
+\code{next\_instruction} &
+\code{instr\_count[]} &
+The instruction list becomes a bounded counter, with
+\code{next\_instruction == NULL} represented by
+\code{instr\_count == MAX\_INSTR}. The type and target of each
+instruction are chosen non-deterministically rather than read from the
+list. \\
+\bottomrule
+
+\code{resource\_t.allocated} &
+\code{resource\_owner[]} &
+The resource list searched by \code{strcmp} becomes an array indexed by
+id, and \code{allocated == NULL} becomes owner 0. \\
+\bottomrule
+
+\code{q\_locks[0]}, \code{omp critical}, \code{i\_lock}, \code{r\_lock} &
+\code{atomic} blocks &
+Mutual exclusion (Mutex) is the only thing the locks provide here, and
+\code{atomic} supplies it without modelling lock acquisition itself
+\cite{spin_atomic}. Only the regions the implementation actually
+protects are made atomic. \\
+\bottomrule
+
+\code{terminate()} &
+\code{check\_terminate} inline &
+The same test, counting waiting and terminated processes and requiring an
+empty ready queue, evaluated over the state array rather than by walking
+the queues. \\
 \bottomrule
 \end{tabular}
 \end{table}
