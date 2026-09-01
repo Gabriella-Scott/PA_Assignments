@@ -77,7 +77,11 @@ record() {
 
   # A run that stops at the first error explores only part of the state
   # space, so its unreached report proves nothing about coverage.
-  if grep -q "Search not completed" "$log"; then
+    if [ "$verdict" = "INCOMPLETE" ]; then
+    # Killed or timed out. The log has no coverage report at all, so
+    # nothing can be claimed about it either way.
+    coverage="unknown"
+  elif grep -q "Search not completed" "$log"; then
     coverage="partial"
   elif grep -qE "\(0 of [0-9]+ states\)" "$log"; then
     coverage="full, 0 unreached"
