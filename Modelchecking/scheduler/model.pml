@@ -36,7 +36,7 @@ init {
 	od;
 }
 
-/* Termination check: models terminate()*/ 
+/* termination check: models terminate()*/ 
 inline check_terminate(done) {
 	byte w = 0;
 	byte t = 0;
@@ -86,14 +86,12 @@ inline release_resource(p,r) {
 	fi
 }
 
-/* Worker process 
-* Executes instructions for a PCB obtained from the ready queue.
-*/ 
+/* Worker: dequeue PCB from ready queue,run instruction loop*/ 
 active [NUM_WORKERS] proctype Worker() {
-	byte pcb_id;// proc id of PCB being executed
-	bool got_one;// flag to indicate if a PCB was obtained from ready queue
+	byte pcb_id; // proc id of PCB being executed
+	bool got_one; // set if a PCB was dequeued
 	byte done;
-	byte res;// resource requested by current instruction
+	byte res; // resource requested by current instruction
 	
 	do
 	:: true -> 
@@ -155,7 +153,7 @@ active [NUM_WORKERS] proctype Worker() {
 					fi
 				:: pcb_state[pcb_id] != RUNNING -> break
 				od;
-				executing[pcb_id]--// Decr executing count for the PCB
+				executing[pcb_id]--
 			:: !got_one -> skip
 				fi;		
 // Termination check
@@ -167,34 +165,32 @@ active [NUM_WORKERS] proctype Worker() {
 			od
 		}
 		
-		/* No two workers may execute the same pcb concurrently.*/ 
+		/* no two workers on the same PCB*/ 
 		#define one_worker_per_pcb (executing[1] <= 1 && executing[2] <= 1 && executing[3] <= 1)
 	ltl pcb_mutex { [] one_worker_per_pcb }	
 		
-		/* No process may be waiting for a resource that it already owns.*/ 
+		/* cant wait on a resource you already own*/ 
 		#define no_self_wait_p ( \
 		(waiting_for[1] == 0 || resource_owner[waiting_for[1]] != 1) && \
 		(waiting_for[2] == 0 || resource_owner[waiting_for[2]] != 2) && \
 		(waiting_for[3] == 0 || resource_owner[waiting_for[3]] != 3))
 	ltl no_self_wait { [] no_self_wait_p }
 		
-		/* A process marked WAITING must have a resource recorded that it
-		* is waiting for.*/ 
+		/* WAITING = > waiting_for != 0*/ 
 		#define waiting_consistent_p ( \
 		(pcb_state[1] != WAITING || waiting_for[1] != 0) && \
 		(pcb_state[2] != WAITING || waiting_for[2] != 0) && \
 		(pcb_state[3] != WAITING || waiting_for[3] != 0))
 	ltl waiting_consistent { [] waiting_consistent_p }
 		
-		/* A PCB may not appear in the ready queue more than once at the
-		* same time.*/ 
+		/* no duplicate PCB in ready queue*/ 
 		#define no_dup_ready_p (in_ready[1] <= 1 && in_ready[2] <= 1 && in_ready[3] <= 1)
 	ltl no_dup_ready { [] no_dup_ready_p }
 		
-		/* Every process eventually reaches TERMINATED.	*/ 
+		/* all PCBs reach TERMINATED*/ 
 		#define all_done (pcb_state[1] == TERMINATED && pcb_state[2] == TERMINATED && pcb_state[3] == TERMINATED)
 	ltl all_terminate { <> all_done }
 		
-		/* A process placed on the ready queue is eventually dispatched.*/ 
+		/* READY = > eventually RUNNING*/ 
 	ltl ready_dispatched { [] ((pcb_state[1] == READY) -> <> (pcb_state[1] == RUNNING)) }
 		

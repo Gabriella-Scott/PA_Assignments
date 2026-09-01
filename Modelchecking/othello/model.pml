@@ -31,17 +31,17 @@
 byte true_score[MAX_MOVES + 1];
 
 /* Master state,mirroring the locals of execute_master*/ 
-short my_colour;// - 1 signals termination
+short my_colour; // -1 signals termination
 byte  round_no;
-byte  num_moves;// move_stack.size after load_round_moves
-byte  moves_left;// what remains on the stack
+byte  num_moves; // move_stack.size after load_round_moves
+byte  moves_left; // what remains on the stack
 byte  master_alpha;
 byte  master_depth;
-byte  best_move;// 0 stands for max_move == - 1
+byte  best_move; // 0 stands for max_move == -1
 byte  best_score;
-bool round_done;// set once a round's collection loop has finished
-byte best_true;// the largest true_score of this round's moves
-byte workers_done;// how many workers have left run_worker
+bool round_done; // set once a round's collection loop has finished
+byte best_true; // the largest true_score of this round's moves
+byte workers_done; // how many workers have left run_worker
 
 /* Tags -> my_player.c,message types -> comms.h*/ 
 mtype = {
@@ -51,11 +51,11 @@ mtype = {
 };
 
 /* The two collectives,one channel per worker.*/ 
-chan bcast_colour[NUM_WORKERS + 1] = [1] of { short };// bcast_colour carries my_colour,or - 1 to signal termination.
-chan bcast_board[NUM_WORKERS + 1] = [1] of { byte };// bcast_board carries the round number instead of 64 board ints.
-chan to_worker[NUM_WORKERS + 1] = [1] of { mtype,byte,byte,byte };// Master -> worker: tag,move,alpha,depth
-chan to_master = [NUM_WORKERS] of { byte,byte,byte,byte };// Worker -> master: rank,move,score,alpha.
-chan from_referee = [1] of { mtype };// Referee -> master
+chan bcast_colour[NUM_WORKERS + 1] = [1] of { short }; // bcast_colour carries my_colour,or -1 to signal termination.
+chan bcast_board[NUM_WORKERS + 1] = [1] of { byte }; // bcast_board carries the round number instead of 64 board ints.
+chan to_worker[NUM_WORKERS + 1] = [1] of { mtype,byte,byte,byte }; // Master -> worker: tag,move,alpha,depth
+chan to_master = [NUM_WORKERS] of { byte,byte,byte,byte }; // Worker -> master: rank,move,score,alpha.
+chan from_referee = [1] of { mtype }; // Referee -> master
 
 /* Abstraction of minimax_pruning in my_player.c*/ 
 inline evaluate_move(m,in_alpha,in_depth,out_score,out_alpha)
@@ -70,7 +70,7 @@ inline evaluate_move(m,in_alpha,in_depth,out_score,out_alpha)
 	:: (in_alpha == NO_EVAL || in_depth == DEPTH_REDUCED) -> 
 		select(out_score : 1 .. SCORE_MAX)
 		
-		/* Full search of an ordinary node.*/ 
+		/* full - depth eval*/ 
 	:: (in_alpha != NO_EVAL && in_depth == DEPTH_FULL) -> 
 		out_score = true_score[m]
 	fi;
@@ -94,10 +94,7 @@ inline send_next_move(dest,alpha)
 	fi
 }
 
-/* MPI_Bcast(&end_game,...) with end_game = - 1.
-* One broadcast only,not two: the worker breaks out before the board
-* broadcast,so the collective sequences still match.
-*/ 
+/* bcast - 1 colour only;worker breaks before board bcast,collectives still match*/ 
 inline bcast_terminate()
 {
 	i = 1;
@@ -107,10 +104,7 @@ inline bcast_terminate()
 	od
 }
 
-/* 
-* Execute the master process. Does this by sending out moves to workers,then 
-* collecting the results. 
-*/ 
+/* master: distribute moves,collect results*/ 
 inline execute_master()
 {
 	/* MPI_Bcast(&my_colour) then MPI_Bcast(board),to every worker*/ 
@@ -124,14 +118,12 @@ inline execute_master()
 		i++
 	od;
 	
-	/* load_round_moves. The board is gone,so the number of legal moves
-	this round is chosen nondeterministically. 0 -> pass.*/ 
+	/* load_round_moves; board abstracted,num_moves nondeterministic,0 = pass*/ 
 	select(num_moves : 0 .. MAX_MOVES);
 	moves_left = num_moves;
 	best_true = 0;
 	
-	/* Fix genuine evaluation of each move for this round. Verification
-	state only,so that a property can name the move that should win.*/ 
+	/* verification - only; lets best_is_maximal name the winner*/ 
 	i = 1;
 	do
 	:: i > num_moves -> break
@@ -148,7 +140,7 @@ inline execute_master()
 	master_alpha = ALPHA_MIN;
 	master_depth = DEPTH_FULL;
 	
-	/* send_init_moves: one message per worker,alpha fixed at INT_MIN*/ 
+	/* send_init_moves: one msg per worker, alpha fixed at INT_MIN*/ 
 	i = 1;
 	do
 	:: i > NUM_WORKERS -> break
@@ -162,8 +154,7 @@ inline execute_master()
 	do
 	:: results >= num_moves -> break
 	:: results < num_moves -> 
-		/* The turn clock can pass cut_off at any point in round,after
-		which every remaining move goes out at the reduced depth.*/ 
+		/* cut_off can trigger mid - round; rest of moves go at reduced depth*/ 
 		#ifndef NO_TIME_CUTOFF
 		if
 		:: master_depth = DEPTH_REDUCED
@@ -193,9 +184,7 @@ inline execute_master()
 	round_done = true
 }
 
-/* Worker process. Each worker receives a colour,then a round number,
-* and then enters the main evaluation loop.
-*/ 
+/* worker: receive colour + round, then eval loop*/ 
 proctype Worker(byte rank)
 {
 	short w_colour;
@@ -263,20 +252,13 @@ proctype Master()
 			running = false;
 			bcast_terminate()
 			
-			/* DEFECT. run_master has no branch for these two,so running
-			stays 1,the loop repeats,and no termination broadcast is
-			ever issued. Modelled as skip,which is exactly what the
-			C if - chain does with them.*/ 
+			/* DEFECT: no branch for these,running stays true,skip mirrors the C behaviour*/ 
 		:: (msg_type == RECV_FAILED || msg_type == CLIENT_DISCONNECTED) -> skip
 		fi
 	od
 }
 
-/* The Ingenious Framework referee,modelled as an environment process.
-* Promela models must be closed,so the environment has to be modelled
-* too. budget bounds the number of ordinary messages so that every run
-* terminates;the four terminal messages each end the session.
-*/ 
+/* referee environment: budget caps ordinary msgs,terminal msg ends session*/ 
 proctype Referee()
 {
 	byte budget = MAX_ROUNDS;
@@ -309,23 +291,17 @@ init {
 	}
 }
 
-/* NO_LEAK and NO_TIME_CUTOFF are fault injection switches. They are not
-* part of the model of my_player.c. Each one removes one of the two
-* independent causes of best_is_maximal failing,so that verification can
-* establish which cause is responsible rather than only that a fault
-* exists. best_is_maximal holds only when both are defined.
-*/ 
+/* Fault injection: each flag removes one cause;both needed for best_is_maximal to hold*/ 
 
-/* The master finalised a round on a score that is not an evaluation at
-* all,but the INT_MAX that minimax uses to initialise minEval.*/ 
+/* round ended with NO_EVAL (INT_MAX sentinel, not a real score)*/ 
 #define chose_no_eval (round_done && best_score == NO_EVAL)
 ltl no_eval_chosen  { []!chose_no_eval }
 
-/* The move the master played really was the best available one.*/ 
+/* best_move should have the highest true_score this round*/ 
 #define chose_maximal (true_score[best_move] == best_true)
 ltl best_is_maximal { [] ((round_done && num_moves > 0) -> chose_maximal) }
 
-/* Every worker has left run_worker and can reach MPI_Finalize.*/ 
+/* all workers past run_worker*/ 
 #define all_home (workers_done == NUM_WORKERS)
 
 ltl no_lost_results { [] (round_done -> len(to_master) == 0) }

@@ -1,309 +1,219 @@
-# Verification runs: Othello MPI player (Program 2)
+# Correctness properties: Othello MPI player (Program 2)
 
-This file records every verification run reported for the Othello model, in
-enough detail to reproduce each result from a clean checkout.
+This file describes the correctness properties checked for the Promela model in `othello/model.pml`. It explains what each property checks, how it relates to `my_player.c`, and why it is important. The verification commands and results are given in `othello/results/run_commands.md`.
 
-The properties themselves, and the reasoning behind them, are in
-`othello/properties.md`. This file is about how the results were obtained.
+## What the model covers
 
-## Environment
+The model represents the MPI master and worker logic in `my_player.c`, including `run_master`, `execute_master`, `send_init_moves`, `send_next_move`, `pop_move`, `run_worker`, and the worker call to `minimax_pruning`. The serial path is not modelled because `serial_master` only runs when `comm_sz == 1` and does not involve concurrency.
 
-| Item | Value |
-| --- | --- |
-| Model checker | Spin Version 6.5.2, 6 December 2019 |
-| Compiler | gcc |
-| Platform | Ubuntu Linux |
-| Memory | 7 GB RAM, 1 GB swap |
-| Model file | `othello/model.pml` |
-| Repository | `PA_Assignments/Modelchecking` |
-| Model version | commit `70b73d2` |
+The model has three types of processes. `Master` represents rank 0, `Worker` represents the other MPI ranks, and `Referee` represents the Ingenious Framework sending messages to the player. The referee is included because Promela models must be closed and because the message handling in `run_master` can affect the behaviour of the workers.
 
-The memory figure matters. It is the constraint that decides which
-configurations can be searched exhaustively and which cannot, and it is
-referred to by name in the section on the reduced configuration below.
+The board and most of the Othello logic are abstracted away. This includes `legal_moves`, `make_move`, `evaluate`, the recursive parts of `minimax`, and the board itself. The model only keeps the three possible outcomes of a `minimax_pruning` call. The board broadcast is represented by the round number because the properties only depend on the broadcast occurring and reaching each worker.
 
-All results were produced from the single committed `model.pml` at the commit
-above. No local edits were made between runs. Every configuration is supplied
-on the command line rather than by editing the file, so each result is
-reproducible from the same source.
+MPI communication is represented using channels. `MPI_Bcast` uses one channel per worker, while move and no-work messages use `to_worker[]`. Worker results are sent through `to_master`, which represents the master's use of `MPI_Iprobe` and `MPI_Recv(MPI_ANY_SOURCE)`.
 
-## Model configuration
+Unlike Program 1, this program has no shared memory and therefore no mutual exclusion problem. The main correctness issues are related to messages, their contents, whether they are consumed, and whether termination messages are sent.
 
-Three parameters are wrapped in include guards so they can be set at parse
-time without editing the model:
+## Model state and verification-only state
 
-    #ifndef NUM_WORKERS
-    #define NUM_WORKERS 3
-    #endif
+The following variables represent state that exists in the implementation:
 
-    #ifndef MAX_MOVES
-    #define MAX_MOVES 4
-    #endif
+| Variable                  | Corresponds to                                                                           |
+| ------------------------- | ---------------------------------------------------------------------------------------- |
+| `my_colour`               | `my_colour` in `run_master`, with a negative value representing the `end_game` broadcast |
+| `round_no`                | The board broadcast, represented by the round number                                     |
+| `num_moves`               | `move_stack.size` after `load_round_moves`                                               |
+| `moves_left`              | Remaining moves on the move stack                                                        |
+| `master_alpha`            | `alpha` in `execute_master`                                                              |
+| `master_depth`            | `depth` in `execute_master`, represented as full or reduced                              |
+| `best_move`, `best_score` | `max_move` and `max_score`, which determine `global_best`                                |
+| `workers_done`            | Number of workers that have left `run_worker`                                            |
 
-    #ifndef MAX_ROUNDS
-    #define MAX_ROUNDS 2
-    #endif
+`NO_EVAL` represents `INT_MAX`, while `ALPHA_MIN` represents `INT_MIN`.
 
-`NUM_WORKERS 3` is not an arbitrary choice. `common/configs.py` in the
-Othello project sets `"threads": 4` for the Othello game, and `Othello.json`
-carries the same value through to the Java wrapper that invokes `mpirun`. So
-`comm_sz` is 4, one master and three workers, and the model matches the
-deployed system.
+The model also has three variables used only for verification:
 
-`MAX_MOVES` must be strictly greater than `NUM_WORKERS`. If it is not,
-`send_init_moves` empties the move stack before any result comes back, so
-`send_next_move` called from the collection loop can only ever send
-`NO_WORK_TAG` and the dynamic work redistribution that the architecture
-exists for is never exercised. This was not deduced in advance; it was caught
-by pan's unreachable statement report at `NUM_WORKERS 3, MAX_MOVES 3`:
+| Variable       | Meaning                                               |
+| -------------- | ----------------------------------------------------- |
+| `true_score[]` | Correct evaluation for each move in the current round |
+| `best_true`    | Highest value in `true_score[]`                       |
+| `round_done`   | Set when the collection loop for a round has finished |
 
-    unreached in proctype Master
-        model.pml:57, state 75, "to_worker[r_rank]!MOVE_TAG,moves_left,master_alpha,master_depth"
-        model.pml:58, state 76, "moves_left = (moves_left-1)"
+`true_score[]` is important because the real program does not store the correct score separately. The model chooses these values before the round and allows `evaluate_move` to return either the correct value or `NO_EVAL`. This makes it possible to check whether the master selected the best move.
 
-`MAX_MOVES 4` is the smallest value that exceeds the worker count.
+`round_done` ensures that the move selection properties are checked only after all results have been collected.
 
-## Where the -D flags go
+---
 
-Two different preprocessor passes are involved and the definitions are not
-interchangeable.
+## Property 1: `no_eval_chosen`
 
-`-DNUM_WORKERS`, `-DMAX_MOVES`, `-DMAX_ROUNDS`, `-DNO_LEAK` and
-`-DNO_TIME_CUTOFF` are used by `model.pml`, so they go to `spin`, which runs
-the C preprocessor when it generates `pan.c`:
+Category: safety, data validity.
 
-    spin -DMAX_MOVES=4 -a model.pml          # correct
-    gcc -O2 -DMAX_MOVES=4 -o pan pan.c       # silently ignored
+```text
+#define chose_no_eval (round_done && best_score == NO_EVAL)
+ltl no_eval_chosen { []!chose_no_eval }
+```
 
-By the time `gcc` sees `pan.c` the constant is already a literal, so the gcc
-form has no effect and produces no warning.
+ The master should never finish a round with `NO_EVAL` as the selected score.
 
-`-DNOCLAIM` and `-DBITSTATE` are used by `pan.c` itself, so they go to `gcc`.
+**Implementation.** In the minimising branch of `minimax`, `minEval` is initially set to `INT_MAX`:
 
-The same flags must also be repeated on any replay, because `spin -t`
-re-reads `model.pml` and re-runs the preprocessor. Replaying a two-worker
-trail against a three-worker model produces a stream of `transition failed`
-lines and a misleading trace. Treat `transition failed` during a replay the
-same way as the warning that `model.pml` is newer than the trail file.
+```c
+minEval = INT_MAX;
+legal_moves(moves, &number_of_moves, my_colour);
 
-## Build steps
+for (int i = 0; i < number_of_moves; i++)
+{
+  ...
+  minEval = minimum(minEval, eval);
+  beta = minimum(beta, eval);
 
-Two verifier binaries are built from the same generated `pan.c`.
+  if (beta <= *alpha)
+  {
+    break;
+  }
+}
 
-### Standard verifier, used for all LTL properties
+return minEval;
+```
 
-    spin -DNUM_WORKERS=3 -DMAX_MOVES=4 -DMAX_ROUNDS=1 -a model.pml
-    gcc -O2 -o pan pan.c
+There is no check for `number_of_moves == 0`. In Othello, having no legal moves means the player passes, so this is a valid situation. If there are no moves, the loop does not execute and `INT_MAX` is returned as if it were a real score. The maximising branch has the same issue with `INT_MIN`.
 
-`spin -a` reports the claims it found and warns that only one is used per
-run:
+The value is then used by `execute_master` when comparing scores:
 
-    the model contains 4 never claims: workers_finish, no_lost_results,
-    best_is_maximal, no_eval_chosen
-    only one claim is used in a verification run
-    choose which one with ./pan -a -N name (defaults to -N no_eval_chosen)
+```c
+if ((process_score > max_score) || (max_move == -1))
+```
 
-Every run below therefore names its property with `-N`. The header line
-`pan: ltl formula <name>` confirms which claim was actually used.
+Since `INT_MAX` is larger than any valid score, it can incorrectly become the best score and can also affect the shared alpha value.
 
-### Claim-free verifier, used for the deadlock check
+**Why it matters.** A sentinel value is being used as a real evaluation. This can cause the master to make a decision using invalid information. The problem is also difficult to notice because the resulting score can still look reasonable.
 
-    gcc -O2 -DNOCLAIM -o pan_noclaim pan.c
+The damage is limited to the current move decision because `execute_master` resets `alpha` at the start of each round.
 
-While a never claim is active, pan disables the invalid end state check, as
-its header shows:
+---
 
-    invalid end states      - (disabled by never claim)
+## Property 2: `best_is_maximal`
 
-`-DNOCLAIM` excludes the claim from the generated verifier, re-enabling that
-check without removing the `ltl` blocks from `model.pml`. One committed model
-file therefore serves every result.
+Category: safety, functional correctness.
 
-### Both binaries must be rebuilt after every `spin -a`
+```text
+#define chose_maximal (true_score[best_move] == best_true)
+ltl best_is_maximal { [] ((round_done && num_moves > 0) -> chose_maximal) }
+```
 
-`spin -a` overwrites `pan.c`. A binary left over from a previous
-configuration will run happily and report results for the wrong model. This
-is easy to miss because nothing warns about it.
+ If a round has at least one legal move, the master should choose the move with the highest correct score.
 
-## Configurations
+**Implementation.** This corresponds to `global_best.move`, which is the move eventually played by `run_master`. The condition `num_moves > 0` excludes the pass case.
 
-| Label | Flags | Purpose |
-| --- | --- | --- |
-| A | `NUM_WORKERS 3, MAX_MOVES 4, MAX_ROUNDS 1` | matches the deployed system |
-| B | `NUM_WORKERS 3, MAX_MOVES 4, MAX_ROUNDS 0` | minimal witness for the termination defect |
-| C | `NUM_WORKERS 3, MAX_MOVES 4, MAX_ROUNDS 2` | covers match reset and the per-round reset |
-| D | `NUM_WORKERS 2, MAX_MOVES 3, MAX_ROUNDS 1` | reduced, small enough to search exhaustively |
-| E | D plus fault injection switches | isolates the causes of `best_is_maximal` failing |
+**Why it matters.** This property checks the main purpose of the program. The MPI communication could work correctly while the program still chooses the wrong move.
 
-## Summary of results
+There are two independent reasons why this property fails:
 
-### Configuration A, three workers, one round
+1. **Invalid minimax results.** The `INT_MAX` value described in Property 1 can be treated as a real score.
+2. **Different search conditions.** `execute_master` can reduce `depth` to 4 after the cutoff time. This means some moves may be searched to depth 11 or more while later moves are searched to depth 4. Their scores are then compared as if they were produced under the same conditions. The shared alpha value can also cause different amounts of pruning.
 
-| Property | Result | Depth | States | Time |
-| --- | --- | --- | --- | --- |
-| `no_eval_chosen` | violated | 205 | 5,336 | under 0.01 s |
-| `best_is_maximal` | violated | 255 | 106,138 | 0.13 s |
-| `workers_finish` | violated, acceptance cycle | 31 | 203 | under 0.01 s |
-| deadlock | invalid end state | 20 | 205 | under 0.01 s |
-| `no_lost_results` | exhausted memory, see bitstate below | | | |
+The model uses two verification switches, `NO_LEAK` and `NO_TIME_CUTOFF`, to test these causes separately. `-DNO_LEAK` removes the `NO_EVAL` fault, while `-DNO_TIME_CUTOFF` removes the depth reduction. The results in `run_commands.md` show that removing either fault on its own still leaves the property violated, while removing both makes it hold. This shows that both problems contribute independently.
 
-State-vector 244 bytes.
+---
 
-### Configuration B, three workers, zero rounds
+## Property 3: `no_lost_results`
 
-| Property | Result | Depth | States |
-| --- | --- | --- | --- |
-| deadlock | invalid end state | 20 | 205 |
-| `workers_finish` | violated, acceptance cycle | 31 | 203 |
+Category: safety, message accounting.
 
-### Configuration C, three workers, two rounds
+```text
+ltl no_lost_results { [] (round_done -> len(to_master) == 0) }
+```
 
-| Property | Result | Depth | States |
-| --- | --- | --- | --- |
-| `no_eval_chosen` | violated | 341 | 5,683 |
-| `best_is_maximal` | violated | 391 | 107,862 |
+This is the only property that holds.
 
-### Configuration D, two workers, one round
+ When a round finishes, there should be no worker results still waiting in the master's queue.
 
-| Property | Result | Depth | States | Time |
-| --- | --- | --- | --- | --- |
-| `no_eval_chosen` | violated | 172 | 1,046 | under 0.01 s |
-| `best_is_maximal` | violated | 222 | 17,286 | 0.02 s |
-| `workers_finish` | violated, acceptance cycle | 28 | 77 | under 0.01 s |
-| deadlock | invalid end state | 17 | 79 | under 0.01 s |
-| `no_lost_results` | holds, 0 errors | | 7,676,089 | 11.4 s |
+**Implementation.** The collection loop ends when:
 
-State-vector 204 bytes. The `no_lost_results` run reports zero unreached
-statements in all four proctypes.
-
-### Configuration E, fault isolation on `best_is_maximal`
+```c
+while (results < num_moves)
+```
 
-| Flags | Result | Depth | States |
-| --- | --- | --- | --- |
-| none | violated | 222 | 17,286 |
-| `-DNO_TIME_CUTOFF` | violated | 218 | 10,026 |
-| `-DNO_LEAK` | violated | 280 | 47,056 |
-| `-DNO_TIME_CUTOFF -DNO_LEAK` | holds, 0 errors | | 626,037 |
+The master counts received results rather than checking whether the channel is empty. If a worker never sends a result, the `MPI_Iprobe` loop can wait forever.
 
-The last run reports zero unreached statements in all four proctypes.
+**Why it matters.** A result left in the queue could be read during the next round and incorrectly used for a different move. This could affect that round's alpha and best score.
 
-## The three-worker `no_lost_results` run
+The property holds for the reduced configuration used in the verification. It does not prove the same result for the full deployed worker count, where the exhaustive state space did not fit in memory and bitstate search was required. Therefore, the approximate result is not treated as equivalent to an exhaustive proof.
 
-Exhaustive search of configuration A was killed by the kernel out-of-memory
-killer. At a 244 byte state vector plus 28 bytes of overhead, 7 GB of RAM
-holds roughly 2.6 x 10^7 states, and the search passed that without
-terminating.
+---
 
-The fallback is bitstate storage, which is a compile-time option:
+## Property 4: `workers_finish`
 
-    spin -DNUM_WORKERS=3 -DMAX_MOVES=4 -DMAX_ROUNDS=1 -a model.pml
-    gcc -O2 -DBITSTATE -o pan_bit pan.c
-    ./pan_bit -a -N no_lost_results -m100000 -w32
+Category: liveness.
 
-Note that `-bitstate` and `-collapse` are compile-time directives for
-`pan.c`. Passing them as runtime flags to `./pan` is silently ignored.
+```text
+#define all_home (workers_done == NUM_WORKERS)
+ltl workers_finish { <> all_home }
+```
 
-Result:
+ Every worker should eventually leave its evaluation loop and be able to reach `MPI_Finalize`.
 
-    errors: 0
-    depth reached 436
-    655,692,780 states stored
-    425,727,270 states matched
-    1.08142e+09 transitions
-    hash factor: 6.55027 (best if > 100.)
-    bits set per state: 3 (-k3)
-    512 MB memory used for hash array (-w32)
-    518 MB total actual memory usage
-    approximately 1,370 seconds
+**Implementation.** A worker waits for the next `MPI_Bcast` at the start of each round. It only stops when the master broadcasts a negative `end_game` value.
 
-Zero unreached statements in all four proctypes.
+`run_master` handles `GENERATE_MOVE`, `PLAY_MOVE`, `GAME_TERMINATION`, `MATCH_RESET`, and `UNKNOWN`. Only the last two result in the termination broadcast. However, `comms.h` also defines `RECV_FAILED` and `CLIENT_DISCONNECTED`, and `run_master` has no cases for them and no final `else`.
 
-**How to read this result.** Bitstate storage replaces exact state storage
-with a hash-indexed bit array, so distinct states can collide and be treated
-as already visited. The search is therefore approximate and possibly lossy.
-The `hash factor` of 6.55 is well below the 100 that indicates near-exhaustive
-coverage, so an appreciable fraction of the state space may have been skipped.
+If either message is received, `running` remains true and no termination broadcast is sent. The workers can therefore remain blocked waiting for the next broadcast.
 
-The correct claim is that no counterexample was found in an approximate
-search covering roughly 6.6 x 10^8 states, not that the property holds at
-three workers. The exhaustive configuration D result is the stronger
-evidence. Reporting both, and being explicit about which is which, is the
-point.
+The Promela model represents this using an explicit `skip`, matching what the C code effectively does for these unhandled messages.
 
-## The reduced configuration
+**Why it matters.** This problem did not occur in the recorded matches because the framework did not send these messages. Model checking found that the situation is still reachable. This shows why model checking is useful for finding inputs and execution paths that normal testing may not encounter.
 
-Properties that fail are cheap, because the search stops at the first
-counterexample. The property that holds must exhaust the reachable state
-space, and that is where the 7 GB limit binds.
+The property fails both with and without `-f`. The problem is caused by a missing branch, not by unfair scheduling.
 
-| Configuration | `no_lost_results` |
-| --- | --- |
-| D, two workers, three moves | 7,676,089 states, exhaustive, 11.4 s |
-| A, three workers, four moves | exceeds 7 GB, bitstate only |
+---
 
-Justification for the reduction, specific to this property: a lost result
-requires the master to finish a round while a message it should have consumed
-is still queued. The shortest such witness needs one worker to send a result
-that the master's counter does not account for, which requires two workers at
-most, one to be accounted for and one not. Adding a third worker admits only
-longer instances of the same shape.
+## Deadlock: invalid end states
 
-This is a bounded argument and not a proof. The exhaustive result establishes
-that no result is stranded within two workers, three moves and one round. It
-does not establish absence for larger configurations, and the bitstate run at
-three workers raises but does not settle the confidence.
+Category: safety. This is not an LTL property.
 
-## Search order and the referee process
+The invalid end state check looks for reachable states where the system has stopped at a point that is not a valid termination state.
 
-The four terminal message branches of `proctype Referee` are listed before
-the `budget > 0` branch. This is deliberate. Depth-first search explores the
-branches of a nondeterministic `do` in the order written, so with
-`GENERATE_MOVE` first the search explored an entire move round before ever
-reaching `RECV_FAILED`, and the termination counterexamples cost tens of
-millions of states at three workers. With the terminal branches first they
-are found in a few hundred.
+The same missing message handling from Property 4 can cause a deadlock. The workers can be blocked waiting for a broadcast while the master continues through its loop without sending one. The smallest counterexample does not require a move to be played, showing that the problem is in the referee message handling rather than move evaluation.
 
-The branches of a nondeterministic selection are unordered by definition, so
-this changes only the order in which the search visits the state space, not
-the state space itself. That is confirmed empirically: after the reordering,
-`no_lost_results` at configuration D still reports exactly 7,676,089 states,
-while the failing runs changed slightly because a different counterexample is
-now reached first.
+`workers_finish` describes the problem in terms of worker termination, while the deadlock check shows that the entire system can become stuck.
 
-## Saving and replaying error trails
+---
 
-Each run overwrites `model.pml.trail`, so `verify.sh` moves each one into
-`results/` immediately. To replay a saved trail, repeat the flags of the run
-that produced it:
+## What the results show
 
-    spin -DNUM_WORKERS=3 -DMAX_MOVES=4 -DMAX_ROUNDS=1 \
-         -t -p -k results/no_eval_chosen_w3r1.trail model.pml
+The four properties point to three main problems in `my_player.c`.
 
-Adding `-c` prints one column per process, which makes the interleaving
-between the master and the three workers easier to follow.
+**1. Invalid minimax initialisation.**
+The minimising branch can return `INT_MAX` when there are no legal moves. This is detected directly by `no_eval_chosen` and also contributes to the failure of `best_is_maximal`.
 
-Trails are named `<property>_w<workers>r<rounds>.trail`.
+**2. Comparing scores from different search conditions.**
+`execute_master` can compare scores produced at different search depths and with different pruning conditions. The fault injection tests show that this is independent of the minimax problem.
 
-## Reproducing every result
+**3. Missing message handling.**
+`run_master` does not handle `RECV_FAILED` or `CLIENT_DISCONNECTED`. This causes `workers_finish` to fail and can also lead to a deadlock.
 
-All of the above is produced by a single script, `othello/verify.sh`, from a
-clean checkout at the commit recorded at the top of this file:
+`no_lost_results` holds for the verified reduced configuration. Including a property that passes provides useful evidence that the model is checking more than just known defects.
 
-    cd Modelchecking/othello
-    ./verify.sh
+---
 
-Or, to skip the two exhaustive runs:
+## Properties considered and not verified
 
-    ./verify.sh quick
+**Mutual exclusion.**
+This does not apply to the MPI program because MPI ranks use separate address spaces and do not share memory.
 
-The script writes the full pan output of every run to `results/logs/`, the
-error trails to `results/`, and a summary table to `results/summary.txt`. It
-rebuilds both binaries after every `spin -a` and passes each definition to
-the correct preprocessor pass.
+**Alpha monotonicity.**
+The master's alpha only increases because it is updated when a received score is greater than the current alpha. This can be seen directly from the implementation and does not provide a useful concurrency property.
 
-The three-worker bitstate run is not part of the script, because it takes
-roughly 23 minutes and is a deliberate fallback rather than a routine result.
-Its commands are given in the section above.
+**Collective ordering.**
+The model sends broadcasts to each worker in a fixed order, so the required ordering is built into the abstraction. Verifying this would mainly test the model rather than the implementation.
 
-iSpin was not used for any of the results reported here. All runs were
-performed from the command line.
+**Move-halving in the maximising branch.**
+`minimax` halves `number_of_moves` when searching the opponent's replies. This affects search quality rather than concurrency, and the board is not represented in the model.
+
+**Memory management.**
+`minimax` allocates `moves` and `copy` before the depth check but does not free them when returning from the `depth == 0 || game_over()` case. This causes memory leaks, but Promela does not model heap allocation. A memory analysis tool would be more appropriate for this issue.
+
+**Socket layer.**
+`comms.c` and the framing of referee messages are treated as framework code. The relevant defect is how `run_master` responds to message types, rather than how those messages are transmitted.
+
