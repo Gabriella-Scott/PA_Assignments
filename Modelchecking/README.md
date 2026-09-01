@@ -5,29 +5,23 @@ SPIN/Promela models and verification of two concurrent systems.
 * **Program 1** - the multicore process scheduler from RW314 Project 1 (`manager.c`)
 * **Program 2** - Othello MPI engine (`my_player.c`)
 
+Each folder contains:
+```
+model.pml               the Promela model, all LTL properties included
+properties.md           the properties and why each one matters
+results/run_commands.md every command, flag and result, with commit hash
+  ```
+
+othello/verify.sh regenerates every Othello result in one run.
+The scheduler results are reproduced by the commands in its run_commands.md.
+iSpin was not used for any result.
+
+Implementation repositories are linked in the report.
+
 ## Requirements
 
 * SPIN 6.5+ (`spin -V`)
 * a C compiler (`gcc`)
-
-## Model configuration
-
-### Scheduler (`scheduler/model.pml`)
-
-| constant | value | meaning |
-|---|---|---|
-| `NUM_PROCS` | 3 | simulated processes |
-| `NUM_RESOURCES` | 2 | shared resources |
-| `NUM_WORKERS` | 2 | scheduler threads ("cores") |
-| `MAX_INSTR` | 3 | instruction slots per process (override with `-DMAX_INSTR=N`) |
-
-### Othello (`othello/model.pml`)
-
-| constant | value | meaning |
-|---|---|---|
-| `NUM_WORKERS` | 3 | MPI worker ranks (rank 0 is master) |
-| `MAX_MOVES` | 4 | moves considered per round |
-| `MAX_ROUNDS` | 2 | game rounds modelled |
 
 ## Building the verifier
 
@@ -56,7 +50,7 @@ run with `-N`:
 ./pan -a -f -N all_terminate      # -f for weak fairness
 ./pan -a -f -N ready_dispatched
 
-./pan_noclaim                      # deadlock / invalid end state check
+./pan_noclaim  # deadlock / invalid end state check
 ```
 
 Each `./pan` run overwrites `model.pml.trail`. Copy it before the next run:
@@ -71,54 +65,8 @@ To replay a saved trail:
 ```bash
 cp results/waiting_consistent.trail model.pml.trail
 spin -t -p model.pml
-spin -t -p -c model.pml            # column format: one column per process
+spin -t -p -c model.pml  # column format: one column per process
 ```
 
 If Spin warns that `model.pml` is newer than `model.pml.trail`, the trail
 belongs to an earlier version of the model and must not be used.
-
-## Flags
-
-| flag | meaning |
-|---|---|
-| `-a`   | search for acceptance cycles (required for liveness claims) |
-| `-f`   | weak fairness |
-| `-N n` | select never claim `n` |
-| `-DNOCLAIM` | compile out never claims to re-enable deadlock detection |
-| `-DMAX_INSTR=N` | override `MAX_INSTR` at parse time without editing the model |
-
-## Scheduler results summary
-
-| property | category | config | result |
-|---|---|---|---|
-| `pcb_mutex` | safety, mutual exclusion | `MAX_INSTR 3` | **violated**, depth 901, 65,957 states |
-| `no_self_wait` | safety, resource ownership | `MAX_INSTR 3` | **violated**, depth 379, 188 states |
-| `waiting_consistent` | safety, state consistency | `MAX_INSTR 3` | **violated**, depth 962, 69,699 states |
-| `no_dup_ready` | safety, queue integrity | `MAX_INSTR 2` | **holds**, 20,861,451 states, 0 errors |
-| `all_terminate` | liveness | `MAX_INSTR 3`, `-f` | **violated**, depth 1069, 493 states |
-| `ready_dispatched` | liveness | `MAX_INSTR 3`, `-f` | **violated**, depth 1088, 11,372,991 states |
-| deadlock | safety, invalid end state | `MAX_INSTR 3` | **violated**, depth 504, 67,872 states |
-
-See `scheduler/results/run_commands.md` for full reproduction details.
-
-## Othello results summary
-
-| property | category | config | result |
-|---|---|---|---|
-| `no_eval_chosen` | safety, data validity | `NUM_WORKERS 3`, `MAX_ROUNDS 1` | **violated**, depth 205, 5,336 states |
-| `best_is_maximal` | safety, functional correctness | `NUM_WORKERS 3`, `MAX_ROUNDS 1` | **violated**, depth 255, 106,138 states |
-| `workers_finish` | liveness | `NUM_WORKERS 3`, `MAX_ROUNDS 1` | **violated**, depth 31, 203 states |
-| deadlock | safety, invalid end state | `NUM_WORKERS 3`, `MAX_ROUNDS 1` | **violated**, depth 20, 205 states |
-| `no_lost_results` | safety, message accounting | `NUM_WORKERS 3`, `MAX_ROUNDS 1` | **incomplete** (memory limit) |
-| `no_lost_results` | safety, message accounting | `NUM_WORKERS 2`, `MAX_ROUNDS 1` | **holds**, 7,676,089 states, 0 errors |
-
-### Fault isolation (`best_is_maximal`, `NUM_WORKERS 2`)
-
-| switches | result |
-|---|---|
-| neither removed | **violated**, depth 222, 17,286 states |
-| `-DNO_TIME_CUTOFF` only | **violated**, depth 218, 10,026 states |
-| `-DNO_LEAK` only | **violated**, depth 280, 47,056 states |
-| both removed | **holds**, 626,037 states, 0 errors |
-
-See `othello/results/run_commands.md` for full reproduction details.
