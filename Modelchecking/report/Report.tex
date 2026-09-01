@@ -100,10 +100,10 @@ in finding behaviours that testing may not expose.
 
 \medskip
 \noindent
-Implementation under analysis (Program 1): \todo{repo URL}\\
-Implementation under analysis (Program 2): \todo{repo URL}\\
 Promela models, properties and verification records:
-\url{https://github.com/Gabriella-Scott/PA_Assignments}
+\url{https://github.com/Gabriella-Scott/PA_Assignments}\\
+Implementation under analysis (Program 1 \& 2): 
+\url{https://git.cs.sun.ac.za/Computer-Science/rw314/2025/project/25935453-rw314-projects}\\
 
 % =====================================================================
 \section{Program 1: FCFS Process Scheduler}
@@ -127,7 +127,7 @@ thread cannot interleave with anything. \code{NUM\_PROCS} is 3, because with 2
 processes one running and one blocked leaves the ready queue empty, and a
 third is needed before a process can be dispatched while another is already
 blocked. \code{NUM\_RESOURCES} is 2, the smallest number admitting a circular
-wait \cite{silberschatz2018}. \code{MAX\_INSTR} is 3, enough for a process to
+wait \cite{baier2008}. \code{MAX\_INSTR} is 3, enough for a process to
 request a resource, release it and request again, so that a release can wake a
 blocked process. Identifiers start at 1 so that 0 can stand for \code{NULL}
 and \code{resource\_owner[r] == 0} reads exactly as
@@ -200,8 +200,9 @@ is sound provided the locks cannot deadlock against each other, which is
 checkable by inspection: every FCFS path acquires them in the same order, and
 \code{release\_resource}, the only function holding two queue locks at once,
 always takes \code{q\_locks[1]} before \code{q\_locks[0]}. With a consistent
-acquisition order no circular wait between locks is possible
-\cite{silberschatz2018}. One caveat to note is that a blocking statement inside an
+aacquisition order no circular wait between locks is possible: a thread
+that holds one lock only ever waits for a lock later in the fixed order,
+so the wait-for relation cannot contain a cycle \cite{baier2008}. One caveat to note is that a blocking statement inside an
 \code{atomic} sequence causes Spin to drop atomicity rather than report an
 error \cite{spin_atomic}, so the sends on \code{ready\_q} and
 \code{waiting\_q} could in principle interleave, but both channels are sized
@@ -422,9 +423,11 @@ fairness, as discussed in Section~\ref{sec:results-1}.
 \medskip\noindent
 \textbf{Deadlock} is checked with Spin's invalid end state detection, which
 asks whether any process is stopped somewhere other than a valid halting
-point \cite{inggs_properties}. That is broader than asking whether a circular
-wait exists \cite{silberschatz2018}; it catches a process blocked on a guard
-that can never become executable, whatever the reason. Since \code{pan}
+point \cite{inggs_properties}.This matches the standard definition of
+deadlock as a state in which the system as a whole has halted while at
+least one component could still continue \cite{baier2008}, and is broader
+than asking whether a circular wait exists; it catches a process blocked
+on a guard that can never become executable, whatever the reason. Since \code{pan}
 disables the check while a never claim is active, this run uses a separate
 claim-free verifier \cite{spin_pan}.
 
@@ -449,12 +452,12 @@ rather than from the model itself \cite{spin_pan}. The value of
 \code{MAX\_INSTR} is also supplied to \code{spin} on the command line, 
 ensuring that all results in Table~\ref{tab:results} use the same source file.
 
-Two flags are used throughout the verification. \code{-m} increases the maximum 
+Two extra flags are used on the larger runs. \code{-m} increases the maximum 
 search depth from the default of 10,000, while \code{-w26} increases the hash 
 table size to $2^{26}$ entries. The larger hash table was needed because the 
 default $2^{19}$ entries caused many hash conflicts at this scale 
 \cite{spin_pan}. All runs were performed from the command line using 
-Spin 6.5.2 on a machine with 7,GB of RAM. iSpin was not used.
+Spin 6.5.2 on a machine with 7\,GB of RAM. iSpin was not used.
 
 
 \begin{table}[htbp]
@@ -610,21 +613,22 @@ Othello rules are all abstracted away. What survives of
 \code{minimax\_pruning} is only which of three outcomes a search produces,
 which is the least the properties in Section~\ref{sec:props-2} need.
 
-Three constants fix the size of the model, all wrapped in \code{\#ifndef}
-guards so they are supplied on the command line. \code{NUM\_WORKERS} is 3,
-not an arbitrary choice: \code{common/configs.py} in the Othello project
-sets \code{"threads": 4} for this game, so \code{comm\_sz} is 4, one master
-and three workers, and the model matches the deployed system.
-\code{MAX\_MOVES} must exceed \code{NUM\_WORKERS}, or \code{send\_init\_moves}
-empties the move stack before any result comes back and the dynamic
-work-redistribution branch is never taken. This was not decided in advance;
-it was caught by \code{pan}'s unreached statement report at
-\code{NUM\_WORKERS 3, MAX\_MOVES 3}, which named the redistribution send as
-dead code, the same kind of finding \code{pan} gave for the scheduler's
-duplicate-ready check. \code{MAX\_MOVES 4} is the smallest value that fixes
-it. \code{MAX\_ROUNDS} bounds the \code{Referee} process so every run
-terminates; it is 2 by default and varied per run in
-Section~\ref{sec:results-2}.
+Three constants control the size of the model, each using a \code{\#ifndef} 
+guard so that it can be set from the command line. \code{NUM\_WORKERS} is set 
+to 3 because \code{common/configs.py} in the Othello project uses 
+\code{"threads": 4}. Since \code{comm\_sz} is 4, this gives one master and 
+three workers, matching the actual system.
+
+\code{MAX\_MOVES} must be greater than \code{NUM\_WORKERS}. Otherwise, 
+\code{send\_init\_moves} can empty the move stack before any worker returns a 
+result, meaning the dynamic work redistribution branch is never reached. This 
+was discovered using \code{pan}'s unreached statement report with 
+\code{NUM\_WORKERS 3, MAX\_MOVES 3}, which showed that the redistribution send 
+was unreachable. \code{MAX\_MOVES 4} is therefore the smallest suitable value.
+Finally, \code{MAX\_ROUNDS} limits the number of rounds in the \code{Referee} 
+process so that each run terminates. It is set to 2 by default and varied 
+between runs in Section~\ref{sec:results-2}.
+
 Table~\ref{tab:mapping2} sets out thef
 correspondence between the implementation and the model.
 
@@ -638,7 +642,7 @@ correspondence between the implementation and the model.
 \midrule
 \code{MPI\_Bcast(\&my\_colour)}, \code{MPI\_Bcast(board)} &
 \code{bcast\_colour[]}, \code{bcast\_board[]} &
-One channel per worker for each collective. The board carries no
+For each collective there is 1 channel per worker. The board carries no
 information any property needs, so it is reduced to the round number. \\
 \addlinespace
 \code{MPI\_Send}/\code{MPI\_Recv} with \code{MOVE\_TAG}, \code{NO\_WORK\_TAG} &
@@ -646,7 +650,7 @@ information any property needs, so it is reduced to the round number. \\
 Direct: the tag distinguishes work from termination exactly as in the
 implementation. \\
 \addlinespace
-\code{MPI\_Iprobe(MPI\_ANY\_SOURCE)} + \code{MPI\_Recv} &
+\code{MPI\_Iprobe(MPI\_ANY\_SOURCE)} \\ + \code{MPI\_Recv} &
 \code{to\_master}, one shared channel &
 \code{MPI\_ANY\_SOURCE} does not distinguish senders, so a single channel
 every worker writes into is a direct abstraction, not a simplification. \\
@@ -673,8 +677,8 @@ the messages so every run terminates. \\
 \end{tabular}
 \end{table}
 
-The headline abstraction is \code{evaluate\_move}, which stands for the call
-a worker makes into \code{minimax\_pruning} and, through it, the minimising
+The headline abstraction is \code{evaluate\_move} (stands for the call
+a worker makes into \code{minimax\_pruning}) and through it, the minimising
 branch of \code{minimax}. That branch initialises an accumulator to
 \code{INT\_MAX} and loops over the legal moves at that node:
 
@@ -694,13 +698,13 @@ for (int i = 0; i < number_of_moves; i++)
 return minEval;
 \end{lstlisting}
 
-Three outcomes fall out of this: the loop never runs because there are no
+Three outcomes fall out of this; namely the loop never runs because there are no
 legal moves at that node, so the function returns its initial value
 unchanged; the loop runs once and stops, because the pruning test sits at
 the bottom rather than the top, so a poisoned or reduced-depth call returns
 its first child's value rather than a true minimum; or the loop runs to
 completion and returns a genuine evaluation. The model reproduces exactly
-these three outcomes as three branches of one \code{if}, resolved
+these three outcomes as 3 branches of 1 \code{if}, resolved
 non-deterministically wherever more than one applies:
 
 \begin{lstlisting}[style=promela,caption={\code{evaluate\_move}, the abstraction of \code{minimax\_pruning}}]
@@ -720,16 +724,15 @@ inline evaluate_move(m,in_alpha,in_depth,out_score,out_alpha)
 }
 \end{lstlisting}
 
-\code{NO\_EVAL} stands for \code{INT\_MAX}, defined as 9, larger than every
-genuine score in the abstract domain \code{1..SCORE\_MAX}, which reproduces
-the one property of \code{INT\_MAX} that matters here: it wins every
-comparison the master makes. \code{true\_score[]} is verification state with
-no counterpart in the implementation. It fixes a genuine evaluation for
-each move at the start of a round, chosen non-deterministically, so that a
-property can compare the move the master played against the move it should
-have played; the implementation has no such array, since the true value of
-a move exists only implicitly, as whatever a correct full search would
-return.
+\code{NO\_EVAL} represents \code{INT\_MAX} and is set to 9, which is larger 
+than any valid score in the abstract domain \code{1..SCORE\_MAX}. This gives it 
+the same behaviour as \code{INT\_MAX} for the comparisons made by the master. 
+\code{true\_score[]} is only used for verification and has no equivalent in 
+the implementation. At the start of each round, it assigns a non-deterministic 
+valid score to each move. This allows the model to compare the move selected 
+by the master with the move that should have been selected. The actual 
+implementation does not have such an array because the correct value of a 
+move is only known from a complete search.
 
 Two omissions in Table~\ref{tab:omissions2} are not free, and both are
 central to Section~\ref{sec:results-2}.
@@ -743,81 +746,79 @@ central to Section~\ref{sec:results-2}.
 \textbf{Omitted} & \textbf{Cost} \\
 \midrule
 Board contents, geometry, \code{is\_stable}, board weights &
-None. No property depends on where a piece sits, only on the score a
-search returns for it. \\
+None $\rightarrow$ No property depends on where a piece sits, only on the score a search returns for it. \\
 \addlinespace
 Recursion inside \code{minimax} below the top call &
-None. It is thread-local and cannot affect any other process's
+None $\rightarrow$ It is thread-local and cannot affect any other process's
 interleaving. \\
 \addlinespace
-The \code{num\_moves}-to-depth mapping (11, 13, 12 or 14) &
-None. Nothing in the protocol depends on the specific depth, only on
+The \code{num\_moves}-to-depth mapping (11, 12, 13 or 14) &
+None $\rightarrow$ Nothing in the protocol depends on the specific depth, only on
 whether a search was cut short, so all four collapse to
 \code{DEPTH\_FULL} and \code{DEPTH\_REDUCED}. \\
 \addlinespace
 The \code{time()} cutoff clock &
-Small. A free nondeterministic choice can fire the cutoff at any point in
+Small $\rightarrow$ A free nondeterministic choice can fire the cutoff at any point in
 a round, which over-approximates a real clock rather than modelling one;
 a counter would multiply the state space for no benefit to the properties
 checked. \\
 \addlinespace
 The \code{MPI\_Iprobe} busy-wait, replaced by a blocking receive &
-Not free. This changes what an unanswered result looks like to Spin,
+Not free $\rightarrow$ This changes what an unanswered result looks like to Spin,
 discussed in Section~\ref{sec:limits-2}. \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-One refinement was forced by Promela semantics. \code{select} cannot bind
-directly to an array element, so \code{true\_score[i]} cannot appear as a
-\code{select} target; the model instead selects into a scratch variable and
-assigns it, the same workaround used nowhere in the scheduler but needed
-here because the scheduler has no array indexed by a loop variable at the
-point of a \code{select}. One correctness note also worth stating plainly:
-\code{bcast\_terminate} sends only the colour broadcast with a negative
-value and not the board broadcast, because a worker breaks out of its loop
-before reaching the board receive, so the collective sequences on both
-sides still match.
+One change was needed because of Promela's \code{select} syntax. 
+\code{select} cannot assign directly to an array element, so 
+\code{true\_score[i]} cannot be used as the target. Instead, the model selects 
+a value into a temporary variable and then assigns it to the array. One other 
+detail is that \code{bcast\_terminate} only sends the colour broadcast with a 
+negative value and does not send the board. This is because the workers exit 
+their loop before reaching the board receive, so the collective communication 
+still matches on both sides.
 
+% Here
 \subsubsection*{Limits on interpretation}
 \label{sec:limits-2}
 
-As with Program 1, this model was written by hand, so a counterexample is a
-candidate defect until checked against the source, and a property that
-holds establishes nothing outside the worker, move and round counts it was
-checked at. One further limit is specific to this model. Both the
-\code{MPI\_Iprobe} busy-wait in \code{execute\_master} and the
-\code{while (running)} loop in \code{run\_master} are spin loops in the
-implementation; the model replaces both with blocking channel receives.
-That changes what Spin reports for the same underlying failure: a spinning
-\code{MPI\_Iprobe} that never receives anything is an infinite execution in
-the implementation, which Spin would only find as a non-progress cycle and
-only with \code{-l}, whereas a blocking receive on a channel nothing will
-ever write to is an invalid end state, caught by the default safety check.
-Both mean the master never returns, so the abstraction turns an
-implementation livelock into a model deadlock, cheaper to detect and with a
-shorter counterexample, and Section~\ref{sec:results-2} reports it on that
-understanding rather than as a literal match to the C control flow.
+As with Program 1, a counterexample is treated as a possible defect until it 
+has been checked against the source code. Similarly, a property that passes 
+only applies to the number of workers, moves, and rounds used in the model. 
+There is also a limitation specific to this program. The implementation uses 
+the \code{MPI\_Iprobe} busy-wait in \code{execute\_master} and the 
+\code{while (running)} loop in \code{run\_master}. In the model, both are 
+replaced with blocking channel receives. This changes how Spin detects the 
+same underlying problem. If an \code{MPI\_Iprobe} loop never receives a 
+message, the implementation can run indefinitely, which Spin would detect as 
+a non-progress cycle using \code{-l}. In the model, a blocking receive on a 
+channel that never receives a message results in an invalid end state, which 
+is detected by the default safety check. In both cases, the master never 
+returns; so the abstraction represents an implementation livelock as a model 
+deadlock, making it easier to detect and producing a shorter counterexample. 
+The results in Section~\ref{sec:results-2} are interpreted with this 
+difference in mind rather than as an exact match to the C control flow.
 
 % ---------------------------------------------------------------------
 \subsection{Correctness Properties}
 \label{sec:props-2}
 
 Three variables have no counterpart in \code{my\_player.c} and exist only
-so a property can be stated, the same role \code{executing[]} and
+so a property can be stated. This is the same role \code{executing[]} and
 \code{in\_ready[]} play in the scheduler model. \code{round\_done} is false
 while a round is in progress and true once the collection loop has
 finished and \code{best\_move} is final. \code{best\_true} is the largest
 \code{true\_score} among the round's moves. \code{workers\_done} counts how
 many workers have left their loop and can reach \code{MPI\_Finalize}.
 
-Five checks were run: four properties as named \code{ltl} blocks, plus a
+Five checks were run: four properties (as named \code{ltl} blocks), plus a
 deadlock check that is not an LTL property. Table~\ref{tab:props2} gives
 each formula as written in \code{model.pml}.
 
 \begin{table}[htbp]
 \centering
-\caption{The four LTL properties as written in \code{model.pml}.}
+\caption{The 4 LTL properties as written in \code{model.pml}.}
 \label{tab:props2}
 \begin{tabular}{l l p{9.2cm}}
 \toprule
@@ -839,97 +840,94 @@ each formula as written in \code{model.pml}.
 \end{table}
 
 \noindent
-\textbf{\code{no\_eval\_chosen}} targets the leaf case of \code{minimax}'s
-minimising branch directly: there is no guard on
-\code{number\_of\_moves == 0}, so a node with no legal moves, an ordinary
-pass rather than an error, returns \code{minEval} still holding its initial
-\code{INT\_MAX}. That value reaches \code{execute\_master}'s comparison
-\code{if ((process\_score > max\_score) || (max\_move == -1))}, and since
-\code{INT\_MAX} exceeds every real evaluation, the move that was never
-searched always wins. This is a correctness property of the value the
-engine plays, not merely an internal invariant.
+\textbf{\code{no\_eval\_chosen}} targets the leaf case in the minimising 
+branch of \code{minimax}. There is no guard for \code{number\_of\_moves == 0}, 
+so a node with no legal moves returns \code{minEval} with its initial value 
+of \code{INT\_MAX}. This value is then used by \code{execute\_master} in the 
+comparison \code{if ((process\_score > max\_score) || (max\_move == -1))}. 
+Since \code{INT\_MAX} is larger than every valid evaluation, the move that 
+was never searched can be selected; this affects the correctness of the move 
+chosen by the engine, rather than just its internal state.
 
 \medskip\noindent
-\textbf{\code{best\_is\_maximal}} asks whether the move \code{execute\_master}
-selects is really one of the best available; \code{num\_moves > 0} excludes
-the pass case, where \code{best\_move} is 0 and \code{true\_score[0]} would
-be meaningless. Two independent things can break it. The first is the
-\code{NO\_EVAL} leak above. The second is that the master compares scores
-computed under different conditions: the search depth drops from 11 to 4
-partway through a round once the turn clock passes \code{cut\_off}, and the
-shared \code{alpha} means a worker that receives a high alpha prunes
-earlier than one that receives \code{INT\_MIN}. Because the pruning test
-\code{if (beta <= *alpha) break;} sits at the \emph{bottom} of the loop
-rather than the top, a poisoned or depth-reduced call still evaluates its
-first child in full and returns that child's ordinary-looking, in-range
-value instead of \code{INT\_MAX}, which is why this second cause is silent
-in a way the first is not. The fault injection results isolating the two
-are in Section~\ref{sec:results-2}.
+\textbf{\code{best\_is\_maximal}} checks whether the move selected by 
+\code{execute\_master} is actually one of the best available moves. 
+The condition \code{num\_moves > 0} excludes the pass case, where 
+\code{best\_move} is 0 and \code{true\_score[0]} has no meaning. Two 
+issues can cause this property to fail. The first is the \code{NO\_EVAL} 
+problem described above. The second is that the master compares scores 
+calculated under different conditions. The search depth can starts at 11, or 12 to 14 when there are few legal moves, and drops to 4 when the turn clock passes \code{cut\_off}, while the shared 
+\code{alpha} can cause some workers to prune earlier than others. Since the 
+pruning check \code{if (beta <= *alpha) break;} is at the bottom of the loop, 
+a depth-reduced or high-alpha search still evaluates its first child and can 
+return a normal-looking score instead of \code{INT\_MAX} (this makes the 
+second issue harder to detect than the first). The fault injection results 
+separating these two causes are given in Section~\ref{sec:results-2}.
 
 \medskip\noindent
 \textbf{\code{no\_lost\_results}} is the property the whole work-sharing
 protocol rests on, and the one expected to hold. \code{to\_master} stands
 for the \code{MPI\_Iprobe} plus \code{MPI\_Recv(MPI\_ANY\_SOURCE)} pair, and
 a single shared channel is the right abstraction because
-\code{MPI\_ANY\_SOURCE} does not distinguish senders \cite{mpi41}. The
+\code{MPI\_ANY\_SOURCE} does not differentiate senders. The
 \code{Iprobe} loop has no escape: the time cutoff lowers \code{depth} but
 never breaks it, so if the send and receive counts were ever unbalanced the
 master would spin forever. This property confirms the balance is exact.
 
 \medskip\noindent
-\textbf{\code{workers\_finish}} asks whether every worker eventually leaves
-its loop and can reach \code{MPI\_Finalize}. A worker exits only on a
-negative broadcast colour, and only the \code{GAME\_TERMINATION} and
-\code{UNKNOWN} branches of \code{run\_master} issue that broadcast.
-\code{receive\_message} in \code{comms.c} can also return
-\code{RECV\_FAILED} or \code{CLIENT\_DISCONNECTED}, and \code{run\_master}'s
-if-chain has no branch for either; since \code{comms.h} is an interface the
-project specification fixed and forbade changing, handling all of its
-values is squarely the player's responsibility. Unlike the scheduler's
-liveness failures, this one fails both with and without \code{-f}: the
-cause is a missing branch, not a scheduling artefact, so the counterexample
-is genuine at either setting.
+\textbf{\code{workers\_finish}} checks whether every worker eventually leaves 
+its loop and reaches \code{MPI\_Finalize}. A worker only exits when it 
+receives a negative broadcast colour, and only the \code{GAME\_TERMINATION} 
+and \code{UNKNOWN} branches of \code{run\_master} send this broadcast. 
+However, \code{receive\_message} in \code{comms.c} can also return 
+\code{RECV\_FAILED} or \code{CLIENT\_DISCONNECTED}, and \code{run\_master} 
+has no branch for either case. Since \code{comms.h} was fixed by the project 
+specification and couldn't be changed, handling these values is the 
+responsibility of the player. This failure occurs both with and without 
+\code{-f}, confirming that it is caused by the missing branches rather than 
+scheduling.
 
 \medskip\noindent
-\textbf{Deadlock} is checked the same way as in Program 1, with a
-claim-free verifier compiled with \code{-DNOCLAIM}, since \code{pan}
-disables the invalid end state check while a never claim is active
-\cite{spin_pan}. It asks whether any reachable state has a process blocked
-with no executable statement while the system has stopped making progress.
-This is worth stating alongside \code{workers\_finish} rather than instead
-of it, because the two catch the same underlying defect through different
-formulations: one says the workers never finish, the other says the system
-halted somewhere it should not have.
+\textbf{Deadlock} is checked in the same way as Program 1, using a 
+claim-free verifier compiled with \code{-DNOCLAIM}. This is necessary 
+because \code{pan} disables the invalid end state check when a never claim 
+is active \cite{spin_pan}. The check looks for a reachable state where a 
+process is blocked with no executable statement while the system has stopped 
+making progress. It's useful to check this alongside \code{workers\_finish} 
+because they identify the same problem in different ways, which is, one shows 
+that the workers never finish, while the other shows that the system has 
+become stuck.
 
 \medskip\noindent
 Two things were considered and not verified. A property comparing the
 round number a worker receives against \code{round\_no} was drafted to
 check that the two broadcasts, \code{bcast\_colour} and \code{bcast\_board},
-stay matched; they are deliberately kept as two channels rather than
+stay matched. They are deliberately kept as two channels rather than
 merged into one so that such a mismatch would be observable, and this
 remains a natural extension rather than a checked result. Alpha
 monotonicity within a round, that \code{master\_alpha} never decreases, was
-also considered and dropped: it is true by construction in both the model
+also considered and dropped. It is true by construction in both the model
 and the implementation, since \code{alpha} is only ever raised by a
-comparison, so a property asserting it would hold trivially and establish
+comparison, therefore a property asserting it would hold trivially and establish
 nothing.
 
 % ---------------------------------------------------------------------
 \subsection{Verification Results and Analysis}
 \label{sec:results-2}
 
-Each run selects one claim with \code{./pan -a -N name}, and the deadlock
-check uses a second binary built with \code{-DNOCLAIM} from the same
-generated \code{pan.c}, exactly as in Program 1 \cite{spin_pan}.
-\code{NUM\_WORKERS}, \code{MAX\_MOVES} and \code{MAX\_ROUNDS} are supplied
-to \code{spin} on the command line, and both binaries are rebuilt after
-every \code{spin -a}, since a stale binary silently reports results for the
-wrong configuration. All runs were on Spin 6.5.2 on the same 7\,GB machine
-used for Program 1. iSpin was not used.
+Each run selects a claim using \code{./pan -a -N name}. 
+The deadlock check uses a second binary compiled with \code{-DNOCLAIM} from 
+the same generated \code{pan.c}, as in Program 1 \cite{spin_pan}. 
+\code{NUM\_WORKERS}, \code{MAX\_MOVES}, and \code{MAX\_ROUNDS} are supplied to
+\code{spin} on the command line. Both binaries are rebuilt after each 
+\code{spin -a} to ensure that the results match the current configuration.
+
+All runs were performed using Spin 6.5.2 on the same machine with 7\,GB of 
+RAM used for Program 1 and iSpin was again not used.
 
 \begin{table}[htbp]
 \centering
-\caption{Verification results, Spin 6.5.2. Depths and state counts as
+\caption{Verification results. Depths and state counts as
 reported by \code{pan}.}
 \label{tab:results2}
 \begin{tabular}{l l l r r}
@@ -958,24 +956,24 @@ than merely fail fast.
 
 \subsubsection*{The \code{NO\_EVAL} leak}
 
-\code{no\_eval\_chosen} fails at depth 205 with a single worker hitting a
-node with no legal moves, small for the same reason \code{no\_self\_wait}
-was small in Program 1: it is a plain logic error, not a race. The defect
-is not confined to the first round either; at \code{MAX\_ROUNDS 2} the same
-property fails again at depth 341 after 5\,683 states, past the point
-where the first round has already closed. The match logs in
-\code{othello/evidence/} confirm this happens in practice, not only in the
-model: 22 of the 60 rounds in match \code{20250513\_115728} finalised on a
-score of 2147483647, and workers received an \code{alpha} of that value 76
-times over the same match.
+\code{no\_eval\_chosen} fails at depth 205 when a single worker reaches a node 
+with no legal moves. As with \code{no\_self\_wait} in Program 1, this is a 
+simple logic error rather than a race condition. The problem is also not 
+limited to the first round. With \code{MAX\_ROUNDS 2}, the property fails 
+again at depth 341 after 5,683 states, after the first round has already 
+finished. The match logs in \code{othello/evidence/} also show that this 
+occurs in practice. In match \code{20250513\_115728}, 22 of 60 rounds ended 
+with a score of 2147483647, and workers received an \code{alpha} value of that value
+76 times during the same match.
+
 
 \subsubsection*{Two independent causes of a suboptimal move}
 
 \code{best\_is\_maximal} fails at depth 255, saying the engine played a
 worse move than one it had already evaluated, the same shape as round 47
-versus round 24 in the match log, where move 47 scored 1328 and move 24
+vs. round 24 in the match log, where move 47 scored 1328 and move 24
 scored \code{INT\_MAX} and was played anyway. Section~\ref{sec:props-2}
-gives two mechanisms that can cause this on their own; the fault injection
+gives two mechanisms that can cause this on their own, the fault injection
 runs in Table~\ref{tab:fault} isolate them.
 
 \begin{table}[htbp]
@@ -994,108 +992,103 @@ none & violated & 222 & 17\,286 \\
 \end{tabular}
 \end{table}
 
-Removing either cause alone leaves the property violated; only removing
-both together makes it hold. That confirms the two mechanisms are
-independent: the \code{NO\_EVAL} leak is sufficient to produce a
-suboptimal choice on its own, and so is comparing scores computed at
-different depths or under different alpha windows, so guarding
-\code{minimax} against the leak alone would not have fixed the property.
+Removing either cause on its own still leaves the property violated; 
+the property only holds when both causes are removed. This shows that the 
+two problems are independent. The \code{NO\_EVAL} leak can cause a suboptimal 
+move by itself, and comparing scores calculated at different depths or with 
+different alpha values can also cause a failure. So, fixing only the 
+\code{minimax} leak would not be enough to make the property hold.
 
 \subsubsection*{The missing message-type branch}
 
-\code{workers\_finish} fails at depth 31, and the deadlock check finds an
-invalid end state at depth 20 in the same configuration; both trace to the
-same missing branch in \code{run\_master} for \code{RECV\_FAILED} and
-\code{CLIENT\_DISCONNECTED}. The smallest witness needs no move round at
-all: at \code{MAX\_ROUNDS 0} the deadlock still appears at depth 20 after
-205 states and \code{workers\_finish} still fails at depth 31 after 203
-states, identical to the \code{MAX\_ROUNDS 1} numbers, which shows the
-defect sits entirely in the referee message loop and has nothing to do
-with move evaluation. Unlike Program 1's liveness properties,
-\code{workers\_finish} fails both with and without \code{-f}: the cause is
-a genuinely missing branch, not a scheduling artefact that fairness would
-explain away, so no fairness argument is needed here the way one was for
-\code{all\_terminate} and \code{ready\_dispatched}.
+\code{workers\_finish} fails at depth 31, while the deadlock check finds an
+invalid end state at depth 20 in the same configuration. Both failures are 
+caused by the missing \code{RECV\_FAILED} and \code{CLIENT\_DISCONNECTED} 
+branches in \code{run\_master}. The smallest counterexample does not require 
+a move round. With \code{MAX\_ROUNDS 0}, the deadlock still occurs at depth 
+20 after 205 states, while \code{workers\_finish} fails at depth 31 after 203 
+states. This shows that the defect is entirely within the referee message 
+loop and is unrelated to move evaluation.
+
+In contrast to the liveness properties in Program 1, \code{workers\_finish} fails 
+both with and without \code{-f}. The problem is a missing branch rather than 
+a scheduling issue that can be addressed through fairness. Therefore, no 
+fairness argument is needed here, unlike for \code{all\_terminate} and 
+\code{ready\_dispatched}.
 
 \subsubsection*{The property that probably holds}
 
-\code{no\_lost\_results} was checked exhaustively at \code{W2, M3, R1}
-with 0 errors over 7\,676\,089 states in 11.4 seconds, with zero unreached
-statements in all four proctypes. At the deployed configuration,
-\code{W3, M4, R1}, the same exhaustive search was killed by the kernel's
-out-of-memory killer: the state vector is 244 bytes, so 7\,GB holds
-roughly $2.6 \times 10^7$ states, and the search passed that without
-terminating. The fallback is bitstate storage, a compile-time option that
-replaces exact storage with a hash-indexed bit array so that distinct
-states can collide and be treated as already visited
-\cite{spin_roadmap}. That run found 0 errors over 655\,692\,780 states in
-around 1\,370 seconds, but its hash factor of 6.55 is well below the 100
-that indicates near-exhaustive coverage, so an appreciable fraction of the
-state space may have gone unexplored. The correct claim is that no
-counterexample was found in an approximate search of roughly $6.6 \times
-10^8$ states, not that the property holds at three workers; the
-exhaustive two-worker result is the stronger evidence, and both are
-reported here rather than only the more flattering one.
+\code{no\_lost\_results} was checked exhaustively with \code{W2, M3, R1}, 
+finding 0 errors across 7\,676\,089 states in 11.4 seconds. All 4 proctypes 
+also had 0 unreached statements. At the deployed configuration, 
+\code{W3, M4, R1}, the exhaustive search was stopped by the kernel's 
+out-of-memory killer. The state vector is 244 bytes, so 7\,GB can store 
+roughly $2.6 \times 10^7$ states, and the search exceeded this before 
+finishing. As a fallback, bitstate storage was used. This stores states in a 
+hash-based bit array, meaning different states can map to the same entry and 
+be treated as already visited. The run found 0 errors across 655\,692\,780 
+states in about 1,370 seconds. However, its hash factor of 6.55 is well 
+below 100, which indicates that the search was not close to exhaustive. 
+Therefore, the result only shows that no counterexample was found in the 
+approximate search of roughly $6.6 \times 10^8$ states. The exhaustive 
+two-worker result provides stronger evidence, so both results are reported.
 
-The reduction to two workers is defensible for this specific property. A
-lost result requires the master to close a round while a message it
-should have consumed is still queued, and the shortest such witness needs
-only one worker whose result is accounted for and one whose result is
-not, which two workers already provide; a third worker would only admit
-longer instances of the same shape. That is an argument about the
-shortest witness, not a proof, and it establishes absence only within the
-verified bound.
+The reduction to two workers is reasonabel for this property. A lost result 
+requires the master to finish a round while a result is still waiting in the 
+queue. The shortest example only needs one worker whose result is processed 
+and another whose result is missed, which can occur with two workers. 
+Adding a third worker would mainly allow longer versions of the same 
+behaviour. This is an argument based on the shortest counterexample rather 
+than a proof, so the result only applies within the verified bound.
 
-One search-order detail is worth recording because it affects how large
-these numbers look without changing what they mean. \code{proctype
-Referee}'s four terminal message branches are listed before its
-\code{budget > 0} branch. Depth-first search explores a nondeterministic
-\code{do} in the order written, so with the terminal branches first, a
-termination counterexample is found in a few hundred states rather than
-after an entire move round has already been explored, which is where the
-tens-of-millions-of-states figures in earlier drafts of this model came
-from. This changes only the order the search visits the state space, not
-the space itself: \code{no\_lost\_results} at \code{W2, M3, R1} reports
-exactly 7\,676\,089 states before and after the reordering, since that
-property's search must be exhaustive either way and visits every state
-regardless of order.
+One search-order detail is important because it affects the reported 
+state counts without changing their meaning. The 4 terminal message branches 
+in \code{proctype Referee} are placed before the \code{budget > 0} branch. 
+Since depth first search explores the nondeterministic \code{do} branches in 
+the order they appear, this allows a termination counterexample to be found 
+after only a few hundred states, rather than after exploring a full move 
+round. This explains the much larger state counts seen in earlier versions 
+of the model. The reordering only changes the order in which states are 
+explored, not the state space itself. For example, \code{no\_lost\_results} 
+at \code{W2, M3, R1} reports exactly 7\,676\,089 states both before and after 
+the reordering because the property must be checked exhaustively and 
+therefore visits every reachable state.
 
 \subsubsection*{Proposed fixes}
 
 Each of the three defects needs a different kind of fix.
 
-The \code{NO\_EVAL} leak is the easiest to close. The minimising branch of
-\code{minimax} needs a guard on \code{number\_of\_moves == 0} before the loop,
-because a node with no legal moves is an ordinary pass in Othello and not an
-error. What it should return there is a real evaluation of the current
-position, which the engine already has in \code{evaluate}, rather than the
-\code{INT\_MAX} the accumulator was initialised to. The maximising branch has
-the same shape with \code{INT\_MIN}, so both need the guard even though only
-the minimising one showed up here. A cheap second layer is to reject a score
-equal to \code{INT\_MAX} in \code{execute\_master} before it is compared
-against \code{max\_score}, so that a leak from anywhere else in the search
-cannot reach the shared \code{alpha}.
-
-The comparability defect is a design change rather than a missing test. The
-master lowers \code{depth} from 11 to 4 in the middle of a round, then
-compares results computed on either side of that change as though they were on
-the same scale. The smallest correct version is to apply the new depth only
-from the next round, so that every score within a round comes from a search of
-the same depth. If the turn clock genuinely cannot wait, the alternative is to
-tag each result with the depth it was computed at and keep the best move from
-the deepest completed depth, discarding the shallower results instead of
-mixing them in. Table~\ref{tab:fault} is what makes this worth the effort:
-fixing the leak alone leaves \code{best\_is\_maximal} violated.
-
-The missing message branch is the smallest fix of the three, and the safer
-form of it is not to add two more \code{else if} arms for
-\code{RECV\_FAILED} and \code{CLIENT\_DISCONNECTED}, but to give the
-if-chain a final \code{else} that sets \code{running = 0} and issues the
-termination broadcast. Naming the two values explicitly fixes today's defect;
-a default arm also covers any value \code{comms.h} might gain later, which
-matters because the interface is fixed by the framework and the player cannot
-change it. Either way the workers stop blocking in \code{MPI\_Bcast} and
-reach \code{MPI\_Finalize}, which is what \code{workers\_finish} asks for.
+\begin{itemize}
+  \item The \code{NO\_EVAL} leak is the easiest to fix. The minimising branch 
+  of \code{minimax} needs a guard for \code{number\_of\_moves == 0} before the 
+  loop, since a node with no legal moves is a normal pass in Othello, not an 
+  error. It should return a real evaluation of the current position using 
+  \code{evaluate}, rather than the \code{INT\_MAX} value used to initialise 
+  the accumulator. The maximising branch has the same issue with 
+  \code{INT\_MIN}, so both branches should include the guard even though only 
+  the minimising case was found here. As an additional safeguard, 
+  \code{execute\_master} could reject a score equal to \code{INT\_MAX} 
+  before comparing it with \code{max\_score}, preventing a leaked invalid 
+  score from reaching the shared \code{alpha}.
+  \item The comparability defect requires a design change rather than just an 
+  extra test. The master lowers \code{depth} from 11-4 during a round, then 
+  compares scores from both depths as if they were on the same scale. 
+  The simplest fix is to apply the new depth from the next round, so that all 
+  scores in a round use the same search depth. If the turn clock cannot wait, 
+  another option is to record the depth used for each result and only keep 
+  the best move from the deepest completed depth, instead of mixing scores 
+  from different depths. Table~\ref{tab:fault} shows why this is needed, 
+  since fixing the leak alone still leaves \code{best\_is\_maximal} violated.
+  \item The missing message branch is the smallest fix of the three, and the safer
+  form of it is not to add 2 more \code{else if} arms for
+  \code{RECV\_FAILED} and \code{CLIENT\_DISCONNECTED}, but to give the
+  if-chain a final \code{else} that sets \code{running = 0} and issues the
+  termination broadcast. Naming the two values explicitly fixes today's defect;
+  a default arm also covers any value \code{comms.h} might gain later, which
+  matters because the interface is fixed by the framework and the player cannot
+  change it. Either way the workers stop blocking in \code{MPI\_Bcast} and
+  reach \code{MPI\_Finalize}, which is what \code{workers\_finish} asks for.
+\end{itemize}
 
 % =====================================================================
 \appendix
@@ -1133,8 +1126,8 @@ gcc -O2 -DNOCLAIM -o pan_noclaim pan.c
 ./pan -a -N pcb_mutex
 ./pan -a -N no_self_wait
 ./pan -a -N waiting_consistent
-./pan -a -N all_terminate    -m50000
-./pan -a -N all_terminate    -f -m50000
+./pan -a -N all_terminate -m50000
+./pan -a -N all_terminate -f -m50000
 ./pan -a -N ready_dispatched -m50000
 ./pan -a -N ready_dispatched -f -m50000 -w26
 ./pan_noclaim
@@ -1162,20 +1155,35 @@ cd Modelchecking/othello
 This regenerates \code{pan.c} and rebuilds both binaries before each group
 of runs, writes every error trail to \code{results/}, the full \code{pan}
 output of every run to \code{results/logs/}, and a summary table to
-\code{results/summary.txt}. Passing \code{quick} as the first argument
-skips the two exhaustive runs (configurations D and E) for a faster,
-partial regeneration.
+\code{results/summary.txt}. Every run is given a wall clock limit of one
+hour. Passing \code{quick} as the first argument skips the two
+\code{no\_lost\_results} runs: the three-worker one, which exhausts
+memory, and the two-worker one, which at 11.4 seconds is the longest run
+that completes.
 
-The three-worker exhaustive \code{no\_lost\_results} run is excluded from
-the script because it exceeds available memory; its bitstate fallback
-takes roughly 23 minutes and is a deliberate one-off rather than a routine
-result, so it is run manually:
+The three-worker \code{no\_lost\_results} run is attempted by the script
+but is not expected to finish. It is the run the out-of-memory killer
+stops, and it appears in \code{summary.txt} as \code{INCOMPLETE} with
+coverage \code{unknown} rather than as a result. Its bitstate fallback is
+not part of the script, because it takes roughly 23 minutes and is a
+deliberate one-off rather than a routine result, so it is run manually:
 
 \begin{lstlisting}[language=bash,caption={Three-worker \code{no\_lost\_results}, bitstate fallback}]
 spin -DNUM_WORKERS=3 -DMAX_MOVES=4 -DMAX_ROUNDS=1 -a model.pml
 gcc -O2 -DBITSTATE -o pan_bit pan.c
 ./pan_bit -a -N no_lost_results -m100000 -w32
 \end{lstlisting}
+
+\section*{AI Declaration}
+Generative AI was used in an assisting role throughout the project. 
+
+For the code, it was used to provide guidance when encountering difficulties and
+assist in identifying the cause of issues.
+
+For the report, generative AI was used to provide guidance on the overall 
+structure, improve grammar and sentence construction, and suggest clearer 
+wording for technical explanations. The final content, technical decisions, 
+analysis, results, and conclusions were my own work.
 
 \bibliographystyle{plainnat}
 \bibliography{refs}
