@@ -1,4 +1,4 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[10pt,a4paper]{article}
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -78,11 +78,7 @@ keeps completeness but puts soundness at risk, because the model can now do
 things the implementation never would. Fixing the parameters to small values
 and leaving components out works the other way: it removes executions, so a
 counterexample that survives is still a real one, but a property that passes
-has only been shown to pass inside the bound. Neither model here is purely one
-or the other, so both directions are handled explicitly. Every counterexample
-is read back against the C source before it is called a defect, and every
-passing result is reported with its configuration attached rather than as a
-general claim. Each abstraction is justified where it is introduced, and
+has only been shown to pass inside the bound. Each abstraction is justified where it is introduced, and
 Section~\ref{sec:limits-1} and Section~\ref{sec:limits-2} give the specific
 limits for each program.
 
@@ -202,12 +198,10 @@ checkable by inspection: every FCFS path acquires them in the same order, and
 always takes \code{q\_locks[1]} before \code{q\_locks[0]}. With a consistent
 aacquisition order no circular wait between locks is possible: a thread
 that holds one lock only ever waits for a lock later in the fixed order,
-so the wait-for relation cannot contain a cycle \cite{baier2008}. One caveat to note is that a blocking statement inside an
-\code{atomic} sequence causes Spin to drop atomicity rather than report an
-error \cite{spin_atomic}, so the sends on \code{ready\_q} and
-\code{waiting\_q} could in principle interleave, but both channels are sized
-at \code{NUM\_PROCS} and can only fill if a PCB is enqueued twice, which is
-what \code{no\_dup\_ready} exists to rule out.
+so the wait-for relation cannot contain a cycle \cite{baier2008}. One caveat is that a blocking statement inside an \code{atomic} sequence
+causes Spin to drop atomicity rather than report an error \cite{spin_atomic},
+but the sends on \code{ready\_q} and \code{waiting\_q} can only block if a PCB
+is enqueued twice, which is what \code{no\_dup\_ready} rules out.
 
 What the model leaves outside an \code{atomic} block matters more. The
 assignment \code{running\_p->state = RUNNING}, the loop guard
@@ -295,13 +289,6 @@ whether a circular wait exists. \\
 \end{tabular}
 \end{table}
 
-Three changes were needed because of how Promela works. An \code{if} 
-statement with no executable guard blocks, so the test after an instruction
-uses two explicit guards for \code{WAITING} instead of a guard and an 
-\code{else}. Spin also doesn't allow \code{else} to be used with channel 
-operations, so the dequeue uses \code{nempty(ready\_q)} and 
-\code{empty(ready\_q)} as two explicit cases.
-
 A worker can try to dequeue a process before the ready queue has been filled,
 because the \code{active} proctypes start at the same time as \code{init}. 
 The \code{empty(ready\_q)} branch handles this case, but it also 
@@ -368,29 +355,19 @@ the three process ids is written out by hand.
 \noindent
 \textbf{\code{pcb\_mutex}} is an important invariant because the PCB 
 represents a unit of work, so only one thread should process it at a time. 
-The dequeue operation is protected, but the code after it is not. This means 
-two threads could enter the instruction loop for the same PCB, causing both 
-to update \code{next\_instruction} and \code{state}.
+The dequeue operation is protected, but the code after it is not.
 
 \medskip\noindent
 \textbf{\code{no\_self\_wait}} checks the behaviour of \code{request\_resource}. 
 The function only checks whether \code{resource->allocated == NULL} and does 
 not check whether the resource is already owned by the requesting process. 
-This results in a process being able to request a resource it already holds 
-and be placed on \code{waitingq}. Since the process is the one holding the 
-resource, it cannot release it while waiting. Unlike the other safety 
-properties, this failure does not depend on a particular thread interleaving
-(so it is considered separately).
 
 \medskip\noindent
-\textbf{\code{waiting\_consistent}} checks that a PCB in state 
-\code{WAITING} is actually waiting for a resource, since the state and resource
-information are updated separately without a lock protecting both operations. 
-This means a PCB can enter the \code{WAITING} state without having a resource 
-recorded. It can then remain on the waiting queue without anything being able 
-to wake it. This property is considered together with \code{pcb\_mutex}, 
-because it shows how overlapping access can lead to incorrect state that 
-affects later decisions.
+\textbf{\code{waiting\_consistent}} checks that a PCB in state \code{WAITING}
+is actually waiting for a resource, since the state and resource information
+are updated separately without a lock protecting both operations. It is
+considered together with \code{pcb\_mutex}, because it shows how overlapping
+access can lead to incorrect state that affects later decisions.
 
 \medskip\noindent
 \textbf{\code{no\_dup\_ready}} checks the three places that add processes 
@@ -414,8 +391,7 @@ it has finished.
 processes before stopping. It is only checked for process 1 because the 3 
 processes are symmetric. FCFS does not use a priority field, and all 3 
 instruction sequences are generated using the same nondeterministic choice. 
-Therefore, checking one process represents the others and keeps the never 
-claim smaller. This is an assumption based on symmetry rather than a formal 
+This is an assumption based on symmetry rather than a formal 
 proof, and it is the one property in Program 1 that was weakened to reduce 
 the verification cost. Both liveness properties are checked under weak 
 fairness, as discussed in Section~\ref{sec:results-1}.
@@ -444,8 +420,7 @@ only on which accesses are protected.
 \subsection{Verification Results and Analysis}
 \label{sec:results-1}
 
-Each run selects a specific claim using \code{./pan -a -N name}. If \code{-N} 
-is not provided, \code{pan} uses the first claim in the file by default. 
+Each run selects a specific claim using \code{./pan -a -N name}.
 The deadlock check uses a second binary compiled from the same generated 
 \code{pan.c} with \code{-DNOCLAIM}. This removes the claims from the verifier,
 rather than from the model itself \cite{spin_pan}. The value of 
@@ -456,9 +431,7 @@ Two extra flags are used on the larger runs. \code{-m} increases the maximum
 search depth from the default of 10,000, while \code{-w26} increases the hash 
 table size to $2^{26}$ entries. The larger hash table was needed because the 
 default $2^{19}$ entries caused many hash conflicts at this scale 
-\cite{spin_pan}. All runs were performed from the command line using 
-Spin 6.5.2 on a machine with 7\,GB of RAM. iSpin was not used.
-
+\cite{spin_pan}.
 
 \begin{table}[htbp]
 \centering
@@ -770,35 +743,19 @@ discussed in Section~\ref{sec:limits-2}. \\
 \end{tabular}
 \end{table}
 
-One change was needed because of Promela's \code{select} syntax. 
-\code{select} cannot assign directly to an array element, so 
-\code{true\_score[i]} cannot be used as the target. Instead, the model selects 
-a value into a temporary variable and then assigns it to the array. One other 
-detail is that \code{bcast\_terminate} only sends the colour broadcast with a 
-negative value and does not send the board. This is because the workers exit 
-their loop before reaching the board receive, so the collective communication 
-still matches on both sides.
-
-% Here
 \subsubsection*{Limits on interpretation}
 \label{sec:limits-2}
 
-As with Program 1, a counterexample is treated as a possible defect until it 
-has been checked against the source code. Similarly, a property that passes 
-only applies to the number of workers, moves, and rounds used in the model. 
-There is also a limitation specific to this program. The implementation uses 
-the \code{MPI\_Iprobe} busy-wait in \code{execute\_master} and the 
-\code{while (running)} loop in \code{run\_master}. In the model, both are 
-replaced with blocking channel receives. This changes how Spin detects the 
-same underlying problem. If an \code{MPI\_Iprobe} loop never receives a 
-message, the implementation can run indefinitely, which Spin would detect as 
-a non-progress cycle using \code{-l}. In the model, a blocking receive on a 
-channel that never receives a message results in an invalid end state, which 
-is detected by the default safety check. In both cases, the master never 
-returns; so the abstraction represents an implementation livelock as a model 
-deadlock, making it easier to detect and producing a shorter counterexample. 
-The results in Section~\ref{sec:results-2} are interpreted with this 
-difference in mind rather than as an exact match to the C control flow.
+The limits in Section~\ref{sec:limits-1} apply here too, with the bound now
+set by the number of workers, moves and rounds.There is also a limitation specific to this program. The implementation uses
+the \code{MPI\_Iprobe} busy-wait in \code{execute\_master}, and the model
+replaces it with a blocking channel receive. If an \code{MPI\_Iprobe} loop
+never receives a message, the implementation runs indefinitely, which Spin
+would detect as a non-progress cycle using \code{-l}; in the model, a blocking
+receive that never completes is an invalid end state, caught by the default
+safety check. In both cases the master never returns, so the abstraction
+represents an implementation livelock as a model deadlock. The results in
+Section~\ref{sec:results-2} are read with this difference in mind.
 
 % ---------------------------------------------------------------------
 \subsection{Correctness Properties}
@@ -888,42 +845,30 @@ responsibility of the player. This failure occurs both with and without
 scheduling.
 
 \medskip\noindent
-\textbf{Deadlock} is checked in the same way as Program 1, using a 
-claim-free verifier compiled with \code{-DNOCLAIM}. This is necessary 
-because \code{pan} disables the invalid end state check when a never claim 
-is active \cite{spin_pan}. The check looks for a reachable state where a 
-process is blocked with no executable statement while the system has stopped 
-making progress. It's useful to check this alongside \code{workers\_finish} 
-because they identify the same problem in different ways, which is, one shows 
-that the workers never finish, while the other shows that the system has 
-become stuck.
+\textbf{Deadlock} is checked in the same way as Program 1, using a claim-free
+verifier compiled with \code{-DNOCLAIM}. It is useful to check alongside
+\code{workers\_finish} because they identify the same problem in different
+ways: one shows that the workers never finish, while the other shows that the
+system has become stuck.
 
 \medskip\noindent
 Two things were considered and not verified. A property comparing the
 round number a worker receives against \code{round\_no} was drafted to
 check that the two broadcasts, \code{bcast\_colour} and \code{bcast\_board},
-stay matched. They are deliberately kept as two channels rather than
-merged into one so that such a mismatch would be observable, and this
-remains a natural extension rather than a checked result. Alpha
-monotonicity within a round, that \code{master\_alpha} never decreases, was
-also considered and dropped. It is true by construction in both the model
-and the implementation, since \code{alpha} is only ever raised by a
-comparison, therefore a property asserting it would hold trivially and establish
-nothing.
+stay matched. Alpha monotonicity within a round, that \code{master\_alpha} never decreases,
+was also considered and dropped. It is true by construction, since
+\code{alpha} is only ever raised by a comparison, so a property asserting it
+would establish nothing.
 
 % ---------------------------------------------------------------------
 \subsection{Verification Results and Analysis}
 \label{sec:results-2}
 
-Each run selects a claim using \code{./pan -a -N name}. 
-The deadlock check uses a second binary compiled with \code{-DNOCLAIM} from 
-the same generated \code{pan.c}, as in Program 1 \cite{spin_pan}. 
-\code{NUM\_WORKERS}, \code{MAX\_MOVES}, and \code{MAX\_ROUNDS} are supplied to
-\code{spin} on the command line. Both binaries are rebuilt after each 
-\code{spin -a} to ensure that the results match the current configuration.
-
-All runs were performed using Spin 6.5.2 on the same machine with 7\,GB of 
-RAM used for Program 1 and iSpin was again not used.
+Each run selects a claim using \code{./pan -a -N name}, and the deadlock check
+uses a second binary compiled with \code{-DNOCLAIM} from the same generated
+\code{pan.c}, as in Program 1. \code{NUM\_WORKERS}, \code{MAX\_MOVES} and
+\code{MAX\_ROUNDS} are supplied to \code{spin} on the command line, and both
+binaries are rebuilt after each \code{spin -a}.
 
 \begin{table}[htbp]
 \centering
@@ -966,7 +911,6 @@ occurs in practice. In match \code{20250513\_115728}, 22 of 60 rounds ended
 with a score of 2147483647, and workers received an \code{alpha} value of that value
 76 times during the same match.
 
-
 \subsubsection*{Two independent causes of a suboptimal move}
 
 \code{best\_is\_maximal} fails at depth 255, saying the engine played a
@@ -992,13 +936,9 @@ none & violated & 222 & 17\,286 \\
 \end{tabular}
 \end{table}
 
-Removing either cause on its own still leaves the property violated; 
-the property only holds when both causes are removed. This shows that the 
-two problems are independent. The \code{NO\_EVAL} leak can cause a suboptimal 
-move by itself, and comparing scores calculated at different depths or with 
-different alpha values can also cause a failure. So, fixing only the 
-\code{minimax} leak would not be enough to make the property hold.
-
+Removing either cause on its own still leaves the property violated; the
+property only holds when both are removed. Fixing only the \code{minimax}
+leak would therefore not be enough.
 \subsubsection*{The missing message-type branch}
 
 \code{workers\_finish} fails at depth 31, while the deadlock check finds an
@@ -1009,12 +949,6 @@ a move round. With \code{MAX\_ROUNDS 0}, the deadlock still occurs at depth
 20 after 205 states, while \code{workers\_finish} fails at depth 31 after 203 
 states. This shows that the defect is entirely within the referee message 
 loop and is unrelated to move evaluation.
-
-In contrast to the liveness properties in Program 1, \code{workers\_finish} fails 
-both with and without \code{-f}. The problem is a missing branch rather than 
-a scheduling issue that can be addressed through fairness. Therefore, no 
-fairness argument is needed here, unlike for \code{all\_terminate} and 
-\code{ready\_dispatched}.
 
 \subsubsection*{The property that probably holds}
 
@@ -1047,12 +981,7 @@ in \code{proctype Referee} are placed before the \code{budget > 0} branch.
 Since depth first search explores the nondeterministic \code{do} branches in 
 the order they appear, this allows a termination counterexample to be found 
 after only a few hundred states, rather than after exploring a full move 
-round. This explains the much larger state counts seen in earlier versions 
-of the model. The reordering only changes the order in which states are 
-explored, not the state space itself. For example, \code{no\_lost\_results} 
-at \code{W2, M3, R1} reports exactly 7\,676\,089 states both before and after 
-the reordering because the property must be checked exhaustively and 
-therefore visits every reachable state.
+round.
 
 \subsubsection*{Proposed fixes}
 
@@ -1066,28 +995,19 @@ Each of the three defects needs a different kind of fix.
   \code{evaluate}, rather than the \code{INT\_MAX} value used to initialise 
   the accumulator. The maximising branch has the same issue with 
   \code{INT\_MIN}, so both branches should include the guard even though only 
-  the minimising case was found here. As an additional safeguard, 
-  \code{execute\_master} could reject a score equal to \code{INT\_MAX} 
-  before comparing it with \code{max\_score}, preventing a leaked invalid 
-  score from reaching the shared \code{alpha}.
+  the minimising case was found here.
   \item The comparability defect requires a design change rather than just an 
   extra test. The master lowers \code{depth} from 11-4 during a round, then 
   compares scores from both depths as if they were on the same scale. 
   The simplest fix is to apply the new depth from the next round, so that all 
-  scores in a round use the same search depth. If the turn clock cannot wait, 
-  another option is to record the depth used for each result and only keep 
-  the best move from the deepest completed depth, instead of mixing scores 
-  from different depths. Table~\ref{tab:fault} shows why this is needed, 
-  since fixing the leak alone still leaves \code{best\_is\_maximal} violated.
-  \item The missing message branch is the smallest fix of the three, and the safer
-  form of it is not to add 2 more \code{else if} arms for
-  \code{RECV\_FAILED} and \code{CLIENT\_DISCONNECTED}, but to give the
-  if-chain a final \code{else} that sets \code{running = 0} and issues the
-  termination broadcast. Naming the two values explicitly fixes today's defect;
-  a default arm also covers any value \code{comms.h} might gain later, which
-  matters because the interface is fixed by the framework and the player cannot
-  change it. Either way the workers stop blocking in \code{MPI\_Bcast} and
-  reach \code{MPI\_Finalize}, which is what \code{workers\_finish} asks for.
+  scores in a round use the same search depth. 
+  \item The missing message branch is the smallest fix of the three. Rather
+  than adding 2 more \code{else if} arms for \code{RECV\_FAILED} and
+  \code{CLIENT\_DISCONNECTED}, the safer form is to give the if-chain a final
+  \code{else} that sets \code{running = 0} and issues the termination
+  broadcast, since that also covers any value \code{comms.h} might gain
+  later. Either way the workers stop blocking in \code{MPI\_Bcast} and reach
+  \code{MPI\_Finalize}.
 \end{itemize}
 
 % =====================================================================
