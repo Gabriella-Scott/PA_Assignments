@@ -25,7 +25,7 @@ int main()
     int g[9][9];             // local + uninitialised -> nondet
     // global would be zeroed
 
-    int r, c, k, l; // row, column, block row, block column
+    int r, c, k, l; // row, col; k, l = pair of cells compared in a group
     // cell range: 1-9
     for (r = 0; r < 9; r++)
     {
