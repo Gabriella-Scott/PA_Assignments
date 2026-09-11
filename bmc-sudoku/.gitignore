@@ -1,0 +1,40 @@
+# Python cache and virtual environments
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+
+# C build artifacts
+*.o
+*.obj
+*.so
+*.dll
+*.dylib
+*.a
+*.lib
+*.exe
+*.out
+*.bin
+
+# Local executable outputs
+solve
+sudoku
+
+# Editor and OS files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Temporary and generated files
+*.log
+*.tmp
+*.bak
+*.orig
+
+# Common assignment output noise
+results/*.log
+results/*.tmp
+puzzles/*.tmp
