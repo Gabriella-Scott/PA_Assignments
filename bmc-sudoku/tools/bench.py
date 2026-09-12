@@ -6,7 +6,7 @@ import sys
 import time
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SOLVER = os.path.join(REPO, "src", "solve_v1.py")
+SOLVER = os.path.join(REPO, "src", "solve.py")
 CHECKER = os.path.join(REPO, "tools", "check.py")
 PUZZLES = os.path.join(REPO, "puzzles")
 

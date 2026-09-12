@@ -1,4 +1,4 @@
-// baseline Sudoku model for CBMC
+// Sudoku model for CBMC, one-hot bitmask encoding
 // VERIFICATION FAILED -> solution in trace
 // VERIFICATION SUCCESSFUL -> no grid passes rules -> unsolvable
 // puzzle passed in by wrapper: -DPUZZLE="{5,3,....}"
@@ -19,72 +19,87 @@
     0, 0, 0, 0, 8, 0, 0, 7, 9}
 #endif // PUZZLE
 
+#define ALL 0x1FFu // bits 0-8 = digits 1-9
+
+// Part 2: wrapper passes earlier solutions in to rule out
+// BLOCKED = flat NBLOCK x 81 mask array. default: none blocked -> prt 1 uses same model unchanged
+#ifndef NBLOCK
+#define NBLOCK 0
+#define BLOCKED {0}
+#endif // BLOCKED
+
+
 int main()
 {
     int puzzle[81] = PUZZLE; // givens, flat
-    int g[9][9];             // local + uninitialised -> nondet
+    unsigned int g[9][9]; // local + uninitialised -> nondet
     // global would be zeroed
 
-    int r, c, k, l; // row, col; k, l = pair of cells compared in a group
+    int r, c, k, b; // row, col, cell in group, box
     // cell range: 1-9
     for (r = 0; r < 9; r++)
     {
         for (c = 0; c < 9; c++)
         {
-            __CPROVER_assume(g[r][c] >= 1 && g[r][c] <= 9);
+            unsigned int m = g[r][c];
+            // exactly 1 bit set and in range
+            // m & (m-1) clears lowest set bit -> 0 only if 1 bit
+            __CPROVER_assume(m != 0 && m <= 256 && (m & (m - 1)) == 0);
+
+            //given: fix to that digit's bit
+            if (puzzle[r * 9 + c] )
+            {
+                __CPROVER_assume(m == (1u << (puzzle[r * 9 + c] - 1)));
+            }
         }
     }
 
-    // givens: fix non-empty cells
+    // rows: 9 one-bit masks OR-ing to all 9 bits -> all distinct
     for (r = 0; r < 9; r++)
     {
+        unsigned int o = 0;
         for (c = 0; c < 9; c++)
         {
-            if (puzzle[r * 9 + c] != 0)
-            {
-                __CPROVER_assume(g[r][c] == puzzle[r * 9 + c]);
-            }
+                o |= g[r][c];            
         }
+        __CPROVER_assume(o == ALL); // all 9 bits set
     }
 
-    // rows: all distinct. 9 cells, vals 1-9, distinct -> each digit once
-    for (r = 0; r < 9; r++)
-    {
-        for (k = 0; k < 9; k++)
-        {
-            for (l = k + 1; l < 9; l++)
-            {
-                __CPROVER_assume(g[r][k] != g[r][l]);
-            }
-        }
-    }
-
-    // columns: all distinct
+    // columns
     for (c = 0; c < 9; c++)
     {
-        for (k = 0; k < 9; k++)
+        unsigned int o = 0;
+        for (r = 0; r < 9; r++)
         {
-            for (l = k + 1; l < 9; l++)
-            {
-                __CPROVER_assume(g[k][c] != g[l][c]);
-            }
+            o |= g[r][c];
         }
+        __CPROVER_assume(o == ALL); // all 9 bits set
     }
 
-    // boxes: all distinct -> box b: top-left (3*(b/3), 3*(b%3)); cell k in box: (k/3, k%3)
-    int b;
+    // boxes -> box b: tl (3*(b/3), 3*(b%3)); cell k in box: (k/3, k%3) 
     for (b = 0; b < 9; b++)
     {
+        unsigned int o = 0;
         for (k = 0; k < 9; k++)
         {
-            for (l = k + 1; l < 9; l++)
-            {
-                __CPROVER_assume(
-                    g[3 * (b / 3) + k / 3][3 * (b % 3) + k % 3] !=
-                    g[3 * (b / 3) + l / 3][3 * (b % 3) + l % 3]);
-            }
+           o |= g[3 * (b / 3) + k / 3][3 * (b % 3) + k % 3];
         }
+        __CPROVER_assume(o == ALL);
     }
+
+    #if NBLOCK > 0 // rule out earlier solns: each must differ in >= 1 cell
+        unsigned int blocked[NBLOCK * 81] = BLOCKED;
+        for (int i = 0; i < NBLOCK; i++)
+        {
+            unsigned int diff = 0;
+            for (int j = 0; j < 81; j++)
+            {
+                diff |= g[j / 9][j % 9] ^ blocked[i * 81 + j];
+            }
+            __CPROVER_assume(diff != 0); // must differ in at least one cell
+        }
+    #endif // NBLOCK > 0
+
     // target: reachable only if all rules holds
     assert(0);
     return 0;

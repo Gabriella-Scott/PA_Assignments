@@ -25,21 +25,27 @@ def read_puzzle(path):  # read puzzle file -> lst of 81 ints (0=empty)
     return [int(t) for t in tokens]
 
 
-def run_cbmc(puzzle):  # Run CBMC on model with given puzzle. Returns (exit code, stdout)
+def run_cbmc(puzzle, extra=()):  # run CBMC on model -> (exit code, stdout)
     define = "-DPUZZLE={" + ",".join(map(str, puzzle)) + "}"
-    result = subprocess.run(
-        ["cbmc", MODEL_PATH, define] + CBMC_FLAGS, capture_output=True, text=True)
+    result = subprocess.run(["cbmc", MODEL_PATH, define] + list(extra) + CBMC_FLAGS,
+                            capture_output=True, text=True)
     return result.returncode, result.stdout
 
 
-# Find 'g={{...}, ...}' line in trace -> list of 81 ints
+# Find 'g={..}' block in trace -> list of 81 ints
 def parse_grid(trace):
-    for line in trace.splitlines():
+    lines = trace.splitlines()
+    for i, line in enumerate(lines):
         if line.startswith("  g={"):
-            vals = line.split(" (")[0]  # drop bin part
-            nums = [int(x) for x in re.findall(r'\d+', vals)]
-            if len(nums) == 81:
-                return nums
+            text = ""
+            for part in lines[i:]:  # value may wrap over 9 lines
+                text += part.split(" ({")[0]  # drop binary dump
+                if " ({" in part:
+                    break
+            # extract all numbers from text
+            masks = [int(x) for x in re.findall(r'\d+', text)]
+            if len(masks) == 81:
+                return [m.bit_length() for m in masks]  # 1<<(d-1) -> d
     return None
 
 
