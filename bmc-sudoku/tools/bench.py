@@ -6,26 +6,31 @@ import sys
 import time
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SOLVER = os.path.join(REPO, "src", "solve.py")
+SOLVER = os.path.join(REPO, "src", "solve_v1.py")
 CHECKER = os.path.join(REPO, "tools", "check.py")
 PUZZLES = os.path.join(REPO, "puzzles")
 
-REPEATS = 3 # runs per puzzle
-TIMEOUT = 300 # secs per run, stops a hang blocking everything
+REPEATS = 3  # runs per puzzle
+TIMEOUT = 300  # secs per run, stops a hang blocking everything
 
-def run_solver(puzzle): # -> (exit code, stdout, seconds); code None = timeout
+
+def run_solver(puzzle):  # -> (exit code, stdout, seconds); code None = timeout
     start = time.perf_counter()
     try:
-        result = subprocess.run([sys.executable, SOLVER, puzzle], capture_output=True, text=True, timeout=TIMEOUT)
+        result = subprocess.run(
+            [sys.executable, SOLVER, puzzle], capture_output=True, text=True, timeout=TIMEOUT)
     except subprocess.TimeoutExpired:
         return (None, "", TIMEOUT)
     return result.returncode, result.stdout, time.perf_counter() - start
 
-def is_correct(folder, puzzle, output): # judge output by folder rule
+
+def is_correct(folder, puzzle, output):  # judge output by folder rule
     if folder == "unsolvable":
         return output.strip() == "UNSOLVABLE"
-    check = subprocess.run([sys.executable, CHECKER, puzzle], input=output, capture_output=True, text=True)
+    check = subprocess.run([sys.executable, CHECKER, puzzle],
+                           input=output, capture_output=True, text=True)
     return check.returncode == 0
+
 
 def main():
     rows = []
@@ -41,23 +46,26 @@ def main():
                 if code is None:
                     status = "TIMEOUT"
                 elif code != 0:
-                    status = "ERROR" # solver crashed/cbmc err
+                    status = "ERROR"  # solver crashed/cbmc err
                 elif not is_correct(folder, puzzle, output):
                     status = "FAIL"
                 if status != "PASS":
-                    break # no point repeating a failure
+                    break  # no point repeating a failure
             if status != "PASS":
                 failures += 1
             rows.append((f"{folder}/{name}", status, min(times)))
-            print(f"{folder}/{name}: {status}, time: {min(times):.2f}s", file=sys.stderr)
+            print(f"{folder}/{name}: {status}, time: {min(times):.2f}s",
+                  file=sys.stderr)
 
     total = sum(t for _, _, t in rows)
     print("| Puzzle | Result | Time (s) |")
     print("|--------|--------|-----------|")
     for name, status, secs in rows:
         print(f"| {name} | {status} | {secs:.2f} |")
-    print(f"| **Total** | | {len(rows) - failures}/{len(rows)} passed | {total:.2f}|")
+    print(
+        f"| **Total** | | {len(rows) - failures}/{len(rows)} passed | {total:.2f}|")
     sys.exit(1 if failures else 0)
-    
+
+
 if __name__ == "__main__":
     main()
