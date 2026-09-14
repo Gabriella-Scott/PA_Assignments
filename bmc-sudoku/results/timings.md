@@ -12,19 +12,20 @@
 
 | Puzzle | Result | Time (s) |
 |--------|--------|-----------|
-| solvable/ai_escargot.txt | PASS | 0.74 |
-| solvable/clue17.txt | PASS | 0.62 |
+| solvable/ai_escargot.txt | PASS | 0.70 |
+| solvable/clue17.txt | PASS | 0.56 |
 | solvable/empty.txt | PASS | 0.48 |
-| solvable/inkala_2012.txt | PASS | 1.02 |
-| solvable/norvig_a.txt | PASS | 0.52 |
+| solvable/inkala_2012.txt | PASS | 1.06 |
+| solvable/norvig_a.txt | PASS | 0.53 |
 | solvable/norvig_b.txt | PASS | 0.61 |
-| solvable/norvig_c.txt | PASS | 0.38 |
-| solvable/wiki.txt | PASS | 0.31 |
-| unsolvable/escargot_plus.txt | PASS | 0.66 |
-| unsolvable/hidden.txt | PASS | 0.30 |
-| unsolvable/inkala_plus.txt | PASS | 0.71 |
-| unsolvable/row.txt | PASS | 0.29 |
-| **Total** | | 12/12 passed | 6.63|
+| solvable/norvig_c.txt | PASS | 0.40 |
+| solvable/solved.txt | PASS | 0.33 |
+| solvable/wiki.txt | PASS | 0.32 |
+| unsolvable/escargot_plus.txt | PASS | 0.69 |
+| unsolvable/hidden.txt | PASS | 0.31 |
+| unsolvable/inkala_plus.txt | PASS | 0.73 |
+| unsolvable/row.txt | PASS | 0.28 |
+| **Total** | | 13/13 passed | 7.00|
 
 ## Part I: pairwise-inequality model
 
@@ -85,6 +86,7 @@ Solvable puzzles chosen to be hard for constraint solvers rather than for humans
 - `norvig_a/b/c.txt`: from norvig.com/hardest.txt
 - `clue17.txt`: 17-clue puzzle, the proven minimum for a unique solution
 - `empty.txt`: no givens, worst case for the givens constraints
+- `solved.txt`: zero empty cells, sanity check for the givens-only path
 
 Unsolvable puzzles, each built by adding one conflicting given to a solvable
 puzzle so the contradiction is not visible in a single row, column or box:

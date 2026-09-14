@@ -28,11 +28,10 @@
 #define BLOCKED {0}
 #endif // BLOCKED
 
-
 int main()
 {
     int puzzle[81] = PUZZLE; // givens, flat
-    unsigned int g[9][9]; // local + uninitialised -> nondet
+    unsigned int g[9][9];    // local + uninitialised -> nondet
     // global would be zeroed
 
     int r, c, k, b; // row, col, cell in group, box
@@ -46,8 +45,8 @@ int main()
             // m & (m-1) clears lowest set bit -> 0 only if 1 bit
             __CPROVER_assume(m != 0 && m <= 256 && (m & (m - 1)) == 0);
 
-            //given: fix to that digit's bit
-            if (puzzle[r * 9 + c] )
+            // given: fix to that digit's bit
+            if (puzzle[r * 9 + c])
             {
                 __CPROVER_assume(m == (1u << (puzzle[r * 9 + c] - 1)));
             }
@@ -60,7 +59,7 @@ int main()
         unsigned int o = 0;
         for (c = 0; c < 9; c++)
         {
-                o |= g[r][c];            
+            o |= g[r][c];
         }
         __CPROVER_assume(o == ALL); // all 9 bits set
     }
@@ -76,29 +75,29 @@ int main()
         __CPROVER_assume(o == ALL); // all 9 bits set
     }
 
-    // boxes -> box b: tl (3*(b/3), 3*(b%3)); cell k in box: (k/3, k%3) 
+    // boxes -> box b: tl (3*(b/3), 3*(b%3)); cell k in box: (k/3, k%3)
     for (b = 0; b < 9; b++)
     {
         unsigned int o = 0;
         for (k = 0; k < 9; k++)
         {
-           o |= g[3 * (b / 3) + k / 3][3 * (b % 3) + k % 3];
+            o |= g[3 * (b / 3) + k / 3][3 * (b % 3) + k % 3];
         }
         __CPROVER_assume(o == ALL);
     }
 
-    #if NBLOCK > 0 // rule out earlier solns: each must differ in >= 1 cell
-        unsigned int blocked[NBLOCK * 81] = BLOCKED;
-        for (int i = 0; i < NBLOCK; i++)
+#if NBLOCK > 0 // rule out earlier solns: each must differ in >= 1 cell
+    unsigned int blocked[NBLOCK * 81] = BLOCKED;
+    for (int i = 0; i < NBLOCK; i++)
+    {
+        unsigned int diff = 0;
+        for (int j = 0; j < 81; j++)
         {
-            unsigned int diff = 0;
-            for (int j = 0; j < 81; j++)
-            {
-                diff |= g[j / 9][j % 9] ^ blocked[i * 81 + j];
-            }
-            __CPROVER_assume(diff != 0); // must differ in at least one cell
+            diff |= g[j / 9][j % 9] ^ blocked[i * 81 + j];
         }
-    #endif // NBLOCK > 0
+        __CPROVER_assume(diff != 0); // must differ in at least one cell
+    }
+#endif // NBLOCK > 0
 
     // target: reachable only if all rules holds
     assert(0);

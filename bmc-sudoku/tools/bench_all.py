@@ -1,7 +1,7 @@
 # Part II bench: solution counts, total time, per-iteration cost
 # expected counts come from an independent backtracking solver, not CBMC
-from solve_all import block_defines
 import solve
+from solve_all import block_defines
 import os
 import sys
 import time

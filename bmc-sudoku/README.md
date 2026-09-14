@@ -1,21 +1,21 @@
-# BMC Sudoku Assignment
+# CBMC Soduko Solver
 
-This project uses the CBMC model checker to verify whether a given Sudoku puzzle is solvable and, if so, to extract a valid solution.
+This repository contains a Sudoku solver built around the CBMC model checker. The core idea is to encode Sudoku constraints as a C model and ask CBMC whether a valid grid exists for the given puzzle. If the assertion is reachable, CBMC produces a counterexample trace that the python wrapper converts back into a solved 9x9 grid.
 
-## Overview
+## Contents:
 
-- The model is implemented in [src/sudoku.c](src/sudoku.c).
-- A Python wrapper in [src/solve.py](src/solve.py) invokes CBMC, parses the counterexample trace, and prints the solved grid.
-- Puzzle input files live in [puzzles/](puzzles/).
-- Output and generated artifacts are stored in [results/](results/).
+- `src/sudoku.c`: the Sudoku contraint model expressed as a CBMC program
+- `src/solve.py`: solves one puzzle and prints either a solution or "UNSOLVABLE"
+- `src/solve_all.py`: enumerates all solutiuons by repeatedly blocking previously found ones
+- `tools/check.py`: validates solver output against Sudoku rules and puzzle givens
+- `tools/bench.py`: runs solver checks across the bundled test sets and reports timings
+- `tools/bench_all.py`:
+- `puzzles/`: sample inputs split into solvable, unsolvable and multi solution cases
 
 ## Puzzle format
-
-Each puzzle file contains 81 digits, with `0` representing an empty cell.
-
-Example:
-
-```
+Each puzzle file contains 81 digits with 0 used as empty. The digits are read as a flat sequence, row-major.
+Example puzzle:
+```text
 530070000
 600195000
 098000060
@@ -27,73 +27,157 @@ Example:
 000080079
 ```
 
-## Run
+Equivalent flat representation:
 
-Make sure CBMC is installed, then run:
+```text
+5 3 0 0 7 0 0 0 0
+6 0 0 1 9 5 0 0 0
+0 9 8 0 0 0 0 6 0
+8 0 0 0 6 0 0 0 3
+4 0 0 8 0 3 0 0 1
+7 0 0 0 2 0 0 0 6
+0 6 0 0 0 0 2 8 0
+0 0 0 4 1 9 0 0 5
+0 0 0 0 8 0 0 7 9
+```
+The input parser expects exactly 81 single-digit tokens. The solver accepts a file path like the examples under `puzzles/`.
 
+## Requirements
+
+- CBMC must be installed and available on your path
+- python 3
+
+To check CBMC is available:
 ```bash
-python3 src/solve.py puzzles/your_puzzle.txt
+cbmc --version
 ```
 
-The script prints either:
+## Quick start
 
-- `UNSOLVABLE` if no valid solution exists, or
-- the solved 9x9 grid if a valid solution is found.
+Solve a single puzzle:
 
-## Files
+```bash
+python3 src/solve.py puzzles/solvable/wiki.txt
+```
 
-- [src/sudoku.c](src/sudoku.c): Sudoku constraints and CBMC assertion model
-- [src/solve.py](src/solve.py): wrapper that runs CBMC and parses results
-- [puzzles/](puzzles/): puzzle inputs
-- [results/](results/): generated logs and traces
-- [tools/](tools/): supporting scripts or utilities
+Expected output is either:
 
-Shrinking the formula is not the same as going faster. Every winner here reduced the number of C statements, not the variable count.
+- `UNSOLVABLE`
+- or a 9x9 grid in the following format:
+
+```text
+5 3 4 6 7 8 9 1 2
+6 7 2 1 9 5 3 4 8
+1 9 8 3 4 2 5 6 7
+8 5 9 7 6 1 4 2 3
+4 2 6 8 5 3 7 9 1
+7 1 3 9 2 4 8 5 6
+9 6 1 5 3 7 2 8 4
+2 8 7 4 1 9 6 3 5
+3 4 5 2 8 6 1 7 9
+```
+## Enumerating all solutions
+To find every valid solution for a puzzle, use `solve_all.py`:
+
+```bash
+python3 src/solve_all.py puzzles/multi/two.txt
+```
+This repeatedly solves the puzzle, blocks each solution found and then continues until no more solutions remains. It 
+prints each discovered grid and ends with:
 
 
-# Puzzle sources
+```text
+NUMBER OF SOLUTIONS: N
+```
 
-Test set for the CBMC Sudoku solver. Every puzzle below was checked with an
-independent brute-force solver to confirm its givens are consistent and to
-count its solutions.
+The `--silent` option suppresses the individual grid output:
 
-## Solvable
+```bash
+python3 src/solve_all.py --silent puzzles/multi/forty.txt
+```
 
-| File | Source |
-|---|---|
-| `wiki.txt` | Example puzzle from the Wikipedia Sudoku article. <https://en.wikipedia.org/wiki/Sudoku> |
-| `inkala_2012.txt` | Arto Inkala's 2012 puzzle, widely reported as the world's hardest. Grid taken from SudokuWiki's article on it. <https://www.sudokuwiki.org/Arto_Inkala_Sudoku> |
-| `ai_escargot.txt` | "AI Escargot", Arto Inkala, 2006. Grid taken from SudokuWiki. <https://www.sudokuwiki.org/Escargot> |
-| `norvig_a.txt` | Line 1 of `hardest.txt` from Peter Norvig's essay "Solving Every Sudoku Puzzle". <https://norvig.com/sudoku.html>, file at <https://norvig.com/hardest.txt> |
-| `norvig_b.txt` | Line 2 of the same file. |
-| `norvig_c.txt` | Line 3 of the same file. |
-| `clue17.txt` | First puzzle in the 49,151-puzzle collection of 17-clue Sudokus (Gordon Royle's collection, distributed by Mladen Dobrichev). 17 is the minimum clue count for a unique solution. <https://sites.google.com/site/dobrichev/sudoku-puzzle-collections>, identified in <http://forum.enjoysudoku.com/17-clue-puzzle-difficulty-t38179.html> |
-| `empty.txt` | Own construction: no givens at all. Any valid grid is a correct answer. |
+## Checking and benchmarking
+Validate a solver result against the puzzle and Sudoku constraints:
+```bash
+python3 src/solve.py puzzles/solvable/wiki.txt | python3 tools/check.py puzzles/solvable/wiki.txt
+```
 
-The Inkala 2012 grid has 21 givens. Several 2012 news reports said 23, but the
-grid published on Inkala's own site and reproduced on SudokuWiki has 21.
+Run the bundled benchmark suite over the sample puzzles:
 
-## Unsolvable
+```bash
+python3 tools/bench.py
+```
+This script runs each puzzle multiple times, checks correctness and prints timings.
 
-All four are own constructions. No published source needed, since the point is
-only to check that the solver prints `UNSOLVABLE`.
+## Puzzle sets
 
-| File | How it was built |
-|---|---|
-| `row.txt` | `wiki.txt` with a second 5 added to row 1. Clash visible on the grid. |
-| `hidden.txt` | Row 1 has eight givens, so cell (1,3) must be 3, but column 3 already has a 3. No clash between any two givens. |
-| `inkala_plus.txt` | `inkala_2012.txt` with cell (2,1) set to 2, where the unique solution has 9. |
-| `escargot_plus.txt` | `ai_escargot.txt` with cell (3,8) set to 3, where the unique solution has 2. |
+The repository includes several curated examples:
 
-The `_plus` puzzles are the useful cases. A puzzle with a unique solution plus
-one extra digit that differs from that solution has no solution at all, and the
-added digit clashes with no given, so a full search is needed to prove it.
+### Solvable puzzles
 
-## Verification
+- `puzzles/solvable/wiki.txt`
+- `puzzles/solvable/inkala_2012.txt`
+- `puzzles/solvable/ai_escargot.txt`
+- `puzzles/solvable/norvig_a.txt`
+- `puzzles/solvable/norvig_b.txt`
+- `puzzles/solvable/norvig_c.txt`
+- `puzzles/solvable/clue17.txt`
+- `puzzles/solvable/empty.txt`
 
-Solution counts, from an independent backtracking solver:
+### Unsolvable puzzles
 
-- `wiki`, `inkala_2012`, `ai_escargot`, `norvig_a`, `norvig_b`, `norvig_c`,
-  `clue17`: exactly 1 solution each
-- `empty`: many solutions (6,670,903,752,021,072,936,960 grids exist)
-- all four unsolvable puzzles: 0 solutions
+- `puzzles/unsolvable/row.txt`
+- `puzzles/unsolvable/hidden.txt`
+- `puzzles/unsolvable/inkala_plus.txt`
+- `puzzles/unsolvable/escargot_plus.txt`
+
+### Multi-solution puzzles
+
+- `puzzles/multi/two.txt`
+- `puzzles/multi/five.txt`
+- `puzzles/multi/forty.txt`
+
+The included test set was checked against an independent brute-force solver to confirm the expected number of solutions and the unsolvable cases.
+
+### Test set
+
+Solution counts were verified with an independent backtracking solver, so the
+expected values below do not depend on CBMC.
+
+**Solvable.** Chosen to be hard for constraint solvers rather than for humans.
+
+| File | Clues | Solutions | Source |
+|------|-------|-----------|--------|
+| `wiki.txt` | 30 | 1 | the worked example in the assignment brief, from the Wikipedia Sudoku article |
+| `ai_escargot.txt` | 23 | 1 | AI Escargot, Arto Inkala, 2006 |
+| `inkala_2012.txt` | 21 | 1 | Arto Inkala, June 2012, via sudokuwiki.org |
+| `norvig_a.txt` | 22 | 1 | line 1 of norvig.com/hardest.txt |
+| `norvig_b.txt` | 23 | 1 | line 2 of norvig.com/hardest.txt |
+| `norvig_c.txt` | 26 | 1 | line 3 of norvig.com/hardest.txt |
+| `clue17.txt` | 17 | 1 | a 17-clue puzzle; 17 is the proven minimum for a unique solution (McGuire et al., 2014) |
+| `empty.txt` | 0 | 6.67 x 10^21 | no givens, the worst case for the givens constraints |
+
+**Unsolvable.** Three of the four add a single conflicting given to a solvable
+puzzle; in two of those the conflict is invisible in any one row, column or box.
+
+| File | Clues | Built from | Contradiction |
+|------|-------|------------|---------------|
+| `row.txt` | 31 | `wiki.txt`, 5 added at r1c3 | duplicate digit in a row, visible at once |
+| `hidden.txt` | 9 | constructed directly | row 1 forces r1c3 = 3, clashing with the 3 in column 3 |
+| `escargot_plus.txt` | 24 | `ai_escargot.txt`, 3 added at r3c8 | no duplicate among the givens, only reachable after propagation |
+| `inkala_plus.txt` | 22 | `inkala_2012.txt`, 2 added at r2c1 | as above |
+
+**Multi-solution.** All three are clue-strippings of the solved `wiki.txt` grid.
+
+| File | Clues | Solutions |
+|------|-------|-----------|
+| `two.txt` | 43 | 2 |
+| `five.txt` | 37 | 5 |
+| `forty.txt` | 30 | 40 |
+
+Sources: McGuire, G., Tugemann, B., & Civario, G. (2014). There is no 16-clue
+sudoku: Solving the sudoku minimum number of clues problem via hitting set
+enumeration. *Experimental Mathematics, 23*(2), 190-217.
+Norvig, P. (n.d.). *Hardest sudoku puzzles.* https://norvig.com/hardest.txt
+Stuart, A. (2012). *Arto Inkala sudoku.* https://www.sudokuwiki.org/Arto_Inkala_Sudoku
+Stuart, A. (2008). *Escargot.* https://www.sudokuwiki.org/Escargot

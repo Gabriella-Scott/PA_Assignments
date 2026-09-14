@@ -41,13 +41,15 @@ def check_givens(puzzle, grid):  # givens -> unchanged
 
     return errs
 
+
 def check_groups(grid):  # every row, col, box contains 1..9
     errs = []
     # check rows
     for i in range(9):
         row = {grid[i][c] for c in range(9)}
         col = {grid[r][i] for r in range(9)}
-        box = {grid[3 * (i // 3)+ k // 3][3 * (i % 3) + k % 3] for k in range(9)}
+        box = {grid[3 * (i // 3) + k // 3][3 * (i % 3) + k % 3]
+               for k in range(9)}
         if row != FULL:
             errs.append(f"row {i + 1} missing {sorted(FULL - row)}")
         if col != FULL:
@@ -57,25 +59,27 @@ def check_groups(grid):  # every row, col, box contains 1..9
 
     return errs
 
+
 def main():
     if len(sys.argv) != 2:
         sys.exit("usage: python3 src/solve.py P | python3 tools/check.py P")
     puzzle = read_puzzle(sys.argv[1])
     output = sys.stdin.read()
-    
+
     if output.strip() == "UNSOLVABLE":
         print("UNSOLVABLE (no grid to check)")
         sys.exit(2)
     grid, errs = parse_output(output)
     if grid is not None:
         errs = check_givens(puzzle, grid) + check_groups(grid)
-        
+
     if errs:
         print("INVALID")
         for e in errs:
             print(" " + e)
         sys.exit(1)
     print("OK")
+
 
 if __name__ == "__main__":
     main()
