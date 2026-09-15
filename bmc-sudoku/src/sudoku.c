@@ -31,7 +31,7 @@
 int main()
 {
     int puzzle[81] = PUZZLE; // givens, flat
-    unsigned int g[9][9];    // local + uninitialised -> nondet
+    unsigned int g[9][9];  // local + uninitialised -> nondet
     // global would be zeroed
 
     int r, c, k, b; // row, col, cell in group, box
@@ -57,7 +57,7 @@ int main()
     for (r = 0; r < 9; r++)
     {
         unsigned int o = 0;
-        for (c = 0; c < 9; c++)
+        for (c = 0; c < 9; c++) 
         {
             o |= g[r][c]; // accumulate bitmask for this row
         }
@@ -100,7 +100,7 @@ int main()
     }
 #endif // NBLOCK > 0
 
-    // target -> reachable only if all rules holds
+    // target ->reachable only if all rules holds
     assert(0);
     return 0;
 }

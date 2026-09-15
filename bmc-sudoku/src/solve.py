@@ -21,9 +21,9 @@ def read_puzzle(path):  # read puzzle file -> lst of 81 ints (0=empty)
     with open(path) as f:
         text = f.read()
     tokens = text.split()  # digits separated by whitespace
-    if len(tokens) != 81:
+    if len(tokens) != 81:# Fall back
         tokens = [c for c in text if c in "0123456789"]
-    if len(tokens) != 81 or not all(t in "0123456789" and len(t) == 1 for t in tokens):  # Fall back
+    if len(tokens) != 81 or not all(t in "0123456789" and len(t) == 1 for t in tokens):  
         sys.exit("error: puzzle must be 81 digits (0-9)")
     return [int(t) for t in tokens]
 
