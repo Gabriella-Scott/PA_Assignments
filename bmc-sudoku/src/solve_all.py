@@ -7,11 +7,9 @@ import sys
 from solve import (CBMC_FAILURE, CBMC_SUCCESS, read_puzzle,
                    run_cbmc, parse_grid, format_grid)
 
-
 def block_defines(found):  # previous solutions -> cbmc -D flags
     masks = [1 << (d-1) for grid in found for d in grid]  # digit -> bit
     return ["-DNBLOCK=" + str(len(found)), "-DBLOCKED={" + ",".join(map(str, masks)) + "}"]
-
 
 def main():
     args = sys.argv[1:]
@@ -29,7 +27,6 @@ def main():
             break
         if code != CBMC_FAILURE:
             sys.exit("error: CBMC failed")
-
         grid = parse_grid(trace)
         if grid is None:
             sys.exit("error: no grid found in cbmc trace")

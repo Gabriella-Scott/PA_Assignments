@@ -28,16 +28,16 @@ def is_correct(folder, puzzle, output):  # judge output by folder rule
     if folder == "unsolvable":
         return output.strip() == "UNSOLVABLE"
     check = subprocess.run([sys.executable, CHECKER, puzzle],
-                           input=output, capture_output=True, text=True)
+                           input=output, capture_output=True, text=True) # run checker on output
     return check.returncode == 0
 
 
 def main():
-    rows = []
+    rows = [] 
     failures = 0
-    for folder in ["solvable", "unsolvable"]:
+    for folder in ["solvable", "unsolvable"]: # iterate over puzzle categories
         folder_path = os.path.join(PUZZLES, folder)
-        for name in sorted(os.listdir(folder_path)):
+        for name in sorted(os.listdir(folder_path)): # iterate over puzzle files in the folder
             puzzle = os.path.join(folder_path, name)
             times, status = [], "PASS"
             for _ in range(REPEATS):
@@ -62,8 +62,7 @@ def main():
     print("|--------|--------|-----------|")
     for name, status, secs in rows:
         print(f"| {name} | {status} | {secs:.2f} |")
-    print(
-        f"| **Total** | | {len(rows) - failures}/{len(rows)} passed | {total:.2f}|")
+    print(f"| **Total** | {len(rows) - failures}/{len(rows)} passed | {total:.2f} |")
     sys.exit(1 if failures else 0)
 
 

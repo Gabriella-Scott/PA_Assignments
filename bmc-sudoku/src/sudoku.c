@@ -40,7 +40,7 @@ int main()
     {
         for (c = 0; c < 9; c++)
         {
-            unsigned int m = g[r][c];
+            unsigned int m = g[r][c]; // current cell's bitmask
             // exactly 1 bit set and in range
             // m & (m-1) clears lowest set bit -> 0 only if 1 bit
             __CPROVER_assume(m != 0 && m <= 256 && (m & (m - 1)) == 0);
@@ -59,7 +59,7 @@ int main()
         unsigned int o = 0;
         for (c = 0; c < 9; c++)
         {
-            o |= g[r][c];
+            o |= g[r][c]; // accumulate bitmask for this row
         }
         __CPROVER_assume(o == ALL); // all 9 bits set
     }
@@ -70,7 +70,7 @@ int main()
         unsigned int o = 0;
         for (r = 0; r < 9; r++)
         {
-            o |= g[r][c];
+            o |= g[r][c]; // accumulate bitmask for this column
         }
         __CPROVER_assume(o == ALL); // all 9 bits set
     }
@@ -79,6 +79,7 @@ int main()
     for (b = 0; b < 9; b++)
     {
         unsigned int o = 0;
+        // accumulate bitmask for this box
         for (k = 0; k < 9; k++)
         {
             o |= g[3 * (b / 3) + k / 3][3 * (b % 3) + k % 3];
@@ -99,7 +100,7 @@ int main()
     }
 #endif // NBLOCK > 0
 
-    // target: reachable only if all rules holds
+    // target -> reachable only if all rules holds
     assert(0);
     return 0;
 }

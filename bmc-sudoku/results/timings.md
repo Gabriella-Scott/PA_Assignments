@@ -25,7 +25,7 @@
 | unsolvable/hidden.txt | PASS | 0.31 |
 | unsolvable/inkala_plus.txt | PASS | 0.73 |
 | unsolvable/row.txt | PASS | 0.28 |
-| **Total** | | 13/13 passed | 7.00|
+| **Total** | | 13/13 passed | 7.00 |
 
 ## Part I: pairwise-inequality model
 
@@ -43,7 +43,7 @@
 | unsolvable/hidden.txt | PASS | 0.28 |
 | unsolvable/inkala_plus.txt | PASS | 0.70 |
 | unsolvable/row.txt | PASS | 0.27 |
-| **Total** | | 12/12 passed | 6.49|
+| **Total** | | 12/12 passed | 6.49 |
 
 Alternating totals, six runs: bitmask 6.35 / 6.45 / 6.50 (mean 6.43), pairwise 6.43 / 6.59 / 6.48 (mean 6.50). The gap is smaller than the spread within either model.
 
@@ -88,8 +88,9 @@ Solvable puzzles chosen to be hard for constraint solvers rather than for humans
 - `empty.txt`: no givens, worst case for the givens constraints
 - `solved.txt`: zero empty cells, sanity check for the givens-only path
 
-Unsolvable puzzles, each built by adding one conflicting given to a solvable
-puzzle so the contradiction is not visible in a single row, column or box:
+Unsolvable puzzles. Three of the four add a single conflicting given to a
+solvable puzzle; in two of those the conflict is invisible in any one row,
+column or box:
 
 - `row.txt`: duplicate digit in a row (shallow contradiction)
 - `hidden.txt`: contradiction only reachable after propagation

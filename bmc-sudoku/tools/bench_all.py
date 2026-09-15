@@ -1,13 +1,15 @@
 # Part II bench: solution counts, total time, per-iteration cost
 # expected counts come from an independent backtracking solver, not CBMC
-import solve
-from solve_all import block_defines
 import os
 import sys
 import time
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# must come before the src imports
 sys.path.insert(0, os.path.join(REPO, "src"))
+
+import solve  # noqa: E402
+from solve_all import block_defines  # noqa: E402
 
 
 CASES = [("puzzles/unsolvable/hidden.txt", 0),   # puzzle, expected count

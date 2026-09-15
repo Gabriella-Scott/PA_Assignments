@@ -33,7 +33,8 @@ def parse_output(text):  # solver output -> 9x9 grid or None, format errors
 
 def check_givens(puzzle, grid):  # givens -> unchanged
     errs = []
-    for r in range(9):
+    # check each cell against the given puzzle
+    for r in range(9): 
         for c in range(9):
             if puzzle[r][c] != 0 and grid[r][c] != puzzle[r][c]:
                 errs.append(f"given changed at row {r + 1}, col {c + 1}: "

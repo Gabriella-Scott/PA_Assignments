@@ -1,10 +1,10 @@
-# CBMC Soduko Solver
+# CBMC Sudoku Solver
 
 This repository contains a Sudoku solver built around the CBMC model checker. The core idea is to encode Sudoku constraints as a C model and ask CBMC whether a valid grid exists for the given puzzle. If the assertion is reachable, CBMC produces a counterexample trace that the python wrapper converts back into a solved 9x9 grid.
 
 ## Contents:
 
-- `src/sudoku.c`: the Sudoku contraint model expressed as a CBMC program
+- `src/sudoku.c`: the Sudoku constraint model expressed as a CBMC program
 - `src/solve.py`: solves one puzzle and prints either a solution or "UNSOLVABLE"
 - `src/solve_all.py`: enumerates all solutiuons by repeatedly blocking previously found ones
 - `tools/check.py`: validates solver output against Sudoku rules and puzzle givens
@@ -15,7 +15,7 @@ This repository contains a Sudoku solver built around the CBMC model checker. Th
 
 ## Modelling approach
 
-Each cell is a 9-bit mask rather than a digit. Bit `i` set means the cell holds digit `i+1`, and exactly one bit in set per cell. This one-hot encoding lets contraints be
+Each cell is a 9-bit mask rather than a digit. Bit `i` set means the cell holds digit `i+1`, and exactly one bit is set per cell. This one-hot encoding lets contraints be
 expressead as bitwise operations instead of comparisons over 1-9, which produces smaller, more uniform clauses for CBMC's SAT backend.
 
 **Cell validity**: `__CPROVER_assume(m != 0 && m <= 256 && (m & (m - 1)) == 0)` restricts the mask to exactly one bit in range. `m & (m -1)` clears the lowest set bit, so the result is zero only if m started with exactly one bit set.
@@ -35,19 +35,6 @@ expressead as bitwise operations instead of comparisons over 1-9, which produces
 ## Puzzle format
 Each puzzle file contains 81 digits with 0 used as empty. The digits are read as a flat sequence, row-major.
 Example puzzle:
-```text
-530070000
-600195000
-098000060
-800060003
-400803001
-700020006
-060000280
-000419005
-000080079
-```
-
-Equivalent flat representation:
 
 ```text
 5 3 0 0 7 0 0 0 0
@@ -60,6 +47,21 @@ Equivalent flat representation:
 0 0 0 4 1 9 0 0 5
 0 0 0 0 8 0 0 7 9
 ```
+Equivalent flat representation:
+
+```text
+530070000
+600195000
+098000060
+800060003
+400803001
+700020006
+060000280
+000419005
+000080079
+```
+
+
 The input parser expects exactly 81 single-digit tokens. The solver accepts a file path like the examples under `puzzles/`.
 
 ## Requirements
