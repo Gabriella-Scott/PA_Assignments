@@ -9,8 +9,28 @@ This repository contains a Sudoku solver built around the CBMC model checker. Th
 - `src/solve_all.py`: enumerates all solutiuons by repeatedly blocking previously found ones
 - `tools/check.py`: validates solver output against Sudoku rules and puzzle givens
 - `tools/bench.py`: runs solver checks across the bundled test sets and reports timings
-- `tools/bench_all.py`:
+- `tools/bench_all.py`: runs solve_all.py over the multi-solution puzzles and reports counts, total and per-run costs
 - `puzzles/`: sample inputs split into solvable, unsolvable and multi solution cases
+- `results/timings.md`: full benchmark tables, SAT instance sizes and environment details
+
+## Modelling approach
+
+Each cell is a 9-bit mask rather than a digit. Bit `i` set means the cell holds digit `i+1`, and exactly one bit in set per cell. This one-hot encoding lets contraints be
+expressead as bitwise operations instead of comparisons over 1-9, which produces smaller, more uniform clauses for CBMC's SAT backend.
+
+**Cell validity**: `__CPROVER_assume(m != 0 && m <= 256 && (m & (m - 1)) == 0)` restricts the mask to exactly one bit in range. `m & (m -1)` clears the lowest set bit, so the result is zero only if m started with exactly one bit set.
+
+**Givens**: each pre-filled cell gets an extra assume pinning its mask to that digit's bit, e.g. digit 5 becomes `1 << 4`.
+
+**Row, column and box rules**: the nine masks in a group are OR-ed together. Since each cell contributes exactly one bit, the OR can only equal `0x1FF` (all 9 bits set) if the 9 cells are all different digits. One assume per group replaces the usual pairwise "cell A != cell B" checks.
+
+**Feeding in the puzzle**: the wrapper never edits `sudoku.c`. It passes the puzzle as `-DPUZZLE={...}` macro on the CBMC command line, so the model source stays fixed across runs.
+
+**Finding a solution**: the model ends in `assert(0)`, unreachable only if a valid grid exists. If CBMC finds a way to reach it (VERIFICATION FAILED, exit code 10), the counterexample trace contains that grid. If no valid grid exists, the assumes can never all hold and the assert stays unreachable (VERIFICATION SUCCESSFUL, exit code 0). The wrapper reads the exit code, not the printed message, to decide between UNSOLVABLE and parsing a trace.
+
+**Part II**: reuses the Part I model unchanged. An `NBLOCK`/`BLOCKED` macro pair (default `NBLOCK=0`, no effect) lets the wrapper pass in previously found grids as flat mask arrays. For each one, an assume requires at least one cell to differ (XOR across all 81 cells is nonzero), forcing CBMC to find a genuinely new solution or report none remain.
+
+**Why one-hot over pairwise inequality**: both were benchmarked and perform identically within noise (see `results/timings.md`). One-hot is kept for the smaller clause count (58446 vs 91098 clauses on the hardest test puzzle) and because it reads closer to the rules as stated, one assume per row, column and box.
 
 ## Puzzle format
 Each puzzle file contains 81 digits with 0 used as empty. The digits are read as a flat sequence, row-major.
@@ -44,7 +64,7 @@ The input parser expects exactly 81 single-digit tokens. The solver accepts a fi
 
 ## Requirements
 
-- CBMC must be installed and available on your path
+- CBMC v6.11.0
 - python 3
 
 To check CBMC is available:
@@ -109,6 +129,19 @@ python3 tools/bench.py
 ```
 This script runs each puzzle multiple times, checks correctness and prints timings.
 
+Run the Part II benchmark over the multi-solution puzzles:
+
+```bash
+python3 tools/bench_all.py
+```
+This runs `solve_all.py` on each puzzle in `puzzles/multi/`, checks the solution count against the expected value, and reports totals and per-run timings.
+
+## Performance notes
+
+Full benchmark tables, SAT instance sizes and the test environment are in `results/timings.md`. Part I solves all 13 benchmark puzzles in under 1.1s each, 7.00s for the full suite.
+
+Part II's iterative blocking re-runs CBMC once per solution found, and each run gets slightly slower as more blocking constraints accumulate, so total time grows roughly quadratically with the number of solutions. On `puzzles/multi/forty.txt` (40 solutions), per-run CBMC cost rises from 0.29s with none blocked to 3.01s with 40 blocked, for a total of 68s. Heavily underconstrained puzzles with hundreds of solutions or more would not finish in reasonable time with this approach.
+
 ## Puzzle sets
 
 The repository includes several curated examples:
@@ -154,7 +187,7 @@ expected values below do not depend on CBMC.
 | `norvig_a.txt` | 22 | 1 | line 1 of norvig.com/hardest.txt |
 | `norvig_b.txt` | 23 | 1 | line 2 of norvig.com/hardest.txt |
 | `norvig_c.txt` | 26 | 1 | line 3 of norvig.com/hardest.txt |
-| `clue17.txt` | 17 | 1 | a 17-clue puzzle; 17 is the proven minimum for a unique solution (McGuire et al., 2014) |
+| `clue17.txt` | 17 | 1 | a 17-clue puzzle; Final Sudoku |
 | `empty.txt` | 0 | 6.67 x 10^21 | no givens, the worst case for the givens constraints |
 
 **Unsolvable.** Three of the four add a single conflicting given to a solvable
@@ -175,9 +208,9 @@ puzzle; in two of those the conflict is invisible in any one row, column or box.
 | `five.txt` | 37 | 5 |
 | `forty.txt` | 30 | 40 |
 
-Sources: McGuire, G., Tugemann, B., & Civario, G. (2014). There is no 16-clue
-sudoku: Solving the sudoku minimum number of clues problem via hitting set
-enumeration. *Experimental Mathematics, 23*(2), 190-217.
+Sources:
+
 Norvig, P. (n.d.). *Hardest sudoku puzzles.* https://norvig.com/hardest.txt
 Stuart, A. (2012). *Arto Inkala sudoku.* https://www.sudokuwiki.org/Arto_Inkala_Sudoku
 Stuart, A. (2008). *Escargot.* https://www.sudokuwiki.org/Escargot
+Final Sudoku. (2026). *17-Clue Sudoku - The Mathematical Minimum.* https://finalsudoku.com/sudoku-17-clue
