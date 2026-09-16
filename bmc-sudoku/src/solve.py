@@ -21,9 +21,9 @@ def read_puzzle(path):  # read puzzle file -> lst of 81 ints (0=empty)
     with open(path) as f:
         text = f.read()
     tokens = text.split()  # digits separated by whitespace
-    if len(tokens) != 81:# Fall back
+    if len(tokens) != 81:  # Fall back
         tokens = [c for c in text if c in "0123456789"]
-    if len(tokens) != 81 or not all(t in "0123456789" and len(t) == 1 for t in tokens):  
+    if len(tokens) != 81 or not all(t in "0123456789" and len(t) == 1 for t in tokens):
         sys.exit("error: puzzle must be 81 digits (0-9)")
     return [int(t) for t in tokens]
 
@@ -37,9 +37,9 @@ def run_cbmc(puzzle, extra=()):  # run CBMC on model -> (exit code, stdout)
 
 # Find 'g={..}' block in trace -> list of 81 ints
 def parse_grid(trace):
-    lines = trace.splitlines() # split trace into individual lines
-    for i, line in enumerate(lines): # iterate over each line in trace
-        if line.startswith("  g={"): # found start
+    lines = trace.splitlines()  # split trace into individual lines
+    for i, line in enumerate(lines):  # iterate over each line in trace
+        if line.startswith("  g={"):  # found start
             text = ""
             for part in lines[i:]:  # value may wrap over 9 lines
                 text += part.split(" ({")[0]  # drop binary dump
@@ -59,11 +59,11 @@ def format_grid(grid):  # 81 ints -> 9 lines, space separated
 def main():
     if len(sys.argv) != 2:
         sys.exit("usage: solve.py <puzzle_file>")
-    puzzle = read_puzzle(sys.argv[1]) # read puzzle from file
-    code, trace = run_cbmc(puzzle) # run CBMC on the puzzle
-    if code == CBMC_SUCCESS: # unsolvable
+    puzzle = read_puzzle(sys.argv[1])  # read puzzle from file
+    code, trace = run_cbmc(puzzle)  # run CBMC on the puzzle
+    if code == CBMC_SUCCESS:  # unsolvable
         print("UNSOLVABLE")
-    elif code == CBMC_FAILURE: # solution exists
+    elif code == CBMC_FAILURE:  # solution exists
         grid = parse_grid(trace)
         if grid is not None:
             print(format_grid(grid))

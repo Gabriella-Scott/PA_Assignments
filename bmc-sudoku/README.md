@@ -104,9 +104,8 @@ To find every valid solution for a puzzle, use `solve_all.py`:
 ```bash
 python3 src/solve_all.py puzzles/multi/two.txt
 ```
-This repeatedly solves the puzzle, blocks each solution found and then continues until no more solutions remains. It 
-prints each discovered grid and ends with:
-
+This repeatedly solves the puzzle, blocks each solution found and then continues until no more solutions remains. 
+It prints each discovered grid, separated by a blank line, and ends with:
 
 ```text
 NUMBER OF SOLUTIONS: N
