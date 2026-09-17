@@ -4,6 +4,7 @@ This repository contains a Sudoku solver built around the CBMC model checker. Th
 
 ## Contents:
 
+- `sudoku.py`: main entry point; parses the flags and calls `src/solve.py` (Part I) or `src/solve_all.py` (Part II)
 - `src/sudoku.c`: the Sudoku constraint model expressed as a CBMC program
 - `src/solve.py`: solves one puzzle and prints either a solution or "UNSOLVABLE"
 - `src/solve_all.py`: enumerates all solutiuons by repeatedly blocking previously found ones
@@ -61,7 +62,6 @@ Equivalent flat representation:
 000080079
 ```
 
-
 The input parser expects exactly 81 single-digit tokens. The solver accepts a file path like the examples under `puzzles/`.
 
 ## Requirements
@@ -74,48 +74,30 @@ To check CBMC is available:
 cbmc --version
 ```
 
-## Quick start
+## Usage
 
-Solve a single puzzle:
-
-```bash
-python3 src/solve.py puzzles/solvable/wiki.txt
-```
-
-Expected output is either:
-
-- `UNSOLVABLE`
-- or a 9x9 grid in the following format:
-
-```text
-5 3 4 6 7 8 9 1 2
-6 7 2 1 9 5 3 4 8
-1 9 8 3 4 2 5 6 7
-8 5 9 7 6 1 4 2 3
-4 2 6 8 5 3 7 9 1
-7 1 3 9 2 4 8 5 6
-9 6 1 5 3 7 2 8 4
-2 8 7 4 1 9 6 3 5
-3 4 5 2 8 6 1 7 9
-```
-## Enumerating all solutions
-To find every valid solution for a puzzle, use `solve_all.py`:
+Run from the `bmc-sudoku/` folder. `sudoku.py` is the main entry point.
 
 ```bash
-python3 src/solve_all.py puzzles/multi/two.txt
-```
-This repeatedly solves the puzzle, blocks each solution found and then continues until no more solutions remains. 
-It prints each discovered grid, separated by a blank line, and ends with:
-
-```text
-NUMBER OF SOLUTIONS: N
+python3 sudoku.py [--exhaustive] [--silent] [--single-line-output] <puzzle_file>
 ```
 
-The `--silent` option suppresses the individual grid output:
+| Flag | Effect |
+|---|---|
+| (none) | Part I: one solution in puzzle format, or `UNSOLVABLE` |
+| `--exhaustive` | Part II: every solution, separated by a blank line, then `NUMBER OF SOLUTIONS: n` |
+| `--silent` | with `--exhaustive`: only the `NUMBER OF SOLUTIONS` line |
+| `--single-line-output` | each board as 81 digits on one line |
+
+Examples:
 
 ```bash
-python3 src/solve_all.py --silent puzzles/multi/forty.txt
+python3 sudoku.py puzzles/solvable/wiki.txt
+python3 sudoku.py --exhaustive puzzles/multi/two.txt
+python3 sudoku.py --exhaustive --silent puzzles/multi/forty.txt
 ```
+
+Part II prints solutions in the order CBMC finds them. `src/solve.py <puzzle>` and `src/solve_all.py [--silent] <puzzle>` can also be run directly.``
 
 ## Checking and benchmarking
 Validate a solver result against the puzzle and Sudoku constraints:

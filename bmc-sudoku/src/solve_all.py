@@ -13,13 +13,7 @@ def block_defines(found):  # previous solutions -> cbmc -D flags
     return ["-DNBLOCK=" + str(len(found)), "-DBLOCKED={" + ",".join(map(str, masks)) + "}"]
 
 
-def main():
-    args = sys.argv[1:]
-    silent = "--silent" in args  # only print the count
-    args = [a for a in args if a != "--silent"]
-    if len(args) != 1:
-        sys.exit("Usage: solve_all.py [--silent] <puzzle_file>")
-    puzzle = read_puzzle(args[0])
+def solve_all(puzzle, silent=False, one_line=False):  # print solns + count
     found = []
     while True:
         extra = block_defines(found) if found else []
@@ -29,15 +23,26 @@ def main():
             break
         if code != CBMC_FAILURE:
             sys.exit("error: CBMC failed")
+
         grid = parse_grid(trace)
         if grid is None:
             sys.exit("error: no grid found in cbmc trace")
         found.append(grid)
         if not silent:
-            print(format_grid(grid))
-            print()  # blank line between boards
+            if len(found) > 1:
+                print()  # blank line between boards, not after last
+            print(format_grid(grid, one_line))
 
     print("NUMBER OF SOLUTIONS: " + str(len(found)))
+
+
+def main():
+    args = sys.argv[1:]
+    silent = "--silent" in args  # only print the count
+    args = [a for a in args if a != "--silent"]
+    if len(args) != 1:
+        sys.exit("usage: solve_all.py [--silent] <puzzle_file>")
+    solve_all(read_puzzle(args[0]), silent)
 
 
 if __name__ == "__main__":

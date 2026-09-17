@@ -52,26 +52,31 @@ def parse_grid(trace):
     return None
 
 
-def format_grid(grid):  # 81 ints -> 9 lines, space separated
+def format_grid(grid, one_line=False):  # 81 ints -> 9 lines, or 81 digits on 1 line
+    if one_line:
+        return "".join(map(str, grid))
     return "\n".join(" ".join(map(str, grid[r * 9: r * 9 + 9])) for r in range(9))
+
+
+def solve_one(puzzle, one_line=False):
+    code, trace = run_cbmc(puzzle)
+    if code == CBMC_SUCCESS:
+        print("UNSOLVABLE")
+    elif code == CBMC_FAILURE:
+        grid = parse_grid(trace)
+        if grid is not None:
+            print(format_grid(grid, one_line))
+        else:
+            # wrapper bug unsolvable
+            sys.exit("error: no grid found in cbmc trace")
+    else:
+        sys.exit("error: CBMC failed")
 
 
 def main():
     if len(sys.argv) != 2:
         sys.exit("usage: solve.py <puzzle_file>")
-    puzzle = read_puzzle(sys.argv[1])  # read puzzle from file
-    code, trace = run_cbmc(puzzle)  # run CBMC on the puzzle
-    if code == CBMC_SUCCESS:  # unsolvable
-        print("UNSOLVABLE")
-    elif code == CBMC_FAILURE:  # solution exists
-        grid = parse_grid(trace)
-        if grid is not None:
-            print(format_grid(grid))
-        else:
-            # wrapper bug, not unsolvable
-            sys.exit("error: no grid found in cbmc trace")
-    else:
-        sys.exit("error: CBMC failed")
+    solve_one(read_puzzle(sys.argv[1]))
 
 
 if __name__ == "__main__":
