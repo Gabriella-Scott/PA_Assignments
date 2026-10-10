@@ -11,24 +11,25 @@ import json
 import os
 import sys
 
+
 # the analysis package sits next to this script, not necessarily in the cwd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from analysis.graph import load_case  # noqa: E402
+from analysis.solver import reaches  # noqa: E402
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Static taint analyser.")
-    parser.add_argument("-i", required=True, help="test case directory")
+    parser.add_argument("-i", dest="input", required=True,
+                        help="test case directory")
     args = parser.parse_args()
 
-    graph, case = load_case(args.i)
+    graph, case = load_case(args.input)
+    answer = reaches(graph, case)
 
-    # TODO replace with the data-flow analysis
-    reaches = False
-
-    # stdout carries the JSON and nothing else
-    print(json.dumps({"reaches": reaches}))
+    # only the JSON object goes to stdout, per the CLI contract
+    print(json.dumps({"reaches": answer}))
     return 0
 
 
