@@ -9,7 +9,6 @@ from .callgraph import CallGraph
 from .graph import CALL, EXIT, Graph, Node, PARAMETER, TestCase
 from .store import Loc, Store
 from .transfer import Transfer, call_temp, return_slot
-from analysis import callgraph
 
 CONTEXT_DEPTH = 2  # call string depth
 

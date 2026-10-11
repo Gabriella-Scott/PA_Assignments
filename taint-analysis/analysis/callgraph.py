@@ -56,14 +56,20 @@ class CallGraph:
         chain.append(None)
         return chain
 
-    def direct_targets(self, call_id: int) -> FrozenSet[int]:
-        """Definitions a bare name resolves to, taking the innermost scope that has it."""
-        name = self.sites[call_id].name
-        for scope in self.scope_chain(call_id):
+    def lookup(self, name: str, node_id: int) -> FrozenSet[int]:
+        """
+        Definitions a bare name resolves to, seen from this node: innermost
+        scope that has it wins, so a nested def shadows the outer one
+        """
+        for scope in self.scope_chain(node_id):
             found = self.scopes.get(scope, {}).get(name)
             if found:
                 return frozenset(found)
         return frozenset()
+
+    def direct_targets(self, call_id: int) -> FrozenSet[int]:
+        """Definitions the callee name of this call site resolves to."""
+        return self.lookup(self.sites[call_id].name, call_id)
 
     # RESOLUTION
 

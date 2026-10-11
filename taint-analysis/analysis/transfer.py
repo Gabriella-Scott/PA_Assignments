@@ -52,14 +52,15 @@ def return_slot(method_id: int) -> str:
 
 
 class Transfer:
-    """Transfer functions for one graph"""
+    """Transfer function for 1 graph."""
 
-    def __init__(self, graph: Graph):
+    def __init__(self, graph: Graph, callgraph=None):
         self.g = graph
+        # the call graph does scope-aware name lookup. None in pt 1 and in
+        # the store unit tests (keep flat table as a fallback)
+        self.cg = callgraph
         # name -> definition sites, for reading a bare function name
         self.funcs_by_name: Dict[str, Set[int]] = {}
-        for m in graph.methods():
-            self.funcs_by_name.setdefault(m.val, set()).add(m.id)
 
 # STATEMENTS
 
@@ -136,7 +137,7 @@ class Transfer:
             return Value(False, set())
 
         if node.kind in (IDENTIFIER, PARAMETER):
-            return self._read_name(node.val, store)
+            return self._read_name(node.val, store, node.id)
 
         if node.kind == CALL:
             # hoisted, so the result is already sitting in its temp
@@ -147,13 +148,20 @@ class Transfer:
 
         return Value(False, set())
 
-    def _read_name(self, name: str, store: Store) -> Value:
+    def _read_name(self, name: str, store: Store, at: int = None) -> Value:
         """A name is a variable if the store knows it, otherwise a bare function name."""
         if name in store.points_to or name in store.tainted:
             return Value(store.is_tainted(name), set(store.locs_of(name)))
 
-        # f = foo: foo is not a variable, it refers to the definition itself
-        return Value(False, {Loc(FUNC, site) for site in self.funcs_by_name.get(name, set())})
+        # f = foo: foo is not a variable, it refers to the definition itself.
+        # Resolve it the same way a call does, so both agree about what a
+        # name means, else taint lands in the wrong function
+        if self.cg is not None and at is not None:
+            sites = self.cg.lookup(name, at)
+        else:
+            sites = self.funcs_by_name.get(name, set())
+
+        return Value(False, {Loc(FUNC, site) for site in sites})
 
     def _eval_operator(self, node: Node, store: Store) -> Value:
         ops = self.g.operands(node.id)
