@@ -9,7 +9,7 @@ CFG -> only containes statement roots, so apply dispatches on those and eval_exp
 
 from typing import Dict, NamedTuple, Set
 
-from .graph import (Graph, Node, CALL, IDENTIFIER, LITERAL, OPERATOR,
+from .graph import (Graph, Node, CALL, IDENTIFIER, LITERAL, METHOD_REF, OPERATOR,
                     PARAMETER, RETURN)
 from .store import FUNC, LIST, Loc, Store
 
@@ -139,6 +139,11 @@ class Transfer:
         if node.kind in (IDENTIFIER, PARAMETER):
             return self._read_name(node.val, store, node.id)
 
+        if node.kind == METHOD_REF:
+            # a nested def is emitted as name = <method ref>, so this node is
+            # the definition itself, never a var
+            return Value(False, self._func_locs(node.val, node.id))
+
         if node.kind == CALL:
             # hoisted, so the result is already sitting in its temp
             return self._read_name(call_temp(node.id), store)
@@ -153,15 +158,21 @@ class Transfer:
         if name in store.points_to or name in store.tainted:
             return Value(store.is_tainted(name), set(store.locs_of(name)))
 
-        # f = foo: foo is not a variable, it refers to the definition itself.
-        # Resolve it the same way a call does, so both agree about what a
-        # name means, else taint lands in the wrong function
+        # f = foo: foo is not a variable, it refers to the definition itself
+        return Value(False, self._func_locs(name, at))
+
+    def _func_locs(self, name: str, at: int = None) -> Set[Loc]:
+        """
+        Definition sites a function name refers to, as FUNC locations.
+        Goes through call graph so a name means the same thing here as it
+        does at a call site, else taint lands in the wrong function
+        """
         if self.cg is not None and at is not None:
             sites = self.cg.lookup(name, at)
         else:
             sites = self.funcs_by_name.get(name, set())
 
-        return Value(False, {Loc(FUNC, site) for site in sites})
+        return {Loc(FUNC, site) for site in sites}
 
     def _eval_operator(self, node: Node, store: Store) -> Value:
         ops = self.g.operands(node.id)
