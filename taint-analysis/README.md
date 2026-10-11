@@ -81,10 +81,12 @@ aliasing or nested function definitions
 - **Weak updates only add taint.** Writing clean data over a tianted list element leaves the list
   tainted, since one location stands for the whole list.
 - **Indices are not tracked**, so `a[0] = x` followed by `sink(a[1])` gives `true`.
-- **Some operator names are guesses.** `assignment`, `greaterThan`, `listLiteral` and
-  `indexAccess` are confirmed from generated graphs; the augmented assignment and boolean
-  connective names are not. An unknown operator falls through to the default rule where every
-  operand taints the result, so a wrong guess loses precision but stays safe.
+- **Some operator names are guesses.** `assignment`, `greaterThan`, `listLiteral`
+  and `indexAccess` are confirmed from generated graphs; the boolean connective
+  names are not. An unknown operator falls through to the default rule where
+  every operand taints the result, so a wrong guess loses precision but stays
+  safe. Augmented assignments are matched on the `assignment` prefix rather than
+  by name, so they do not depend on the guess.
 
 ## Extras
 
@@ -97,3 +99,5 @@ aliasing or nested function definitions
 - **`tools/`** holds development scripts, not part of the analyser: `dump_case.py` prints the AST
   and CFG per function, `test_store.py` asserts the store operations, and `test_transfer.py` runs
   the suite and traces one case with `-v`.
+  - **Augmented assignments are matched by prefix**, so an `assignment*` operator
+  the tables do not list still updates the store rather than being skipped.
