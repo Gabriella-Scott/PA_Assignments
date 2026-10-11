@@ -173,9 +173,6 @@ class Solver:
         """IN store at a callee's entry: formals bound to actuals, plus the heap."""
         entry = Store()
 
-        # locals do not cross, locations do (lists are pass by reference)
-        entry.tainted.update(k for k in store.tainted if isinstance(k, Loc))
-
         for name, arg in self.cg.bind(call_id, method_id):
             value = self.transfer.eval_expr(arg, store)
             entry.assign(name, value.tainted, value.locs)

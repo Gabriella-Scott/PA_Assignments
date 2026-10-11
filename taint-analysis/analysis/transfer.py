@@ -16,9 +16,6 @@ from .store import FUNC, LIST, Loc, Store
 
 ASSIGN = "assignment"
 
-AUG_ASSIGN = {"assignmentPlus", "assignmentMinus", "assignmentMultiplication",
-              "assignmentDivision", "assignmentModulo"}
-
 # comparisons and boolean connectives return a bool, not the operand data
 BOOL_OPS = {"greaterThan", "greaterEqualsThan", "lessThan", "lessEqualsThan",
             "equals", "notEquals", "logicalAnd", "logicalOr", "logicalNot",
@@ -61,6 +58,8 @@ class Transfer:
         self.cg = callgraph
         # name -> definition sites, for reading a bare function name
         self.funcs_by_name: Dict[str, Set[int]] = {}
+        for m in graph.methods():
+            self.funcs_by_name.setdefault(m.val, set()).add(m.id)
 
 # STATEMENTS
 
@@ -88,7 +87,7 @@ class Transfer:
         if node.val == ASSIGN and len(ops) == 2:
             self._assign(ops[0], self.eval_expr(ops[1], store), store)
 
-        elif node.val in AUG_ASSIGN and len(ops) == 2:
+        elif node.val.startswith(ASSIGN) and len(ops) == 2:
             # x += y is x = x + y, so the old value survives into the new one
             old = self.eval_expr(ops[0], store)
             rhs = self.eval_expr(ops[1], store)
