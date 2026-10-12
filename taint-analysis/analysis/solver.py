@@ -170,7 +170,7 @@ class Solver:
         return out
 
     def entry_store(self, call_id: int, method_id: int, store: Store) -> Store:
-        """IN store at a callee's entry: formals bound to actuals, plus the heap."""
+        """IN store at a callee's entry: formals bound to actuals."""
         entry = Store()
 
         for name, arg in self.cg.bind(call_id, method_id):
