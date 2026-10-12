@@ -97,7 +97,10 @@ aliasing or nested function definitions
 - **Aliasing, lists and function references use one mechanism.** A variable maps to a set of
   abstract locations, each named by the graph node that creates it.
 - **`tools/`** holds development scripts, not part of the analyser: `dump_case.py` prints the AST
-  and CFG per function, `test_store.py` asserts the store operations, and `test_transfer.py` runs
-  the suite and traces one case with `-v`.
-  - **Augmented assignments are matched by prefix**, so an `assignment*` operator
+  and CFG per function, `fake_graph.py` builds small graphs by hand so the analysis can be tested
+  without a generated case, `test_store.py` asserts the store operations, `test_transfer.py` runs
+  the transfer functions and traces one case with `-v`, `test_solver.py` covers loops, merges,
+  calling contexts, recursion and lists, and `test_callgraph.py` covers name resolution,
+  shadowing and argument binding.
+- **Augmented assignments are matched by prefix**, so an `assignment*` operator
   the tables do not list still updates the store rather than being skipped.

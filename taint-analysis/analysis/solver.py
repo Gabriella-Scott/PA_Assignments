@@ -170,8 +170,11 @@ class Solver:
         return out
 
     def entry_store(self, call_id: int, method_id: int, store: Store) -> Store:
-        """IN store at a callee's entry: formals bound to actuals."""
+        """IN store at a callee's entry: formals bound to actuals, plus the heap."""
         entry = Store()
+
+        # lists are shared, so a loc tainted in the caller stays tainted here
+        entry.tainted.update(k for k in store.tainted if isinstance(k, Loc))
 
         for name, arg in self.cg.bind(call_id, method_id):
             value = self.transfer.eval_expr(arg, store)

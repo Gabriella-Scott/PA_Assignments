@@ -4,13 +4,10 @@ Loader for test case directory: graph.json & test_cases.json
 AST edges: parent -> child, structure of program
 CFG edges: statement -> successor, execution order inside one function
 """
-
-
 import json
 import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Set
-
 
 # Node kinds produced by graph builder
 METHOD = "METHOD"

@@ -12,3 +12,7 @@ venv/
 # Local scratch
 scratch/
 *.log
+
+printout.pdf
+printout.ps
+tools/strip_comments.py
